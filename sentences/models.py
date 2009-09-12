@@ -1,14 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
+import ankiResource
 import datetime
 
 # Create your models here.
 
 # Sentence
 class Sentence(models.Model):
-	sentence = models.CharField(max_length=200) #the sentence
+	# Relationships
+	profile = models.ForeignKey(ankiResource.accounts.models.Profile) #Attach sentences to users.
+	
+	sentence = models.TextField() #the sentence
 	
 	#other info
 	pub_date = models.DateTimeField("Date Submitted")
+	
+	#language
+	language = models.CharField(max_length=30) #what language the sentence is in
+	
+	#tags
+	tags = models.TextField() #tags, with spaces commas in between
 	
 	#Display something useful at interactive prompt...
 	def __unicode__(self):

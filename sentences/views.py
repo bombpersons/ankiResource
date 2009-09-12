@@ -8,12 +8,14 @@ import datetime
 # Create your views here.
 
 # -----------------------------INDEX------------------------------------
+# Shows the sentence index page
 def index(request):
 	latest_sentences_list = m.Sentence.objects.all().order_by('-pub_date')[:5]
 	
 	return render_to_response("sentences/index.html", {'latest_sentences_list': latest_sentences_list})
 
 # ----------------------------- SENTENCE -------------------------------
+# Shows an individual sentence.
 def sentence(request, sentence_id):
 	try:
 		sentence = m.Sentence.objects.get(pk=sentence_id)
@@ -22,7 +24,9 @@ def sentence(request, sentence_id):
 	
 	return render_to_response("sentences/sentence.html", {'sentence': sentence})
 
+
 # ---------------------------- NEW SENTENCE ----------------------------
+# Makes a new Sentence
 def new(request):
 	#Try to make the new sentence
 	newSentence = m.Sentence(sentence=request.POST['sentence'], pub_date=datetime.datetime.now())

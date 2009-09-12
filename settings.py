@@ -4,7 +4,7 @@ import os, django
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
-# Django settings for anki_site project.
+# Now the real settings
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -21,6 +21,9 @@ DATABASE_USER = ''             # Not used with sqlite3.
 DATABASE_PASSWORD = ''         # Not used with sqlite3.
 DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
 DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+
+# The module that describes user profiles
+AUTH_PROFILE_MODULE = 'accounts.Profile'
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -84,5 +87,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
 	'django.contrib.admin',
+	'ankiResource.accounts',
 	'ankiResource.sentences',
 )

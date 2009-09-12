@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -19,6 +20,6 @@ urlpatterns = patterns('',
 	
 	#static files (don't use this in a production environment!!!1!)
 	(r'^Media/(?P<path>.*)$', 'django.views.static.serve',
-		{'document_root': 'ankiResource.settings.MEDIA_ROOT'}),
+		{'document_root': settings.MEDIA_ROOT}),
 
 )
