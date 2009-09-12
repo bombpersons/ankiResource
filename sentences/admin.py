@@ -1,4 +1,4 @@
-from anki_site.sentences.models import *
+from ankiResource.sentences.models import *
 from django.contrib import admin
 
 

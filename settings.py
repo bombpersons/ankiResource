@@ -1,3 +1,9 @@
+import os, django
+
+# Lets set up where our project is first
+DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
+SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+
 # Django settings for anki_site project.
 
 DEBUG = True
@@ -35,7 +41,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/bombpersons/site/anki_site/Media/'
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'Media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -63,10 +69,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
-ROOT_URLCONF = 'anki_site.urls'
+ROOT_URLCONF = 'ankiResource.urls'
 
 TEMPLATE_DIRS = (
-	"/home/bombpersons/site/anki_site/templates",
+	os.path.join(SITE_ROOT, 'templates'),
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -78,5 +84,5 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
 	'django.contrib.admin',
-	'anki_site.sentences',
+	'ankiResource.sentences',
 )

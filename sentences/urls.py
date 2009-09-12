@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
 	#sentences url's
-	(r'^$', 'anki_site.sentences.views.index'),
-	(r'^(?P<sentence_id>\d+)$', 'anki_site.sentences.views.sentence'),
-	(r'^new/$', 'anki_site.sentences.views.new'),
+	(r'^$', 'ankiResource.sentences.views.index'),
+	(r'^(?P<sentence_id>\d+)$', 'ankiResource.sentences.views.sentence'),
+	(r'^new/$', 'ankiResource.sentences.views.new'),
 )

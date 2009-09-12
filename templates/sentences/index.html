@@ -1,15 +1,21 @@
-<h1>Latest sentences:</h1>
-{% if latest_sentences_list %}
-	<ul>
-	{% for sentence in latest_sentences_list %}
-		<li>{{ sentence.sentence }}</li>
-	{% endfor %}
-	</ul>
-{% else %}
-	<p>No sentences =(</p>
-{% endif %}
-<h1>Add a sentence:</h1>
-<form action="/sentences/new/" method="post">
-	Sentence: <input type="text" name="sentence" id="sentence" />
-	<input type="submit" value="Add" />
-</form>
+{% extends "sentences/base.html" %}
+
+{% block title %}Sentences{% endblock title %}
+
+{% block main %}
+	<h1>Latest sentences:</h1>
+	{% if latest_sentences_list %}
+		<ul>
+		{% for sentence in latest_sentences_list %}
+			<li>{{ sentence.sentence }}</li>
+		{% endfor %}
+		</ul>
+	{% else %}
+		<p>No sentences =(</p>
+	{% endif %}
+	<h1>Add a sentence:</h1>
+	<form action="/sentences/new/" method="post">
+		Sentence: <input type="text" name="sentence" id="sentence" />
+		<input type="submit" value="Add" />
+	</form>
+{% endblock main %}

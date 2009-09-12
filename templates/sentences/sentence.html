@@ -1,22 +1,28 @@
-<h1>{{ sentence.sentence }}</h1>
-<ul>
-{% for media in sentence.media_set.all %}
-	{% if media %}
-		<li>
-		{% ifequal media.type "Image" %}
-			<img src= /Media/{{ media.image }}/>
-		{% else %}
-			{% ifequal media.type "Video" %}
-				<video src=/Media/{{ media.file }} width=300 height=200 controls=True>
-				<p>Please upgrade to a browser that supports video tags.</p>
-				</video>
+{% extends "sentences/base.html" %}
+
+{% block title %} Viewing Sentence {% endblock title %}
+
+{% block main %}
+	<h1>{{ sentence.sentence }}</h1>
+	<ul>
+	{% for media in sentence.media_set.all %}
+		{% if media %}
+			<li>
+			{% ifequal media.type "Image" %}
+				<img src= /Media/{{ media.image }}/>
 			{% else %}
-				<video src=/Media/{{ media.file }} width=300 height=50 controls=True>
-				<p>Please upgrade to a browser that supports video tags.</p>
-				</video>
+				{% ifequal media.type "Video" %}
+					<video src=/Media/{{ media.file }} width=300 height=200 controls=True>
+					<p>Please upgrade to a browser that supports video tags.</p>
+					</video>
+				{% else %}
+					<video src=/Media/{{ media.file }} width=300 height=50 controls=True>
+					<p>Please upgrade to a browser that supports video tags.</p>
+					</video>
+				{% endifequal %}
 			{% endifequal %}
-		{% endifequal %}
-		</li>
-	{% endif %}
-{% endfor %}
-</ul>
+			</li>
+		{% endif %}
+	{% endfor %}
+	</ul>
+{% endblock main %}

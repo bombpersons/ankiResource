@@ -15,10 +15,10 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/(.*)', admin.site.root),
 	
-	(r'^sentences/', include('anki_site.sentences.urls')),
+	(r'^sentences/', include('ankiResource.sentences.urls')),
 	
 	#static files (don't use this in a production environment!!!1!)
 	(r'^Media/(?P<path>.*)$', 'django.views.static.serve',
-		{'document_root': '/home/bombpersons/site/anki_site/Media'}),
+		{'document_root': 'ankiResource.settings.MEDIA_ROOT'}),
 
 )

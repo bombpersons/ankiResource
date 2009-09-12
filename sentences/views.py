@@ -1,5 +1,5 @@
 from django.shortcuts import *
-import anki_site.sentences.models as m
+import ankiResource.sentences.models as m
 from django.http import *
 from django.core.urlresolvers import *
 
@@ -28,5 +28,5 @@ def new(request):
 	newSentence = m.Sentence(sentence=request.POST['sentence'], pub_date=datetime.datetime.now())
 	newSentence.save()
 	
-	return HttpResponseRedirect(reverse('anki_site.sentences.views.sentence', args=(newSentence.id,)))
+	return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(newSentence.id,)))
 		
