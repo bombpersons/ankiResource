@@ -1,10 +1,11 @@
 <html>
 	<head>
+	{% block css %}<link rel="stylesheet" type="text/css" href="/Media/css/base.css" />{% endblock css %}
 	<title>{% block title %}Default Title{% endblock title %} - Anki Resource</title>
 	</head>
 	
 	<body>
-		<table border="1" width="600">
+		<table width="600">
 			<tr>
 				<td width="25%">{% block sidebar %}Default{% endblock sidebar %}</td>
 				<td width="75%">{% block main %}Default{% endblock main %}</td>

@@ -1,0 +1,17 @@
+/* Affects the whole page */
+body
+{
+color: Black;
+}
+
+table
+{
+border-style: solid;
+border-width: 5;
+}
+
+td
+{
+border-style: solid;
+border-width: 3;
+}
