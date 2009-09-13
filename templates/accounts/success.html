@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block main %}
+	{% if login %}
+		Succesfully logged in. 
+	{% endif %}
+	
+	{% if logout %}
+		Succesfully logged out.
+	{% endif %}
+{% endblock main %}

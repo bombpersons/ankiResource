@@ -5,10 +5,31 @@
 	</head>
 	
 	<body>
-		<table width="600">
+		{% block top %}
+			{% if user.is_authenticated %}
+				Welcome, {{ user.username }}.
+				<a href="{% url url_accounts_logout %}">Logout.</a>
+			{% else %}
+				You are not signed in. 
+				<a href="{% url url_accounts_login %}">Login.</a>
+			{% endif %}
+		{% endblock top %}
+		<table width="100%">
 			<tr>
-				<td width="25%">{% block sidebar %}Default{% endblock sidebar %}</td>
-				<td width="75%">{% block main %}Default{% endblock main %}</td>
+				<td width="25%" valign=top>
+				{% block sidebar %}
+					<table width="100%">
+						<tr>
+							<td>{% block main_menu_title %}Main Menu{% endblock main_menu_title %}</td>
+						</tr>
+						{% block main_menu_content %}
+							<tr><td><a href="{% url url_sentences_index %}">Sentences</a></td></tr>
+							<tr><td><a href="{% url url_accounts_index %}">Account</a></td></tr>
+						{% endblock main_menu_content %}
+					</table>
+				{% endblock sidebar %}
+				</td>
+				<td width="75%" valign=top>{% block main %}Default{% endblock main %}</td>
 			</tr>
 		</table>
 	</body>

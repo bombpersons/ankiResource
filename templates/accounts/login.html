@@ -3,8 +3,18 @@
 {% block title %}Login {% endblock title%}
 
 {% block main %}
-	<form action="" method="POST">
-		{{ form.as_p }}
-		<input type="submit" value="Log in" />
-	</form>
+	{% if failed_login %}
+		<p>Wrong password or username</p>
+	{% endif %}
+	{% if not_active %}
+		<p>Your account is either banned or has not been activated yet (check your email).</p>
+	{% endif %}
+	{% if not user.is_authenticated %}
+		<form action="" method="POST">
+			{{ form.as_p }}
+			<input type="submit" value="Log in" />
+		</form>
+	{% else %}
+		<p>You are already logged in. Do you want to <a href="{% url url_accounts_logout %}">logout?</a></p>
+	{% endif %}
 {% endblock main %}
