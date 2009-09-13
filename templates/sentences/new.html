@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block main %}
+	<h1>Add a new sentence:</h1>
+	<form action="/sentences/new/" method="post" enctype="multipart/form-data">
+		{{ form.as_p }}
+		<input type="submit" value="Add Sentence" />
+	</form>
+{% endblock main %}

@@ -1,5 +1,4 @@
 from django.shortcuts import *
-import ankiResource.sentences.models as m
 from django.http import *
 from django.core.urlresolvers import *
 from django.contrib import auth
@@ -7,6 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
 from ankiResource.accounts.forms import LoginForm
+import ankiResource.sentences.models as m
 
 # ----------------------------- INDEX ----------------------------------
 # Shows the accounts index page (redirects to profile if you are logged in)

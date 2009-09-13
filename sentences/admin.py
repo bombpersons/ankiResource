@@ -28,3 +28,4 @@ class SentenceAdmin(admin.ModelAdmin):
 	inlines = [ChoiceInLineMedia]
 
 admin.site.register(Sentence, SentenceAdmin)
+admin.site.register(Media)

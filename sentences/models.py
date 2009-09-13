@@ -34,8 +34,8 @@ class Sentence(models.Model):
 
 # Media
 class Media(models.Model):
-	file = models.FileField(upload_to="Sentences/Files", blank=True) #the location of the file
-	image = models.ImageField(upload_to="Sentences/Images", blank=True) #the location of the image (if it is an image)
+	file = models.FileField(upload_to="Sentences", blank=True) #the location of the file
+	image = models.ImageField(upload_to="Sentences", blank=True) #the location of the image (if it is an image)
 	
 	TYPE_CHOICES = (
 		('Sound', 'Sound'),
