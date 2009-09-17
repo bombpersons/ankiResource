@@ -6,7 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
 from ankiResource.accounts.forms import LoginForm
-import ankiResource.sentences.models as m
+from ankiResource.accounts import models
 
 # ----------------------------- INDEX ----------------------------------
 # Shows the accounts index page (redirects to profile if you are logged in)
@@ -14,6 +14,19 @@ import ankiResource.sentences.models as m
 def index(request):
 	#redirect to users profile page
 	return HttpResponseRedirect("/accounts/profile/" + str(request.user.id))
+
+# ------------------------------ PROFILE -------------------------------
+# View profile information
+def profile(request, account_id):
+	#Grab information about profile
+	profile = models.Profile.objects.get(pk=account_id)
+	
+	#Send information to template
+	dic = {
+		'profile': profile,
+	}
+	
+	return render_to_response("accounts/profile.html", dic, context_instance=RequestContext(request))
 
 
 # ----------------------------- LOGIN ----------------------------------
