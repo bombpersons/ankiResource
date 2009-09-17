@@ -30,7 +30,7 @@
 		{% ifequal sentence.profile.user.username user.username %}
 			Posted by you. <a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit this sentence.
 		{% else %}
-			Posted by {{ sentence.profile.user.username }}
+			Posted by <a href="{% url url_accounts_profile sentence.profile.user.id %}">{{ sentence.profile.user.username }}</a>
 		{% endifequal %}
 	</h3>
 {% endblock main %}
