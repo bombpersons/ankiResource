@@ -16,6 +16,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/(.*)', admin.site.root),
 	
+	#main (root) app
+	(r'^', include('ankiResource.main.urls')),
+	
 	#accounts app
 	(r'^accounts/', include('ankiResource.accounts.urls')),
 	
@@ -25,7 +28,7 @@ urlpatterns = patterns('',
 	#-------------------------------------------------------------------
 	#-------------------------------------------------------------------
 	#static files (don't use this in a production environment!!!1!)
-	(r'^Media/(?P<path>.*)$', 'django.views.static.serve',
+	(r'^static/(?P<path>.*)$', 'django.views.static.serve',
 		{'document_root': settings.MEDIA_ROOT}),
 
 )

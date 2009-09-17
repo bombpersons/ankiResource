@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main %}
+	<table>
+		{% for new in news %}
+			<tr>
+				<td>{{ new.title }}</td>
+			</tr>
+			
+			<tr>
+				<td>{{ new.text }}</td>
+			</tr>
+			
+			<tr>
+				<td>Posted by {{ new.profile.user.username }} at {{ new.pub_date }}</td>
+			</tr>
+			
+		{% endfor %}
+	</table>
+{% endblock main %}

@@ -17,13 +17,27 @@ import datetime
 # Shows the sentence index page
 def index(request):
 	#Get the latest 5 sentences to show on the main page
-	latest_sentences_list = sentences.models.Sentence.objects.all().order_by('-pub_date')[:5]
+	latest_sentences_list = sentences.models.Sentence.objects.all().order_by('-pub_date')[:settings.ANKIRESOURCE_SENTENCES_INDEX_SENTENCE_NUM]
 	
 	dic = {
 		'latest_sentences_list': latest_sentences_list,
 	}
 	
 	return render_to_response("sentences/index.html", dic, context_instance=RequestContext(request))
+	
+# ----------------------------- LIST SENTENCES -------------------------
+# Shows a list of sentences
+def list(request):
+	#Get all sentences
+	sentence_list = sentences.models.Sentence.objects.all().order_by('-pub_date')
+	
+	#Send it all to template renderer
+	dic = {
+		'sentence_list': sentence_list,
+	}
+	
+	#Render the page
+	return render_to_response("sentences/list.html", dic, context_instance=RequestContext(request))
 
 # ----------------------------- SENTENCE -------------------------------
 # Shows an individual sentence.
@@ -33,7 +47,12 @@ def sentence(request, sentence_id):
 	except:
 		raise Http404
 	
-	return render_to_response("sentences/sentence.html", {'sentence': sentence}, context_instance=RequestContext(request))
+	dic = {
+		'sentence': sentence,
+		
+	}
+	
+	return render_to_response("sentences/sentence.html", dic, context_instance=RequestContext(request))
 
 
 # ---------------------------- NEW SENTENCE ----------------------------
@@ -58,13 +77,13 @@ def new(request):
 			
 			#If there is media, save it
 			if 'video' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['video'], "Sentences/video"), type="Video", sentence=newSentence))
+				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['video'], "media/video"), type="Video", sentence=newSentence))
 				
 			if 'sound' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['sound'], "Sentences/sound"), type="Sound", sentence=newSentence))
+				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['sound'], "media/sound"), type="Sound", sentence=newSentence))
 				
 			if 'image' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(image=storeFile(request.FILES['image'], "Sentences/image"), type="Image", sentence=newSentence))
+				newSentence.media_set.add(sentences.models.Media(image=storeFile(request.FILES['image'], "media/images"), type="Image", sentence=newSentence))
 			
 			#Redirect the user to the new sentence.
 			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(newSentence.id,)))
@@ -84,3 +103,30 @@ def new(request):
 		
 		#render the page
 		return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
+
+# --------------------------- DELETE SENTENCE --------------------------
+@login_required
+# Deletes a sentence
+def delete(request, sentence_id):
+	# First grab the sentence.
+	sentence = sentences.models.Sentence.objects.get(pk=sentence_id)
+	
+	# Make a dic for the template to use.
+	dic = {
+	}
+	
+	# Only delete the sentence if the user is a superuser (admin
+	# Or if the sentence is owned by them.
+	if request.user == sentence.profile.user or request.user.is_superuser == True:
+		# Delete the sentence.
+		sentence.delete()
+		
+		# Tell the template the sentence was deleted
+		dic.update({'deleted': True})
+		
+	# Tell the template access was denied
+	else:
+		dic.update({'deleted': False})
+	
+	# Render the page
+	return render_to_response("sentences/del.html", dic, context_instance=RequestContext(request))

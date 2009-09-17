@@ -4,6 +4,7 @@ import os
 
 #Stores the file in the media dir. Returns the location (relative to media dir) if succesfull.
 def storeFile(file, dir):
+	print os.path.join(settings.MEDIA_ROOT, dir, file.name)
 	#open the destination file
 	dest = open(os.path.join(settings.MEDIA_ROOT, dir, file.name), "wb+")
 	

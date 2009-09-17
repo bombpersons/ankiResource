@@ -1,0 +1,19 @@
+body {
+	background-color: White;
+}
+
+table {
+	border-style: solid;
+}
+
+.main_menu_header {
+	background-color: #CCCCCC;
+}
+
+.main_menu_item {
+	background-color: #EEEEEE;
+}
+
+.spacer {
+	background-color: Grey;
+}

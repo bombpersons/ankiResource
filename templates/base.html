@@ -1,6 +1,6 @@
 <html>
 	<head>
-	{% block css %}<link rel="stylesheet" type="text/css" href="/Media/css/base.css" />{% endblock css %}
+	{% block css %}<link rel="stylesheet" type="text/css" href="/static/media/css/base.css" />{% endblock css %}
 	<title>{% block title %}Default Title{% endblock title %} - Anki Resource</title>
 	</head>
 	
@@ -23,10 +23,11 @@
 							<td>{% block main_menu_title %}Main Menu{% endblock main_menu_title %}</td>
 						</tr>
 						{% block main_menu_content %}
-							<th><a href="{% url url_sentences_index %}">Sentences</a></th>
-							<tr><a href="{% url url_sentences_new %}">Add new</a></tr>
-							
-							<th><a href="{% url url_accounts_index %}">Account</a></th>
+							<tr class=main_menu_header><td><a href="{% url url_sentences_index %}">Sentences</a></td></tr>
+							<tr class=main_menu_item><td><a href="{% url url_sentences_list %}">View all</a></td></tr>
+							<tr class=main_menu_item><td><a href="{% url url_sentences_new %}">Add new</a></td></tr>
+							<tr class=spacer><td></td></tr>
+							<tr class=main_menu_header><td><a href="{% url url_accounts_index %}">Account</a></td></tr>
 						{% endblock main_menu_content %}
 					</table>
 				{% endblock sidebar %}

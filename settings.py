@@ -44,7 +44,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(SITE_ROOT, 'Media')
+MEDIA_ROOT = os.path.join(SITE_ROOT, 'static')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -54,7 +54,7 @@ MEDIA_URL = ''
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = '/admin_media/'
 
 # The login url
 LOGIN_URL = "/accounts/login"
@@ -91,5 +91,17 @@ INSTALLED_APPS = (
     'django.contrib.sites',
 	'django.contrib.admin',
 	'ankiResource.accounts',
+	'ankiResource.main',
 	'ankiResource.sentences',
 )
+
+##########################
+# SITE SPECIFIC SETTINGS #
+##########################
+
+#MAIN SITE
+
+ANKIRESOURCE_MAIN_INDEX_NEWS_ITEMS_NUM = 5
+
+#SENTENCES SITE
+ANKIRESOURCE_SENTENCES_INDEX_SENTENCE_NUM = 5

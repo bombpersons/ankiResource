@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main %}
+	{% ifequal deleted 1 %}
+		Sentence succesfully deleted.
+	{% else %}
+		You don't have the correct permissions to delete this sentence.
+	{% endifequal %}
+	
+{% endblock main %}

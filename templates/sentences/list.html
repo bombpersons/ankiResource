@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}All sentences{% endblock title %}
+
+{% block main %}
+	<table width="100%">
+		{% for sentence in sentence_list %}
+			<tr>
+				<td><a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.sentence }}</a></td>
+				<td>
+					{% ifequal user.id sentence.profile.user.id %}
+						<a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit.
+					{% endifequal %}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	
+{% endblock main %}

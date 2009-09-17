@@ -9,21 +9,28 @@
 		{% if media %}
 			<li>
 			{% ifequal media.type "Image" %}
-				<img src= /Media/{{ media.image }}/>
+				<img src= /static/{{ media.image }}/>
 			{% else %}
 				{% ifequal media.type "Video" %}
-					<video src=/Media/{{ media.file }} width=300 height=200 controls=True>
+					<video src=/static/{{ media.file }} width=300 height=200 controls=True>
 					<p>Please upgrade to a browser that supports video tags.</p>
 					</video>
 				{% else %}
-					<video src=/Media/{{ media.file }} width=300 height=50 controls=True>
+					<video src=/static/{{ media.file }} width=300 height=50 controls=True>
 					<p>Please upgrade to a browser that supports video tags.</p>
 					</video>
 				{% endifequal %}
 			{% endifequal %}
 			</li>
 		{% endif %}
-	{% endfor %}
-	<h3>Posted by {{ sentence.profile.user.username }}</h3>
+	{% endfor %}	
 	</ul>
+	
+	<h3>
+		{% ifequal sentence.profile.user.username user.username %}
+			Posted by you. <a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit this sentence.
+		{% else %}
+			Posted by {{ sentence.profile.user.username }}
+		{% endifequal %}
+	</h3>
 {% endblock main %}
