@@ -1,0 +1,5 @@
+#Ignore compiled python files
+*.pyc
+
+#Ignore the database (user will need to make a new one anyway)
+*.db
