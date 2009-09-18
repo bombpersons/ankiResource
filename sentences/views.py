@@ -84,6 +84,15 @@ def new(request):
 				
 			if 'image' in request.FILES:
 				newSentence.media_set.add(sentences.models.Media(image=storeFile(request.FILES['image'], "media/images"), type="Image", sentence=newSentence))
+				
+			#Pick a language
+			if request.POST['language'] == "Other" and request.POST['other_language'] != "":
+				newSentence.language = request.POST['other_language']
+			elif request.POST['language'] != "Other":
+				newSentence.language = request.POST['language']
+				
+			#Now save again
+			newSentence.save()
 			
 			#Redirect the user to the new sentence.
 			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(newSentence.id,)))
