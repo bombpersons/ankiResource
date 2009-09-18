@@ -10,5 +10,6 @@
 	{% endif %}
 	
 	{% if registered %}
-		Successfully registered. You can now <a href="{{ url url_accounts_login }}">login</a>
+		Successfully registered. You can now <a href="{% url url_accounts_login %}">login</a>
+	{% endif %}
 {% endblock main %}

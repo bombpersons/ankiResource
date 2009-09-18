@@ -40,9 +40,9 @@ def register(request):
 		if form.is_valid():
 			
 			#Cool, make the user and profile
-			newUser = auth.models.User(username=form.cleaned_data['username'],
-							password=form.cleaned_data['password'],
-							email=form.cleaned_data['email']
+			newUser = auth.models.User.objects.create_user(form.cleaned_data['username'],
+							form.cleaned_data['email'],
+							form.cleaned_data['password'],
 			)
 			newUser.is_active = True
 			newUser.save()
