@@ -4,6 +4,9 @@ from ankiResource.settings import *
 DEBUG = False
 TEMPLATE_DEBUG = False
 
+#FIX FOR FASTCGI BUG
+FORCE_SCRIPT_NAME = '""'
+
 # Where to send notifications for errors (Change this to your own e-mail)
 ADMINS = (
 	('Admin', 'blindrabbits@gmail.com')
