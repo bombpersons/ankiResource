@@ -8,8 +8,10 @@ class SentenceForm(forms.Form):
 		('English', 'English'),
 		('日本語', '日本語'),
 		('Other', 'Other')
-	))
-	other_language = forms.CharField()
+	)
+	)
+	
+	other_language = forms.CharField(required=False)
 	
 	video = forms.FileField(required=False)
 	sound = forms.FileField(required=False)
