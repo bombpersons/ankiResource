@@ -4,6 +4,8 @@
 	<title>{% block title %}Default Title{% endblock title %} - Anki Resource</title>
 	</head>
 	
+	{% include "everypage/tracker.html" %}
+	
 	<body>
 		{% block top %}
 			{% if user.is_authenticated %}
