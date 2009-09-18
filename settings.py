@@ -95,6 +95,9 @@ INSTALLED_APPS = (
 	'ankiResource.sentences',
 )
 
+#FIX FOR FASTCGI BUG
+FORCE_SCRIPT_NAME = '""'
+
 ##########################
 # SITE SPECIFIC SETTINGS #
 ##########################

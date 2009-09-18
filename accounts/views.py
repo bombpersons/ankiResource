@@ -5,7 +5,7 @@ from django.contrib import auth
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 
-from ankiResource.accounts.forms import LoginForm
+from ankiResource.accounts.forms import LoginForm, RegisterForm
 from ankiResource.accounts import models
 
 # ----------------------------- INDEX ----------------------------------
@@ -27,6 +27,46 @@ def profile(request, account_id):
 	}
 	
 	return render_to_response("accounts/profile.html", dic, context_instance=RequestContext(request))
+
+# ----------------------------- REGISTER -------------------------------
+# Registers a user
+def register(request):
+	#If we get post data, assume user has already filled form.
+	#We need to validate the data.
+	if request.method == "POST":
+		form = RegisterForm(request.POST)
+		
+		#Validate
+		if form.is_valid():
+			
+			#Cool, make the user and profile
+			newUser = auth.models.User(username=form.cleaned_data['username'],
+							password=form.cleaned_data['password'],
+							email=form.cleaned_data['email']
+			)
+			newUser.is_active = True
+			newUser.save()
+			
+			
+			newProfile = models.Profile(user_id=newUser.id)
+			newProfile.save()
+			
+			#Now redirect to success page
+			return HttpResponseRedirect("/accounts/success/?registered=True")
+		
+		#If the form isn't valid redirect to show the user the errors	
+		else:
+			return HttpResponseRedirect("/accounts/register")
+	
+	#If we aren't getting post data, just show a blank form
+	else:
+		form = RegisterForm()
+	
+	dic = {
+		'form': form,
+	}
+	
+	return render_to_response("accounts/register.html", dic, context_instance=RequestContext(request))
 
 
 # ----------------------------- LOGIN ----------------------------------

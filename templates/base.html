@@ -11,7 +11,7 @@
 				<a href="{% url url_accounts_logout %}">Logout.</a>
 			{% else %}
 				You are not signed in. 
-				<a href="{% url url_accounts_login %}">Login.</a>
+				<a href="{% url url_accounts_login %}">Login</a> / <a href="{% url url_accounts_register %}">Register</a>
 			{% endif %}
 		{% endblock top %}
 		<table width="100%">
@@ -28,6 +28,9 @@
 							<tr class=main_menu_item><td><a href="{% url url_sentences_new %}">Add new</a></td></tr>
 							<tr class=spacer><td></td></tr>
 							<tr class=main_menu_header><td><a href="{% url url_accounts_index %}">Account</a></td></tr>
+							{% if not user.is_authenticated %}
+								<tr class=main_menu_item><td><a href="{% url url_accounts_register %}">Register</a></td></tr>
+							{% endif %}
 						{% endblock main_menu_content %}
 					</table>
 				{% endblock sidebar %}

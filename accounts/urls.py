@@ -7,7 +7,8 @@ urlpatterns = patterns('',
 	#PROFILE
 	url(r'^profile/(?P<account_id>\d+)$', 'ankiResource.accounts.views.profile', name="url_accounts_profile"),
 	
-	#url(r'^register/$', 'ankiResource.accounts.views.register', name="url_accounts_register"),
+	#REGISTER
+	url(r'^register/$', 'ankiResource.accounts.views.register', name="url_accounts_register"),
 	
 	#LOGIN
 	url(r'^login/$', 'ankiResource.accounts.views.loginUser', name="url_accounts_login"),

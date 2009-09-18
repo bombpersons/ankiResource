@@ -8,4 +8,7 @@
 	{% if logout %}
 		Succesfully logged out.
 	{% endif %}
+	
+	{% if registered %}
+		Successfully registered. You can now <a href="{{ url url_accounts_login }}">login</a>
 {% endblock main %}
