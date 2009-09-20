@@ -9,6 +9,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
 	(r'^admin/(.*)', admin.site.root),
 
+	# Haystack
+	(r'^search/', include('haystack.urls')),
+
 	#main (root) app
 	(r'^', include('ankiResource.main.urls')),
 

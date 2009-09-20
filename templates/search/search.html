@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Search{% endblock title %}
+
+{% block main %}
+	    <h2>Search</h2>
+
+    <form method="get" action=".">
+        <table width="100%">
+            {{ form.as_table }}
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <input type="submit" value="Search">
+                </td>
+            </tr>
+        </table>
+		
+		<table width="100%">
+			{% if page.object_list %}
+				{% for result in page.object_list %}
+					<tr>
+						<td><a href="{% url url_sentences_sentence result.object.id %}">{{ result.object.sentence }}</a></td>
+						<td>
+							{% ifequal user.id result.object.profile.user.id %}
+								<a href="{% url url_sentences_delete result.object.id %}">Delete</a> / Edit.
+							{% endifequal %}
+						</td>
+					</tr>
+				{% endfor %}
+			{% else %}
+				<p>No results found =(</p>
+			{% endif %}
+		</table>
+    </form>
+{% endblock main %}

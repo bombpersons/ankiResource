@@ -21,7 +21,8 @@ urlpatterns = patterns('',
 	
 	#makes a new sentence
 	url(r'^new/$', 'ankiResource.sentences.views.new', name="url_sentences_new"),
-	
+		
 	#deletes a sentence
 	url(r'^delete/(?P<sentence_id>\d+)$', 'ankiResource.sentences.views.delete', name="url_sentences_delete"),
 )
+

@@ -113,6 +113,7 @@ def new(request):
 		#render the page
 		return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
 
+
 # --------------------------- DELETE SENTENCE --------------------------
 @login_required
 # Deletes a sentence

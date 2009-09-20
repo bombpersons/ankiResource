@@ -13,6 +13,8 @@ class SentenceForm(forms.Form):
 	
 	other_language = forms.CharField(required=False)
 	
+	tags = forms.CharField(required=False)
+	
 	video = forms.FileField(required=False)
 	sound = forms.FileField(required=False)
 	image = forms.ImageField(required=False)

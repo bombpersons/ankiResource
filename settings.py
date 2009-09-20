@@ -90,10 +90,24 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
 	'django.contrib.admin',
+	'haystack',
 	'ankiResource.accounts',
 	'ankiResource.main',
 	'ankiResource.sentences',
 )
+
+##########################
+#   HAYSTACK SETTINGS    #
+##########################
+
+# Search conf file
+HAYSTACK_SITECONF = 'ankiResource.search_sites'
+
+# Temp path where xapian does it's thing
+HAYSTACK_XAPIAN_PATH = os.path.join(SITE_ROOT, 'xapian')
+
+# Search engine we are using
+HAYSTACK_SEARCH_ENGINE = 'xapian'
 
 ##########################
 # SITE SPECIFIC SETTINGS #

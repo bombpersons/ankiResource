@@ -3,3 +3,6 @@
 
 #Ignore the database (user will need to make a new one anyway)
 *.db
+
+#Ignore the temporory xapian folder
+xapian

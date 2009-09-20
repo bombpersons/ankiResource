@@ -19,7 +19,7 @@ class Sentence(models.Model):
 	language = models.CharField(max_length=30) #what language the sentence is in
 	
 	#tags
-	tags = models.TextField() #tags, with spaces commas in between
+	tags = models.TextField(blank=True) #tags, with spaces commas in between
 	
 	#Display something useful at interactive prompt...
 	def __unicode__(self):
