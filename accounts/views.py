@@ -19,6 +19,13 @@ def index(request):
 # View profile information
 def profile(request, account_id):
 	#Grab information about profile
+	try:
+		profile = models.Profile.objects.get(pk=account_id)
+	except models.Profile.DoesNotExist:
+		# Make a profile if the user doesn't have one
+		profile = models.Profile(user_id=account_id)
+		profile.save()
+	
 	profile = models.Profile.objects.get(pk=account_id)
 	
 	#Send information to template

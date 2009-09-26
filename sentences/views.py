@@ -3,13 +3,12 @@ from django.http import *
 from django.core.urlresolvers import *
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.contrib.auth.models import User
 
 from ankiResource import settings
-from ankiResource.uploading.functions import storeFile
-from ankiResource import sentences, accounts
+from ankiResource.uploading.functions import *
+from ankiResource import sentences, accounts, media
 from ankiResource.sentences.forms import SentenceForm
-
-import datetime
 
 # Create your views here.
 
@@ -65,37 +64,11 @@ def new(request):
 		
 		#continue if the form is valid
 		if form.is_valid():
-			#Try to make the new sentence
-			newSentence = sentences.models.Sentence(
-													sentence=request.POST['sentence'], 
-													pub_date=datetime.datetime.now(), 
-													profile_id=accounts.models.Profile.objects.get(pk=request.user.id).id,
-													)
-			
-			#Right we should be good to save now =D
-			newSentence.save()
-			
-			#If there is media, save it
-			if 'video' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['video'], "media/video"), type="Video", sentence=newSentence))
-				
-			if 'sound' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['sound'], "media/sound"), type="Sound", sentence=newSentence))
-				
-			if 'image' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(image=storeFile(request.FILES['image'], "media/images"), type="Image", sentence=newSentence))
-				
-			#Pick a language
-			if request.POST['language'] == "Other" and request.POST['other_language'] != "":
-				newSentence.language = request.POST['other_language']
-			elif request.POST['language'] != "Other":
-				newSentence.language = request.POST['language']
-				
-			#Now save again
-			newSentence.save()
+			# Add the sentence
+			id = addSentence(request, form)
 			
 			#Redirect the user to the new sentence.
-			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(newSentence.id,)))
+			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(id,)))
 			
 		#add the form to the dic
 		dic = {'form': form}

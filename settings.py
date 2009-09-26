@@ -92,6 +92,7 @@ INSTALLED_APPS = (
 	'django.contrib.admin',
 	'haystack',
 	'ankiResource.accounts',
+	'ankiResource.media',
 	'ankiResource.main',
 	'ankiResource.sentences',
 )
@@ -114,7 +115,6 @@ HAYSTACK_SEARCH_ENGINE = 'xapian'
 ##########################
 
 #MAIN SITE
-
 ANKIRESOURCE_MAIN_INDEX_NEWS_ITEMS_NUM = 5
 
 #SENTENCES SITE
