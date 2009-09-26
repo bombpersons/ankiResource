@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django import forms
+import tagging
 
 #------------------------- SentenceForm --------------------------------
 class SentenceForm(forms.Form):
@@ -13,7 +14,7 @@ class SentenceForm(forms.Form):
 	
 	other_language = forms.CharField(required=False)
 	
-	tags = forms.CharField(required=False)
+	tags = tagging.forms.TagField(required=False)
 	
 	video = forms.FileField(required=False)
 	sound = forms.FileField(required=False)

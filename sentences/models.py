@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 import ankiResource
 import datetime
+from tagging.fields import TagField
+from tagging.models import Tag
+
 
 # Create your models here.
 
@@ -30,11 +33,15 @@ class Sentence(models.Model):
 	language = models.CharField(max_length=30) #what language the sentence is in
 	
 	#tags
-	tags = models.TextField(blank=True) #tags with spaces inbetween
+	tags = TagField()
 	
 	#Display something useful at interactive prompt...
 	def __unicode__(self):
 		return self.sentence
+
+	def get_tags(self):
+		return Tag.objects.get_for_object(self) 
+
 
 # Media
 class Media(models.Model):

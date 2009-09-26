@@ -75,6 +75,10 @@ def new(request):
 			#Right we should be good to save now =D
 			newSentence.save()
 			
+			#Tags
+			if request.POST['tags'] != "":
+				newSentence.tags = request.POST['tags']
+			
 			#If there is media, save it
 			if 'video' in request.FILES:
 				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['video'], "media/video"), type="Video", sentence=newSentence))

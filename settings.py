@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
 	'django.contrib.admin',
 	'haystack',
+	'tagging',
 	'ankiResource.accounts',
 	'ankiResource.main',
 	'ankiResource.sentences',

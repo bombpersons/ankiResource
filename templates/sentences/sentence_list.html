@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Tag
+{% endblock title %}
+
+{% block main %}
+
+	Found {{object_list|length}} sentence(s) tagged with tag "{{tag}}"
+
+	<table width="100%">
+	{% for sentence in object_list %}
+	<tr>
+		<td><a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.sentence }}</a></td>
+		<td>
+			{% ifequal user.id sentence.profile.user.id %}
+				<a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit.
+			{% endifequal %}
+		</td>
+	</tr>
+	{% endfor %}
+	</table>
+
+{% endblock main%}
