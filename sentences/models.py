@@ -19,7 +19,7 @@ class List(models.Model):
 class Sentence(models.Model):
 	# Relationships
 	profile = models.ForeignKey(ankiResource.accounts.models.Profile) #Attach sentences to users.
-	list = models.ForeignKey(List, blank=True) #Attach sentence to a list (optional)
+	list = models.ForeignKey(List, blank=True, null=True) #Attach sentence to a list (optional)
 	
 	sentence = models.TextField() #the sentence
 	
