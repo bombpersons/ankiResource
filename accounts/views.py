@@ -22,12 +22,17 @@ def profile(request, account_id):
 	try:
 		profile = models.Profile.objects.get(pk=account_id)
 	except models.Profile.DoesNotExist:
+<<<<<<< HEAD:accounts/views.py
 		# Make a profile if the user doesn't have one
 		profile = models.Profile(user_id=account_id)
 		profile.save()
 	
 	profile = models.Profile.objects.get(pk=account_id)
 	
+=======
+		profile = models.Profile(user_id=account_id)
+		profile.save()
+>>>>>>> df2473d928c9135469ff7248a554eec234b2e998:accounts/views.py
 	#Send information to template
 	dic = {
 		'profile': profile,
