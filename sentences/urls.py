@@ -17,11 +17,9 @@ urlpatterns = patterns('',
 	
 	#show sentences as a list
 	url(r'^list/$', 'ankiResource.sentences.views.list', name="url_sentences_list"),
-	
-
 
 	#show sentences with tag
-	url(r'^tag/(?P<tag>[^/]+)/$', 'tagging.views.tagged_object_list', dict(queryset_or_model=Sentence)),
+	url(r'^tag/(?P<tag>[^/]+)/$', 'tagging.views.tagged_object_list', dict(queryset_or_model=Sentence), name="url_sentences_tags"),
 	
 	#shows a specific sentence
 	url(r'^(?P<sentence_id>\d+)$', 'ankiResource.sentences.views.sentence', name="url_sentences_sentence"),
