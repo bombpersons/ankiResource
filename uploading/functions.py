@@ -1,11 +1,12 @@
 from ankiResource import settings
+from ankiResource import media, sentences, accounts
 
-import os, shutil, hashlib, re
+import os, shutil, hashlib, re, datetime
 
 #Stores the file in the media dir. Returns the location (relative to media dir) if succesfull.
 def storeFile(file, dir):
 	#open the destination file
-	temp = open(os.path.join(settings.MEDIA_ROOT, 'temp', file.name), "wb+")
+	temp = open(os.path.join(settings.MEDIA_ROOT, 'temp', file.name), "wb")
 	
 	#if we couldn't open the file return a blank string
 	if not temp:
@@ -15,12 +16,14 @@ def storeFile(file, dir):
 	for chunk in file.chunks():
 		temp.write(chunk)
 	
-	#get the checksum for the file
-	hash =  hashlib.md5(temp.read()).hexdigest()
-	
 	#close the file
 	temp.close()
+		
+	#get the checksum for the file
+	hash = hashlib.md5(open(os.path.join(settings.MEDIA_ROOT, 'temp', file.name), "rb").read()).hexdigest()
 	
+	print os.path.join(settings.MEDIA_ROOT, 'temp', file.name)
+		
 	#get the file extension
 	ext = file.name.split(".")
 	proper_filename = hash + "." + ext[len(ext) - 1]
@@ -31,3 +34,43 @@ def storeFile(file, dir):
 	
 	#return the location of the file
 	return os.path.join(dir, proper_filename)
+
+#Adds a sentence, returns the new sentence's id
+def addSentence(request, form):
+	#Try to make the new sentence
+	newSentence = sentences.models.Sentence(
+											sentence=form.cleaned_data['sentence'], 
+											pub_date=datetime.datetime.now(), 
+											user=request.user,
+											)
+	
+	#Right we should be good to save now =D
+	newSentence.save()
+	
+	#If there is media, save it
+	ms = []
+	if 'video' in request.FILES:
+		ms.append(media.models.Media(file=storeFile(request.FILES['video'], "media/video"), type="Video"))
+		
+	if 'sound' in request.FILES:
+		ms.append(media.models.Media(file=storeFile(request.FILES['sound'], "media/sound"), type="Sound"))
+		
+	if 'image' in request.FILES:
+		ms.append(media.models.Media(image=storeFile(request.FILES['image'], "media/images"), type="Image"))
+		
+	# Add the media to the sentence
+	for m in ms:
+		m.save()
+		newSentence.media.add(m)
+
+	#Pick a language
+	if form.cleaned_data['language'] == "Other" and form.cleaned_data['other_language'] != "":
+		newSentence.language = form.cleaned_data['other_language']
+	elif form.cleaned_data['language'] != "Other":
+		newSentence.language = form.cleaned_data['language']
+		
+	#Now save again
+	newSentence.save()
+	
+	#Return ID
+	return newSentence.id

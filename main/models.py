@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 import ankiResource
 
 # News post model. These are shown on the main index page.
@@ -8,7 +9,7 @@ class News(models.Model):
 	pub_date = models.DateTimeField()
 	
 	#relationships
-	profile = models.ForeignKey(ankiResource.accounts.models.Profile)
+	user = models.ForeignKey(User)
 	
 	#Display something useful at a prompt
 	def __unicode__(self):

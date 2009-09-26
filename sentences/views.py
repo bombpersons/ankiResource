@@ -3,13 +3,12 @@ from django.http import *
 from django.core.urlresolvers import *
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
+from django.contrib.auth.models import User
 
 from ankiResource import settings
-from ankiResource.uploading.functions import storeFile
-from ankiResource import sentences, accounts
+from ankiResource.uploading.functions import *
+from ankiResource import sentences, accounts, media
 from ankiResource.sentences.forms import SentenceForm
-
-import datetime
 
 # Create your views here.
 
@@ -97,9 +96,12 @@ def new(request):
 				
 			#Now save again
 			newSentence.save()
+
+			# Add the sentence
+			id = addSentence(request, form)
 			
 			#Redirect the user to the new sentence.
-			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(newSentence.id,)))
+			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(id,)))
 			
 		#add the form to the dic
 		dic = {'form': form}

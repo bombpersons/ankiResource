@@ -8,33 +8,22 @@ from tagging.models import Tag
 
 # Create your models here.
 
-class List(models.Model):
-	# Relationships
-	profile = models.ForeignKey(ankiResource.accounts.models.Profile) # (Optionally) attach this list to a user
-																	  # If this is set, only the user(s) can edit
-																	  # list.
-	
-	# Options
-	open = models.BooleanField() # Whether or not the list is open.
-								 # If a list is open, anyone can edit it.
-
-# Sentence
+# SENTENCE -------------------------------------------------------------
+# A sentence
 class Sentence(models.Model):
 	# Relationships
-	profile = models.ForeignKey(ankiResource.accounts.models.Profile) #Attach sentences to users.
-	list = models.ForeignKey(List, blank=True, null=True) #Attach sentence to a list (optional)
+	user = models.ForeignKey(User) #Attach sentences to users.
+	media = models.ManyToManyField('media.Media', blank=True, null=True) #Media attached to this sentence
 	
-	sentence = models.TextField() #the sentence
-	
-	#other info
-	pub_date = models.DateTimeField("Date Submitted")
-	
-	#language
+	# Values
+	sentence = models.TextField() #The actual sentence
+	pub_date = models.DateTimeField("Date Submitted") #The date and time the sentence was submitted
 	language = models.CharField(max_length=30) #what language the sentence is in
 	
 	#tags
 	tags = TagField()
 	
+	# Custom Methods
 	#Display something useful at interactive prompt...
 	def __unicode__(self):
 		return self.sentence
@@ -53,9 +42,18 @@ class Media(models.Model):
 		('Image', 'Image'),
 		('Video', 'Video'),
 	)
+
+# LIST -----------------------------------------------------------------
+# A list of sentences. A user can make a list of sentences for any purpose,
+# a list for JLPT words, a list for a certain Drama series, etc
+# A list can also be "open", which means that any user can edit / add to the list.
+class List(models.Model):
+	# Relationships
+	user = models.ManyToManyField(User) 	  # (Optionally) attach this list to a user
+									  # If this is set, only the user(s) can edit
+									  # list.
+	sentence = models.ManyToManyField(Sentence, blank=True, null=True) # Sentences associated with this List
 	
-	#type of Media
-	type = models.CharField(max_length=10, choices=TYPE_CHOICES)
-			
-	#Relationships
-	sentence = models.ForeignKey(Sentence)
+	# Options
+	open = models.BooleanField() # Whether or not the list is open.
+								 # If a list is open, anyone can edit it.
