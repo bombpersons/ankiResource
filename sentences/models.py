@@ -9,18 +9,8 @@ import datetime
 # A sentence
 class Sentence(models.Model):
 	# Relationships
-<<<<<<< HEAD:sentences/models.py
 	user = models.ForeignKey(User) #Attach sentences to users.
 	media = models.ManyToManyField('media.Media', blank=True, null=True) #Media attached to this sentence
-=======
-	profile = models.ForeignKey(ankiResource.accounts.models.Profile) #Attach sentences to users.
-	list = models.ForeignKey(List, blank=True, null=True) #Attach sentence to a list (optional)
-	
-	sentence = models.TextField() #the sentence
-	
-	#other info
-	pub_date = models.DateTimeField("Date Submitted")
->>>>>>> df2473d928c9135469ff7248a554eec234b2e998:sentences/models.py
 	
 	# Values
 	sentence = models.TextField() #The actual sentence
