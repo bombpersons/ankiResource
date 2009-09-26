@@ -19,8 +19,11 @@ def index(request):
 # View profile information
 def profile(request, account_id):
 	#Grab information about profile
-	profile = models.Profile.objects.get(pk=account_id)
-	
+	try:
+		profile = models.Profile.objects.get(pk=account_id)
+	except models.Profile.DoesNotExist:
+		profile = models.Profile(user_id=account_id)
+		profile.save()
 	#Send information to template
 	dic = {
 		'profile': profile,
