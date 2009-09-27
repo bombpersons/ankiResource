@@ -18,16 +18,6 @@ def index(request):
 # ------------------------------ PROFILE -------------------------------
 # View profile information
 def profile(request, account_id):
-	#Grab information about profile
-	try:
-		profile = models.Profile.objects.get(user=account_id)
-	except models.Profile.DoesNotExist:
-		# Make a profile if the user doesn't have one
-		profile = models.Profile(user_id=account_id)
-		profile.save()
-	
-	profile = models.Profile.objects.get(user=account_id)
-	
 	#Send information to template
 	dic = {
 		'profile': profile,
@@ -88,12 +78,15 @@ def loginUser(request):
 			
 			#If that was succesful, log them in
 			if user != None:
+				# If the user doesn't have a profile make one.
 				try:
-					profile = models.Profile.objects.get(user=account_id)
+					profile = models.Profile.objects.get(user=user)
 				except models.Profile.DoesNotExist:
 					# Make a profile if the user doesn't have one
-					profile = models.Profile(user_id=account_id)
+					profile = models.Profile(user=user)
 					profile.save()
+					
+					
 				#check if the user isn't unactive (not activated or banned)
 				if user.is_active:
 					auth.login(request, user)
