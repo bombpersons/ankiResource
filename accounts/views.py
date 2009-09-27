@@ -23,7 +23,7 @@ def profile(request, account_id):
 		profile = models.Profile.objects.get(user=account_id)
 	except models.Profile.DoesNotExist:
 		# Make a profile if the user doesn't have one
-		profile = models.Profile(user=account_id)
+		profile = models.Profile(user_id=account_id)
 		profile.save()
 	
 	profile = models.Profile.objects.get(user=account_id)
