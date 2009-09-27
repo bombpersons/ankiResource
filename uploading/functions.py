@@ -68,6 +68,8 @@ def addSentence(request, form):
 		newSentence.language = form.cleaned_data['other_language']
 	elif form.cleaned_data['language'] != "Other":
 		newSentence.language = form.cleaned_data['language']
+	
+	newSentence.tags = form.cleaned_data['tags']
 		
 	#Now save again
 	newSentence.save()
