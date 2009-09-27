@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load tagging_tags %}
 
 {% block title %}Sentences{% endblock title %}
 
@@ -13,4 +14,14 @@
 	{% else %}
 		<p>No sentences =(</p>
 	{% endif %}
+	<h1>Tag Cloud</h1>
+	
+	{% tag_cloud_for_model sentences.Sentence as object_list %}
+	
+	{% for tag in object_list %}
+			<a href="{% url tagging.views.tagged_object_list tag %}"> 
+			<font size="{{tag.font_size}}"> {{tag.name}} </font>
+ 			</a>
+	{% endfor %}
+
 {% endblock main %}
