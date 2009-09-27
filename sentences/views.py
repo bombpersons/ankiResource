@@ -138,15 +138,10 @@ def show_list(request, list_id):
 
 # ---------------------------- ADD / REMOVE TO LIST --------------------
 @login_required
-def ajax_list_edit(request):
-	print request.POST['list']
-	print request.POST['sentence']
-	
+def ajax_list_edit(request):	
 	# Make sure the list and sentence exist
 	list = sentences.models.List.objects.get(pk=request.POST['list'])
 	sentence = sentences.models.Sentence.objects.get(pk=request.POST['sentence'])
-	
-	print sentence.sentence
 	
 	# Make a dic
 	dic = {
