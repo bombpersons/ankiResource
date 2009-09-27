@@ -4,6 +4,9 @@
 
 {% block main %}
 	<h1>{{ sentence.sentence }}</h1>
+	Tags: {% for tag in sentence.get_tags %}
+		<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }} </a>
+	{% endfor %}
 	<ul>
 	{% for media in sentence.media.all %}
 		{% if media %}
