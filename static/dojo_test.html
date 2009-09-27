@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" 
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+    <head>
+    	<title>Dojo Toolkit Test Page</title>    
+    
+	<!-- load the dojo toolkit base -->
+	<script type="text/javascript" src="js/dojotoolkit/dojo/dojo.js"
+	    djConfig="parseOnLoad:true, isDebug:true"></script>
+    
+	<script type="text/javascript">
+		dojo.require("dojo.NodeList-fx");
+		
+		function init() {
+				var contentNode = dojo.byId("content");
+				dojo.xhrGet({
+					url: "/sentences/3",
+					handleAs: "text",
+					load: function(data,args){
+						// fade out the node we're modifying
+						dojo.fadeOut({
+							node: contentNode,
+							onEnd: function(){
+								// set the data, fade it back in
+								contentNode.innerHTML = data; 
+								dojo.fadeIn({ node: contentNode }).play();    
+							}
+							
+						}).play();
+					},
+					
+					// if any error occurs, it goes here:
+					error: function(error,args){
+						console.warn("error!",error);
+					}
+			});
+
+			}
+			
+		// Make init run at startup
+		dojo.addOnLoad(init);
+	</script>
+    
+	<style type="text/css">
+		.testClass {
+			color:#ff0000;
+		} 
+	</style>    
+    </head>
+	
+	
+    <body><!-- this is a Typical WebPage starting point ... -->
+        <h1 id="testHeading">Dojo Skeleton Page</h1>		
+    	<div id="content">
+	   	<table width="100%">
+		
+			<tr>
+				<td><a href="/sentences/19">Another TEst.</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/18">Test with tag.</a></td>
+
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/17">Test with tag.</a></td>
+				<td>
+					
+				</td>
+			</tr>
+
+		
+			<tr>
+				<td><a href="/sentences/16">BAlalalals</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/15">dcsaa</a></td>
+				<td>
+
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/14">dsaa</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+
+				<td><a href="/sentences/13">dsaa</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/12">dsaa</a></td>
+				<td>
+					
+				</td>
+
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/11">dsaa</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/10">dsaa</a></td>
+
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/9">Tets</a></td>
+				<td>
+					
+				</td>
+			</tr>
+
+		
+			<tr>
+				<td><a href="/sentences/8">... </a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/7">... </a></td>
+				<td>
+
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/6">... </a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+
+				<td><a href="/sentences/5">Haa</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/4">Test.</a></td>
+				<td>
+					
+				</td>
+
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/3">ds</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/2">Media</a></td>
+
+				<td>
+					
+				</td>
+			</tr>
+		
+			<tr>
+				<td><a href="/sentences/1">Media</a></td>
+				<td>
+					
+				</td>
+			</tr>
+		
+	</table>
+
+	</div>
+    </body>
+</html>

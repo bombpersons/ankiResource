@@ -113,3 +113,79 @@ def delete(request, sentence_id):
 	
 	# Render the page
 	return render_to_response("sentences/del.html", dic, context_instance=RequestContext(request))
+	
+# ------------------------------- SHOW LIST ----------------------------
+def show_list(request, list_id):
+	# Make a dic
+	dic = {
+	}
+	
+	# Grab the list
+	try:
+		list = sentences.models.List.objects.get(pk=list_id)
+	except:
+		raise Http404
+		
+	# Put it into the dict
+	dic.update({ 'list': list })
+	
+	# Render the template
+	return render_to_response("sentences/show_list.html", dic, context_instance=RequestContext(request))
+
+# //////////////////////////////////////////////////////////////////////
+# ------------------------------- AJAX ---------------------------------
+# \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+# ---------------------------- ADD / REMOVE TO LIST --------------------
+@login_required
+def ajax_list_edit(request):
+	print request.POST['list']
+	print request.POST['sentence']
+	
+	# Make sure the list and sentence exist
+	list = sentences.models.List.objects.get(pk=request.POST['list'])
+	sentence = sentences.models.Sentence.objects.get(pk=request.POST['sentence'])
+	
+	print sentence.sentence
+	
+	# Make a dic
+	dic = {
+	}
+	
+	# K, now check if the user has permissions to do this.
+	if request.user in list.user.all() or list.open:
+		# Add / Remove the sentence to the list
+		if 'add' in request.POST:
+			if request.POST['add'] == "1":
+				list.sentence.add(sentence)
+				
+				# Tell the template we succeeded
+				dic.update({'success': True})
+		
+		if 'remove' in request.POST:
+			if request.POST['remove'] == "1":
+				list.sentence.remove(sentence)
+				
+				# Tell the template we succeeded
+				dic.update({'success': True})
+		
+		# Check whether or not the sentence is in the list.
+		if 'exists' in request.POST:
+			if request.POST['exists'] == "1":
+				if sentence in list.sentence.all():
+					dic.update({'success': True})
+				else:
+					# Tell the template we failed
+					dic.update({'success': False})
+				
+			
+		# Save the list
+		list.save()
+		
+	else:
+		
+		# Tell the template we failed =(
+		dic.update({'success': False})
+	
+	#Render to template
+	return render_to_response("sentences/ajax/list_edit.html", dic, context_instance=RequestContext(request))

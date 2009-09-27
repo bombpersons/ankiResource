@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+	// Require dojo query
+	dojo.require("dojo.NodeList-fx")
+
+	function checkbox() {
+			// An array for the post data
+			var POSTcontent = new Array();
+			
+			// If the checkbox value is false, send a remove
+			if (this.checked == false) {
+				POSTcontent["remove"] = 1;
+			} else {
+				POSTcontent["add"] = 1;
+			}
+			
+			POSTcontent["list"] = {{ user.get_profile.list.id }};
+			POSTcontent["sentence"] = this.id;
+			
+			dojo.xhrPost({
+				url: "{% url url_sentences_ajax_list_edit %}",
+				handleAs: "text",
+				content: POSTcontent,
+				
+				//display data at console
+				load: function(data,args){
+					console.log(data)
+				},
+				
+				// if any error occurs, it goes here:
+				error: function(error,args){
+					console.warn("error!",error);
+				},
+			});
+	}
+
+	// Checks if the sentence is in the list
+	function checkbox_update() {
+			// Get all checkboxes
+			var checkboxes = dojo.query(".list_check_boxes");
+			
+			// Loop through all the boxes and check if they are in the list
+			checkboxes.forEach(function(node, index, nodeList) {
+				console.log(index, node.checked);
+				
+				console.log("{{ user.get_profile.list.id }}");
+				console.log(node.id);
+				
+				dojo.xhrPost({
+					url: "{% url url_sentences_ajax_list_edit %}",
+					handleAs: "text",
+					content: {
+						'list': {{ user.get_profile.list.id }},
+						'sentence' : node.id,
+						'exists' : 1,
+					},
+					
+					//display data at console
+					load: function(data,args){						
+						// If data is true, the sentence is in the list
+						if (dojo.trim(data) == 'True') {
+							node.checked = true;
+						} else {
+							node.checked = false;
+						}
+					},
+					
+					// if any error occurs, it goes here:
+					error: function(error,args){
+						console.warn("error!",error);
+					},
+				});
+			})
+			
+	}
+	
+	{{ javascript.super }}
+{% endblock javascript %}
+
+{% block init_javascript %}
+	// When a user clicks on the check boxes, add them to their current list.
+	dojo.query(".list_check_boxes").connect("onchange", checkbox);
+	
+	// Update all checkboxes (check them if they are in the list)
+	checkbox_update();
+	
+	{{ init_javascript.super }}
+{% endblock init_javascript %}

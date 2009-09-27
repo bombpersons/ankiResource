@@ -1,4 +1,4 @@
-from ankiResource.sentences.models import Sentence
+from ankiResource.sentences.models import Sentence, List
 from ankiResource.media.models import Media
 from django.contrib import admin
 
@@ -21,3 +21,4 @@ class SentenceAdmin(admin.ModelAdmin):
 	]
 	
 admin.site.register(Sentence, SentenceAdmin)
+admin.site.register(List)

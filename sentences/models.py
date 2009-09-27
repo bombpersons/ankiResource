@@ -30,18 +30,7 @@ class Sentence(models.Model):
 
 	def get_tags(self):
 		return Tag.objects.get_for_object(self) 
-
-
-# Media
-class Media(models.Model):
-	file = models.FileField(upload_to="Sentences", blank=True) #the location of the file
-	image = models.ImageField(upload_to="Sentences", blank=True) #the location of the image (if it is an image)
-	
-	TYPE_CHOICES = (
-		('Sound', 'Sound'),
-		('Image', 'Image'),
-		('Video', 'Video'),
-	)
+		
 
 # LIST -----------------------------------------------------------------
 # A list of sentences. A user can make a list of sentences for any purpose,
@@ -57,3 +46,5 @@ class List(models.Model):
 	# Options
 	open = models.BooleanField() # Whether or not the list is open.
 								 # If a list is open, anyone can edit it.
+								 
+	name = models.CharField(max_length=200, blank=True) # Name of the list (optional)

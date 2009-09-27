@@ -16,7 +16,7 @@ urlpatterns = patterns('',
 	url(r'^$', 'ankiResource.sentences.views.index', name="url_sentences_index"),
 	
 	#show sentences as a list
-	url(r'^list/$', 'ankiResource.sentences.views.list', name="url_sentences_list"),
+	url(r'^all/$', 'ankiResource.sentences.views.list', name="url_sentences_list"),
 
 	#show sentences with tag
 	url(r'^tag/(?P<tag>[^/]+)/$', 'tagging.views.tagged_object_list', dict(queryset_or_model=Sentence), name="url_sentences_tags"),
@@ -29,5 +29,12 @@ urlpatterns = patterns('',
 		
 	#deletes a sentence
 	url(r'^delete/(?P<sentence_id>\d+)$', 'ankiResource.sentences.views.delete', name="url_sentences_delete"),
+	
+	#shows a list
+	url(r'^list/(?P<list_id>\d+)$', 'ankiResource.sentences.views.show_list', name="url_sentences_show_list"),
+	
+	# ------------------------- AJAX -----------------------------------
+	# Add / Removes / Confirms a sentence in a list
+	url(r'^ajax/list/add/$', 'ankiResource.sentences.views.ajax_list_edit', name="url_sentences_ajax_list_edit"),
 )
 
