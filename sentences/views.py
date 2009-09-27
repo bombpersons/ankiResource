@@ -64,39 +64,6 @@ def new(request):
 		
 		#continue if the form is valid
 		if form.is_valid():
-			#Try to make the new sentence
-			newSentence = sentences.models.Sentence(
-													sentence=request.POST['sentence'], 
-													pub_date=datetime.datetime.now(), 
-													user_id=accounts.models.Profile.objects.get(pk=request.user.id).id,
-													)
-			
-			#Right we should be good to save now =D
-			#newSentence.save()
-			
-			#Tags
-			if request.POST['tags'] != "":
-				newSentence.tags = request.POST['tags']
-			
-			#If there is media, save it
-			if 'video' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['video'], "media/video"), type="Video", sentence=newSentence))
-				
-			if 'sound' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(file=storeFile(request.FILES['sound'], "media/sound"), type="Sound", sentence=newSentence))
-				
-			if 'image' in request.FILES:
-				newSentence.media_set.add(sentences.models.Media(image=storeFile(request.FILES['image'], "media/images"), type="Image", sentence=newSentence))
-				
-			#Pick a language
-			if request.POST['language'] == "Other" and request.POST['other_language'] != "":
-				newSentence.language = request.POST['other_language']
-			elif request.POST['language'] != "Other":
-				newSentence.language = request.POST['language']
-				
-			#Now save again
-			#newSentence.save()
-
 			# Add the sentence
 			id = addSentence(request, form)
 			
