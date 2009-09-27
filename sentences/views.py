@@ -68,11 +68,11 @@ def new(request):
 			newSentence = sentences.models.Sentence(
 													sentence=request.POST['sentence'], 
 													pub_date=datetime.datetime.now(), 
-													profile_id=accounts.models.Profile.objects.get(pk=request.user.id).id,
+													user_id=accounts.models.Profile.objects.get(pk=request.user.id).id,
 													)
 			
 			#Right we should be good to save now =D
-			newSentence.save()
+			#newSentence.save()
 			
 			#Tags
 			if request.POST['tags'] != "":
@@ -95,7 +95,7 @@ def new(request):
 				newSentence.language = request.POST['language']
 				
 			#Now save again
-			newSentence.save()
+			#newSentence.save()
 
 			# Add the sentence
 			id = addSentence(request, form)
