@@ -23,3 +23,4 @@ class SentenceForm(forms.Form):
 #--------------------------ListForm -----------------------------------
 class ListForm(forms.Form):
 	name = forms.CharField()
+	open = forms.BooleanField() # Whether or not the list is open.

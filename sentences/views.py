@@ -142,7 +142,8 @@ def new_list(request):
 		#continue if the form is valid
 		if form.is_valid():
 			# Add the sentence
-			new_list = sentences.models.List(	name=form.cleaned_data['name'],
+			new_list = sentences.models.List(name=form.cleaned_data['name'],
+											 open=form.cleaned_data['open'],
 											)
 			new_list.save()			
 			new_list.user.add(request.user)
@@ -150,7 +151,7 @@ def new_list(request):
 			
 			id=new_list.id
 			
-			#Redirect the user to the new sentence.
+			#Redirect the user to the new list.
 			return HttpResponseRedirect(reverse('ankiResource.sentences.views.show_list', args=(id,)))
 			
 		#add the form to the dic

@@ -24,7 +24,7 @@
 		{% block top %}
 			{% if user.is_authenticated %}
 				Welcome, {{ user.username }}.
-				<a href="{% url url_accounts_logout %}">Logout.</a> <a href="{% url url_sentences_show_list user.get_profile.quick_list.id %}">My List.</a>
+				<a href="{% url url_accounts_logout %}">Logout.</a> <a href="{% url url_sentences_show_list user.get_profile.quick_list.id %}">Quick List.</a>
 			{% else %}
 				You are not signed in. 
 				<a href="{% url url_accounts_login %}">Login</a> / <a href="{% url url_accounts_register %}">Register</a>
@@ -42,8 +42,15 @@
 							<tr class=main_menu_header><td><a href="{% url url_sentences_index %}">Sentences</a></td></tr>
 							<tr class=main_menu_item><td><a href="/search/">Search</a></td></tr>
 							<tr class=main_menu_item><td><a href="{% url url_sentences_list %}">View all</a></td></tr>
-							<tr class=main_menu_item><td><a href="{% url url_sentences_new %}">Add new</a></td></tr>
+							<tr class=main_menu_item><td><a href="{% url url_sentences_new %}">Add new</a></td></tr
 							<tr class=spacer><td></td></tr>
+							
+							
+							<tr class=main_menu_header><td><a href="{% url url_manager_index %}">Lists</a></td></tr>
+							<tr class=main_menu_item><td><a href="{% url url_sentences_new_list %}">Add new</a></td></tr>
+							<tr class=spacer><td></td></tr>
+							
+							
 							<tr class=main_menu_header><td><a href="{% url url_accounts_index %}">Account</a></td></tr>
 							{% if not user.is_authenticated %}
 								<tr class=main_menu_item><td><a href="{% url url_accounts_register %}">Register</a></td></tr>
