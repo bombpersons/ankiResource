@@ -3,32 +3,39 @@
 {% block title %} Viewing Sentence {% endblock title %}
 
 {% block main %}
-	<h1>{{ sentence.sentence }}</h1>
-	Tags: {% for tag in sentence.get_tags %}
-		<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }} </a>
-	{% endfor %}
-	<ul>
-	{% for media in sentence.media.all %}
-		{% if media %}
-			<li>
-			{% ifequal media.type "Image" %}
-				<img src= /static/{{ media.image }}/>
-			{% else %}
-				{% ifequal media.type "Video" %}
-					<video src=/static/{{ media.file }} width=300 height=200 controls=True>
-					<p>Please upgrade to a browser that supports video tags.</p>
-					</video>
+	<table width="100%">
+		<tr><h1>{{ sentence.sentence }}</h1></tr>
+		
+		<tr>
+			<td>
+				Tags: {% for tag in sentence.get_tags %}
+					<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }} </a>
+				{% endfor %}
+			</td>
+		</tr>
+
+		{% for media in sentence.media.all %}
+			{% if media %}
+				<tr><td>
+				{% ifequal media.type "Image" %}
+					<img src= /static/{{ media.image }}/>
 				{% else %}
-					<video src=/static/{{ media.file }} width=300 height=50 controls=True>
-					<p>Please upgrade to a browser that supports video tags.</p>
-					</video>
+					{% ifequal media.type "Video" %}
+						<video src=/static/{{ media.file }} width=300 height=200 controls=True>
+						<p>Please upgrade to a browser that supports video tags.</p>
+						</video>
+					{% else %}
+						<video src=/static/{{ media.file }} width=300 height=50 controls=True>
+						<p>Please upgrade to a browser that supports video tags.</p>
+						</video>
+					{% endifequal %}
 				{% endifequal %}
-			{% endifequal %}
-			</li>
-		{% endif %}
-	{% endfor %}	
-	</ul>
-	
+				</td></tr>
+			{% endif %}
+		{% endfor %}
+
+	</table>
+
 	<h3>
 		{% ifequal sentence.profile.user.username user.username %}
 			Posted by you. <a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit this sentence.
@@ -36,4 +43,13 @@
 			Posted by <a href="{% url url_accounts_profile sentence.user.id %}">{{ sentence.user.username }}</a>
 		{% endifequal %}
 	</h3>
+	
+	<table width="100%">
+		{% if more %}
+			More sentences like this:
+			{% for sentence in more %}
+				<tr><td><a href="{% url url_sentences_sentence sentence.object.id %}">{{ sentence.object.sentence }}</a><td></tr>
+			{% endfor %}
+		{% endif %}
+	</table>
 {% endblock main %}

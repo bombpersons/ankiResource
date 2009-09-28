@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib.auth.models import User
 
+from haystack.query import SearchQuerySet
+
 from ankiResource import settings
 from ankiResource.uploading.functions import *
 from ankiResource import sentences, accounts, media
@@ -46,8 +48,14 @@ def sentence(request, sentence_id):
 	except:
 		raise Http404
 	
+	# Get more sentences like this.
+	more = SearchQuerySet().all().more_like_this(sentence)
+	
+	print more.count()
+	
 	dic = {
 		'sentence': sentence,
+		'more': more,
 		
 	}
 	
