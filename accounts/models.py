@@ -35,3 +35,7 @@ class Profile(models.Model):
 	def editable_lists(self):
 		#returns lists that the user can edit
 		return List.objects.filter(user=self.user)
+		
+	def num_editable_lists(self):
+		#returns number of editable lists
+		return len(List.objects.filter(user=self.user))

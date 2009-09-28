@@ -33,6 +33,9 @@ urlpatterns = patterns('',
 	#shows a list
 	url(r'^list/(?P<list_id>\d+)$', 'ankiResource.sentences.views.show_list', name="url_sentences_show_list"),
 	
+	#adds a list
+	url(r'^newlist/$', 'ankiResource.sentences.views.new_list', name="url_sentences_new_list"),
+			
 	# ------------------------- AJAX -----------------------------------
 	# Add / Removes / Confirms a sentence in a list
 	url(r'^ajax/list/add/$', 'ankiResource.sentences.views.ajax_list_edit', name="url_sentences_ajax_list_edit"),

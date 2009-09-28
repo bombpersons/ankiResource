@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from ankiResource import settings
 from ankiResource.uploading.functions import *
 from ankiResource import sentences, accounts, media
-from ankiResource.sentences.forms import SentenceForm
+from ankiResource.sentences.forms import SentenceForm, ListForm
 
 # Create your views here.
 
@@ -131,6 +131,46 @@ def show_list(request, list_id):
 	
 	# Render the template
 	return render_to_response("sentences/show_list.html", dic, context_instance=RequestContext(request))
+	
+#---------------------Create a new list------------------#
+@login_required
+def new_list(request):
+	if request.method == "POST":
+		#validate the data
+		form = ListForm(request.POST)
+		
+		#continue if the form is valid
+		if form.is_valid():
+			# Add the sentence
+			new_list = sentences.models.List(	name=form.cleaned_data['name'],
+											)
+			new_list.save()			
+			new_list.user.add(request.user)
+			new_list.save()
+			
+			id=new_list.id
+			
+			#Redirect the user to the new sentence.
+			return HttpResponseRedirect(reverse('ankiResource.sentences.views.show_list', args=(id,)))
+			
+		#add the form to the dic
+		dic = {'form': form}
+	
+		#render the page
+		return render_to_response("sentences/new_list.html", dic, context_instance=RequestContext(request))
+	
+	#If we aren't already adding, draw a blank form.
+	else:
+		form = ListForm()
+		
+		#make a dic to hold the form
+		dic = {'form': form}
+		
+		#render the page
+		return render_to_response("sentences/new_list.html", dic, context_instance=RequestContext(request))
+
+
+	
 
 # //////////////////////////////////////////////////////////////////////
 # ------------------------------- AJAX ---------------------------------

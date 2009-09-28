@@ -19,3 +19,7 @@ class SentenceForm(forms.Form):
 	video = forms.FileField(required=False)
 	sound = forms.FileField(required=False)
 	image = forms.ImageField(required=False)
+	
+#--------------------------ListForm -----------------------------------
+class ListForm(forms.Form):
+	name = forms.CharField()
