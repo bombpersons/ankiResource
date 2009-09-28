@@ -31,4 +31,7 @@ class Profile(models.Model):
 
 		# Call the normal save
 		super(Profile, self).save()
-
+	
+	def editable_lists(self):
+		#returns lists that the user can edit
+		return List.objects.filter(user=self.user)

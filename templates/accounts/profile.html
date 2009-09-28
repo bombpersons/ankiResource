@@ -8,7 +8,14 @@
 			<td width="20%">Username:</td>
 			<td>{{ user.username }}</td>
 		</tr>
-		
+
+		<tr>
+			<td width="20%">Editable Lists:</td>
+			{% for list in user.get_profile.editable_lists %}
+				<td> <a href="{% url url_sentences_show_list list.id %}">{{ list }} </a></td>
+			{% endfor %}
+		</tr>		
+
 		<tr>
 			<td></td>
 		</tr>

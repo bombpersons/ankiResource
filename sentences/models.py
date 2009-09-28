@@ -51,3 +51,6 @@ class List(models.Model):
 	
 	def number_of_sentences(self):
 		return len(self.sentence.all())
+		
+	def __unicode__(self):
+		return self.name
