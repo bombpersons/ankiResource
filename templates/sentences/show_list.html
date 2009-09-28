@@ -9,6 +9,10 @@
 {% endblock title %}
 
 {% block main %}
+	<h1> {{ list.name }} </h1>
+	
+	{{list.number_of_sentences}} sentence(s) in this list
+
 	<table width="100%">
 		{% for sentence in list.sentence.all %}
 			<tr>

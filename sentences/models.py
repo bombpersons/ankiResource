@@ -48,3 +48,6 @@ class List(models.Model):
 								 # If a list is open, anyone can edit it.
 								 
 	name = models.CharField(max_length=200, blank=True) # Name of the list (optional)
+	
+	def number_of_sentences(self):
+		return len(self.sentence.all())

@@ -15,7 +15,7 @@
 				POSTcontent["add"] = 1;
 			}
 			
-			POSTcontent["list"] = {{ user.get_profile.list.id }};
+			POSTcontent["list"] = {{ user.get_profile.quick_list.id }};
 			POSTcontent["sentence"] = this.id;
 			
 			dojo.xhrPost({
@@ -44,14 +44,14 @@
 			checkboxes.forEach(function(node, index, nodeList) {
 				console.log(index, node.checked);
 				
-				console.log("{{ user.get_profile.list.id }}");
+				console.log("{{ user.get_profile.quick_list.id }}");
 				console.log(node.id);
 				
 				dojo.xhrPost({
 					url: "{% url url_sentences_ajax_list_edit %}",
 					handleAs: "text",
 					content: {
-						'list': {{ user.get_profile.list.id }},
+						'list': {{ user.get_profile.quick_list.id }},
 						'sentence' : node.id,
 						'exists' : 1,
 					},

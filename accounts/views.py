@@ -20,7 +20,7 @@ def index(request):
 def profile(request, account_id):
 	#Send information to template
 	dic = {
-		'profile': profile,
+		'user':auth.models.User.objects.get(pk=account_id),
 	}
 	
 	return render_to_response("accounts/profile.html", dic, context_instance=RequestContext(request))

@@ -24,7 +24,7 @@
 		{% block top %}
 			{% if user.is_authenticated %}
 				Welcome, {{ user.username }}.
-				<a href="{% url url_accounts_logout %}">Logout.</a> <a href="{% url url_sentences_show_list user.get_profile.list.id %}">My List.</a>
+				<a href="{% url url_accounts_logout %}">Logout.</a> <a href="{% url url_sentences_show_list user.get_profile.quick_list.id %}">My List.</a>
 			{% else %}
 				You are not signed in. 
 				<a href="{% url url_accounts_login %}">Login</a> / <a href="{% url url_accounts_register %}">Register</a>

@@ -7,7 +7,7 @@ from ankiResource.sentences.models import List
 class Profile(models.Model):
 	# Relationships
 	user = models.ForeignKey(User)
-	list = models.ForeignKey("sentences.List", blank=True, null=True) 
+	quick_list = models.ForeignKey("sentences.List", blank=True, null=True) 
 											   # A personal list just for the user.
 											   # Used as a list for downloading sentences,
 											   # if a list isn't specified.
@@ -19,13 +19,13 @@ class Profile(models.Model):
 	#Custom save method to make sure a list object is made
 	def save(self):
 		# Make a list if it doesn't already exist.
-		if not self.list:
-			newList = List(open=False)
+		if not self.quick_list:
+			newList = List(open=False, name= str(self.user.username) + "'s quicklist")
 			newList.save()
 			
 			newList.user.add(self.user)
 			
-			self.list = newList
+			self.quick_list = newList
 			
 			newList.save()
 

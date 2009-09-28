@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}{{ profile.user.username }}'s Profile{% endblock title %}
+{% block title %}{{ user.username }}'s Profile{% endblock title %}
 
 {% block main %}
 	<table width="100%">
 		<tr>
 			<td width="20%">Username:</td>
-			<td>{{ profile.user.username }}</td>
+			<td>{{ user.username }}</td>
 		</tr>
 		
 		<tr>
