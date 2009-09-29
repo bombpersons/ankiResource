@@ -36,7 +36,7 @@ class Sentence(models.Model):
 # A list of sentences. A user can make a list of sentences for any purpose,
 # a list for JLPT words, a list for a certain Drama series, etc
 # A list can also be "open", which means that any user can edit / add to the list.
-class List(models.Model):
+class ooList(models.Model):
 	# Relationships
 	user = models.ManyToManyField(User) 	  # (Optionally) attach this list to a user
 									  # If this is set, only the user(s) can edit

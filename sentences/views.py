@@ -9,8 +9,11 @@ from haystack.query import SearchQuerySet
 
 from ankiResource import settings
 from ankiResource.uploading.functions import *
-from ankiResource import sentences, accounts, media
+from ankiResource import accounts, media, lists
+from ankiResource.lists.models import List
 from ankiResource.sentences.forms import SentenceForm, ListForm
+
+from models import Sentence
 
 # Create your views here.
 
@@ -18,7 +21,7 @@ from ankiResource.sentences.forms import SentenceForm, ListForm
 # Shows the sentence index page
 def index(request):
 	#Get the latest 5 sentences to show on the main page
-	latest_sentences_list = sentences.models.Sentence.objects.all().order_by('-pub_date')[:settings.ANKIRESOURCE_SENTENCES_INDEX_SENTENCE_NUM]
+	latest_sentences_list = Sentence.objects.all().order_by('-pub_date')[:settings.ANKIRESOURCE_SENTENCES_INDEX_SENTENCE_NUM]
 	
 	dic = {
 		'latest_sentences_list': latest_sentences_list,
@@ -30,7 +33,7 @@ def index(request):
 # Shows a list of sentences
 def list(request):
 	#Get all sentences
-	sentence_list = sentences.models.Sentence.objects.all().order_by('-pub_date')
+	sentence_list = Sentence.objects.all().order_by('-pub_date')
 	
 	#Send it all to template renderer
 	dic = {
@@ -44,7 +47,7 @@ def list(request):
 # Shows an individual sentence.
 def sentence(request, sentence_id):
 	try:
-		sentence = sentences.models.Sentence.objects.get(pk=sentence_id)
+		sentence = Sentence.objects.get(pk=sentence_id)
 	except:
 		raise Http404
 	
@@ -100,7 +103,7 @@ def new(request):
 # Deletes a sentence
 def delete(request, sentence_id):
 	# First grab the sentence.
-	sentence = sentences.models.Sentence.objects.get(pk=sentence_id)
+	sentence = Sentence.objects.get(pk=sentence_id)
 	
 	# Make a dic for the template to use.
 	dic = {
@@ -130,7 +133,7 @@ def show_list(request, list_id):
 	
 	# Grab the list
 	try:
-		list = sentences.models.List.objects.get(pk=list_id)
+		list = List.objects.get(pk=list_id)
 	except:
 		raise Http404
 		
@@ -150,9 +153,9 @@ def new_list(request):
 		#continue if the form is valid
 		if form.is_valid():
 			# Add the sentence
-			new_list = sentences.models.List(name=form.cleaned_data['name'],
-											 open=form.cleaned_data['open'],
-											)
+			new_list = List(name=form.cleaned_data['name'],
+							open=form.cleaned_data['open'],
+							)
 			new_list.save()			
 			new_list.user.add(request.user)
 			new_list.save()
@@ -189,8 +192,8 @@ def new_list(request):
 @login_required
 def ajax_list_edit(request):	
 	# Make sure the list and sentence exist
-	list = sentences.models.List.objects.get(pk=request.POST['list'])
-	sentence = sentences.models.Sentence.objects.get(pk=request.POST['sentence'])
+	list = List.objects.get(pk=request.POST['list'])
+	sentence = Sentence.objects.get(pk=request.POST['sentence'])
 	
 	# Make a dic
 	dic = {

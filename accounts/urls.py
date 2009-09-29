@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+import ankiResource
 
 urlpatterns = patterns('',
 	#INDEX

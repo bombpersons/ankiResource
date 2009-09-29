@@ -1,4 +1,5 @@
-from ankiResource.sentences.models import Sentence, List
+from ankiResource.sentences.models import Sentence
+from ankiResource.lists.models import List
 from ankiResource.media.models import Media
 from django.contrib import admin
 

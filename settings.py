@@ -96,6 +96,7 @@ INSTALLED_APPS = (
 	'ankiResource.media',
 	'ankiResource.main',
 	'ankiResource.sentences',
+	'ankiResource.lists',
 )
 
 ##########################

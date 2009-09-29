@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from ankiResource.sentences.models import List
+from ankiResource.lists.models import List
 
 # User Profile
 class Profile(models.Model):
 	# Relationships
 	user = models.ForeignKey(User)
-	quick_list = models.ForeignKey("sentences.List", blank=True, null=True) 
+	quick_list = models.ForeignKey("lists.List", blank=True, null=True) 
 											   # A personal list just for the user.
 											   # Used as a list for downloading sentences,
 											   # if a list isn't specified.
