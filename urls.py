@@ -21,6 +21,9 @@ urlpatterns = patterns('',
 	#sentences app
 	(r'^sentences/', include('ankiResource.sentences.urls')),
 	
+	#list app
+	(r'^lists/', include('ankiResource.lists.urls')),
+	
 	#manager apP
 	(r'^manager/', include('ankiResource.manager.urls')),
 
