@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from models import List
 from ankiResource.sentences.models import Sentence
 from ankiResource.sentences.forms import ListForm
+from forms import QuicklistForm
 
 # ------------------------------- SHOW LIST ----------------------------
 def show_list(request, list_id):
@@ -65,7 +66,48 @@ def new_list(request):
 		#render the page
 		return render_to_response("lists/new_list.html", dic, context_instance=RequestContext(request))
 		
+@login_required
+def save_quick_list(request):
+	if request.method == "POST":
+		#validate the data
+		form = QuicklistForm(request.POST)
 		
+		#continue if the form is valid
+		if form.is_valid():
+			# Add the sentence
+			new_list = List(name=form.cleaned_data['name'],
+							open=False,
+							)
+			new_list.save()			
+			new_list.user.add(request.user)
+			
+			uql = request.user.get_profile().quick_list
+			
+			for sentence in uql.sentence.all():
+				new_list.sentence.add(sentence)
+			
+			new_list.save()
+			
+			id=new_list.id
+			
+			#Redirect the user to the new list.
+			return HttpResponseRedirect(reverse('ankiResource.lists.views.show_list', args=(id,)))
+			
+		#add the form to the dic
+		dic = {'form': form}
+	
+		#render the page
+		return render_to_response("lists/new_list.html", dic, context_instance=RequestContext(request))
+	
+	#If we aren't already adding, draw a blank form.
+	else:
+		form = QuicklistForm()
+		
+		#make a dic to hold the form
+		dic = {'form': form}
+		
+		#render the page
+		return render_to_response("lists/save_quick_list.html", dic, context_instance=RequestContext(request))		
 
 # //////////////////////////////////////////////////////////////////////
 # ------------------------------- AJAX ---------------------------------

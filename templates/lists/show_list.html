@@ -26,4 +26,9 @@
 			</tr>
 		{% endfor %}
 	</table>
+	
+	{% ifequal list.id user.get_profile.quick_list.id %}
+		<a href="{% url url_lists_savequicklist %}"> Save this to a new list </a> 
+	{% else %}
+	{% endifequal %}
 {% endblock main %}
