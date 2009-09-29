@@ -25,7 +25,7 @@ def show_list(request, list_id):
 	dic.update({ 'list': list })
 	
 	# Render the template
-	return render_to_response("sentences/show_list.html", dic, context_instance=RequestContext(request))
+	return render_to_response("lists/show_list.html", dic, context_instance=RequestContext(request))
 
 #---------------------Create a new list------------------#
 @login_required
@@ -53,7 +53,7 @@ def new_list(request):
 		dic = {'form': form}
 	
 		#render the page
-		return render_to_response("sentences/new_list.html", dic, context_instance=RequestContext(request))
+		return render_to_response("lists/new_list.html", dic, context_instance=RequestContext(request))
 	
 	#If we aren't already adding, draw a blank form.
 	else:
@@ -63,7 +63,7 @@ def new_list(request):
 		dic = {'form': form}
 		
 		#render the page
-		return render_to_response("sentences/new_list.html", dic, context_instance=RequestContext(request))
+		return render_to_response("lists/new_list.html", dic, context_instance=RequestContext(request))
 		
 		
 
@@ -118,4 +118,4 @@ def ajax_list_edit(request):
 		dic.update({'success': False})
 	
 	#Render to template
-	return render_to_response("sentences/ajax/list_edit.html", dic, context_instance=RequestContext(request))
+	return render_to_response("lists/ajax/list_edit.html", dic, context_instance=RequestContext(request))
