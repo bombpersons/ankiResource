@@ -39,19 +39,19 @@
 							<td>{% block main_menu_title %}Main Menu{% endblock main_menu_title %}</td>
 						</tr>
 						{% block main_menu_content %}
-							<tr class=main_menu_header><td><a href="{% url url_sentences_index %}">Sentences</a></td></tr>
-							<tr class=main_menu_item><td><a href="/search/">Search</a></td></tr>
-							<tr class=main_menu_item><td><a href="{% url url_sentences_list %}">View all</a></td></tr>
-							<tr class=main_menu_item><td><a href="{% url url_sentences_new %}">Add new</a></td></tr
+							<tr class=sidebar_sentence_head><td><a href="{% url url_sentences_index %}">Sentences</a></td></tr>
+							<tr class=sidebar_sentence_item><td><a href="/search/">Search</a></td></tr>
+							<tr class=sidebar_sentence_item><td><a href="{% url url_sentences_list %}">View all</a></td></tr>
+							<tr class=sidebar_sentence_item><td><a href="{% url url_sentences_new %}">Add new</a></td></tr
 							<tr class=spacer><td></td></tr>
 							
 							
-							<tr class=main_menu_header><td><a href="{% url url_manager_index %}">Lists</a></td></tr>
-							<tr class=main_menu_item><td><a href="{% url url_sentences_new_list %}">Add new</a></td></tr>
+							<tr class=sidebar_list_head><td><a href="{% url url_manager_index %}">Lists</a></td></tr>
+							<tr class=sidebar_list_item><td><a href="{% url url_sentences_new_list %}">Add new</a></td></tr>
 							<tr class=spacer><td></td></tr>
 							
 							
-							<tr class=main_menu_header><td><a href="{% url url_accounts_index %}">Account</a></td></tr>
+							<tr class=sidebar_account_head><td><a href="{% url url_accounts_index %}">Account</a></td></tr>
 							{% if not user.is_authenticated %}
 								<tr class=main_menu_item><td><a href="{% url url_accounts_register %}">Register</a></td></tr>
 							{% endif %}

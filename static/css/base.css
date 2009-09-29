@@ -14,6 +14,26 @@ table {
 	background-color: #EEEEEE;
 }
 
+.sidebar_sentence_head {
+	background-color: #66CC66;
+}
+
+.sidebar_sentence_item {
+	background-color: #99FF99;
+}
+
+.sidebar_list_head {
+	background-color: #6699CC;
+}
+
+.sidebar_list_item {
+	background-color: #CCCCFF;
+}
+
+.sidebar_account_head {
+	background-color: #FF9999;
+}
+
 .spacer {
 	background-color: Grey;
 }
