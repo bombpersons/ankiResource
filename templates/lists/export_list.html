@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block main %}
+	{% if error %}
+		<h1>Error: An unknown error occurred.</h1>
+	{% endif %}
+
+	{% if not_supported %}
+		<h1>Error: This format is currently not supported</h1>
+	{% endif %}
+	
+	{% if no_export_type %}
+		<h1>Error: No export format was specified</h1>
+	{% endif %}
+	
+{% endblock main %}

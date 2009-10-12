@@ -44,12 +44,12 @@
 		{% endifequal %}
 	</h3>
 	
-	<table width="100%">
+	<!--{% comment %}<table width="100%">
 		{% if more %}
 			More sentences like this:
 			{% for sentence in more %}
 				<tr><td><a href="{% url url_sentences_sentence sentence.object.id %}">{{ sentence.object.sentence }}</a><td></tr>
 			{% endfor %}
 		{% endif %}
-	</table>
+	</table>{% endcomment %}-->
 {% endblock main %}

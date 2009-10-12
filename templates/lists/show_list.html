@@ -11,7 +11,8 @@
 {% block main %}
 	<h1> {{ list.name }} </h1>
 	
-	{{ list.number_of_sentences }} sentence(s) in this list
+	{{ list.number_of_sentences }} sentence(s) in this list <br />
+	Export this list as.. <a href="{% url url_lists_export list.id %}?export_type=Text">a text file.</a>
 
 	<table width="100%">
 		{% for sentence in list.sentence.all %}

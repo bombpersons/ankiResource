@@ -10,6 +10,8 @@ from ankiResource.sentences.models import Sentence
 from ankiResource.sentences.forms import ListForm
 from forms import QuicklistForm
 
+from export import TextFileListExporter
+
 # ------------------------------- SHOW LIST ----------------------------
 def show_list(request, list_id):
 	# Make a dic
@@ -27,6 +29,70 @@ def show_list(request, list_id):
 	
 	# Render the template
 	return render_to_response("lists/show_list.html", dic, context_instance=RequestContext(request))
+
+# ---------------------------------- EXPORT LIST -----------------------
+def export_list(request, list_id):
+	# Make a dictionary
+	dic = {
+	}
+	
+	# Try and grab the list
+	try:
+		list = List.objects.get(pk=list_id)
+	except:
+		raise Http404
+		
+	# Put it into the dictionary, incase the template wants the info
+	dic.update({
+		'list': list,
+	})
+	
+	# Check whether or not the user has specified which exporter to use.
+	if 'export_type' not in request.GET:
+		# Add a not in the dict telling the template
+		dic.update({ 'no_export_type': True })
+		
+		# Render
+		return render_to_response("lists/export_list.html", dic, context_instance=RequestContext(request))
+	
+	# Check what format the user wants to export to
+	if request.GET['export_type'] == "Text":
+			# User wants to export as a text file
+			exporter = TextFileListExporter()
+	
+	# Not supported
+	else:
+		# Tell the template that, that format is not supported.
+		dic.update({ 'not_supported': True })
+		
+		# Render the template
+		return render_to_response("lists/export_list.html", dic, context_instance=RequestContext(request))
+	
+	# Let's continue exporting.
+	# Load the list
+	exporter.readList(list)
+	
+	# Export the to file and get the name
+	filename = exporter.export()
+	
+	print exporter.filename
+	
+	# If that was succesful...
+	if filename:
+		
+		# Forward the user to download the file
+		response = HttpResponse(open(filename, 'rb').read(), mimetype='application/octet-stream')
+		response['Content-Disposition'] = 'attachment; filename=' + exporter.filename
+		return response
+	
+	# We didn't get a filename...
+	else:
+		
+		# For some reason we didn't get a filename, tell the template
+		dic.update({ 'error': True })
+		return render_to_response("lists/export_list.html", dic, context_instance=RequestContext(request))
+			
+	
 
 #---------------------Create a new list------------------#
 @login_required
