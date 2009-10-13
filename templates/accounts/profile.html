@@ -15,7 +15,7 @@
 			
 			{% for list in user.get_profile.editable_lists %}
 				<tr> <td width="20%"> </td>
-				<td> <a href="{% url url_sentences_show_list list.id %}">{{ list }} </a></td>
+				<td> <a href="{% url url_sentences_show_list list.id %}">{{ list.name_nos }} </a></td>
 				</tr>
 			{% endfor %}
 			
