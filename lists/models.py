@@ -22,5 +22,8 @@ class List(models.Model):
 	def number_of_sentences(self):
 		return len(self.sentence.all())
 		
+	def name_nos(self):
+		return self.name + " (%s)" % self.number_of_sentences()
+	
 	def __unicode__(self):
 		return self.name
