@@ -1,6 +1,29 @@
 # This file contains classes that can export lists into various formats.
 
-import tempfile, re
+import tempfile, re, codecs, random, os
+
+# LIST FILES -----------------------------------------------------------
+# This function lists all the files in a directory (ignoring folders)
+def listFiles(dir):
+	files = []
+	
+	for file in os.listdir(dir):
+		if os.path.isfile(os.path.join(dir,file)):
+			files.append(file)
+	
+	return files
+
+# LIST DIRS ------------------------------------------------------------
+# This function lists all the folders in a folder (ignoring files)
+def listDirs(dir):
+	files = []
+	
+	for file in os.listdir(dir):
+		if os.path.isdir(os.path.join(dir,file)):
+			files.append(file)
+	
+	return files
+
 
 # A class to store information about sentences
 # E.g The sentence itself, media information etc
@@ -19,11 +42,33 @@ class ListExporter:
 	def __init__(self):
 		# VARS
 		self.sentences = [] # A list of the sentences to export.
+		self.letters = [
+			'a', 'b', 'c', 'd', 'e',
+		]
+		
+	# GET RANDOM NAME
+	def getRandomName(self, length):
+		# Get random characters and make a string length long
+		name = ""
+		running = True
+		while running:
+			for pizza in range(length):
+				name += random.choice(self.letters)
+			
+			# K, now check whether or not this file already exists
+			if name not in listFiles("/tmp") or name not in listDirs("/tmp"):
+				running = False
+		
+		print os.path.join("/tmp", name)
+		return os.path.join("/tmp", name)	
 	
 	# OPEN TEMP FILE
 	def openTempFile(self):
-		# Make a temporary file, it get's deleted when the file is closed.
-		file = tempfile.NamedTemporaryFile()
+		# Get a name
+		name = self.getRandomName(10)
+		
+		# Now open the proper file with utf-8
+		file = codecs.open(name, "w+b", "utf-8")
 		
 		# Now return this.
 		return file
@@ -66,6 +111,13 @@ class TextFileListExporter(ListExporter):
 			
 			for sentence in self.sentences:
 				file.write(sentence.sentence + "\n")
+				print "Writing line"
+			
+			# Close the file
+			file.close()
+			
+			# Open the file again
+			file = codecs.open("/tmp/cedaedabed", "rb+", "utf-8")
 			
 			# Before we exit, it would be convenient for use to make a
 			# name to use for this file. (even though we can't choose
