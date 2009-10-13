@@ -65,10 +65,10 @@ class ListExporter:
 	# OPEN TEMP FILE
 	def openTempFile(self):
 		# Get a name
-		name = self.getRandomName(10)
+		self.tempname = self.getRandomName(10)
 		
 		# Now open the proper file with utf-8
-		file = codecs.open(name, "w+b", "utf-8")
+		file = codecs.open(self.tempname, "w+b", "utf-8")
 		
 		# Now return this.
 		return file
@@ -117,7 +117,7 @@ class TextFileListExporter(ListExporter):
 			file.close()
 			
 			# Open the file again
-			file = codecs.open("/tmp/cedaedabed", "rb+", "utf-8")
+			file = codecs.open(self.tempname, "rb+", "utf-8")
 			
 			# Before we exit, it would be convenient for use to make a
 			# name to use for this file. (even though we can't choose
