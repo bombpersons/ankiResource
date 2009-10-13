@@ -1,0 +1,25 @@
+{% extends "base.html" %}}
+
+{% block title %}All list{% endblock title %}
+
+{% block main %}
+	<table width="100%">
+		{% for list in page.object_list %}
+			<tr>
+				<td><a href="{% url url_sentences_show_list list.id %}">{{ list.name }}</a></td>
+				<td>
+					{% ifequal user.id list.profile.user.id %}
+						Delete / Edit.
+					{% endifequal %}
+				</td>
+			</tr>
+		{% endfor %}
+	</table>
+	
+	Pages:
+	<span>
+		{% for page_num in paginator.page_range %}
+			<a href="{% url url_lists_show_all %}?page={{ page_num }}">{{ page_num }}</a>
+		{% endfor %}
+	</span>
+{% endblock main %}

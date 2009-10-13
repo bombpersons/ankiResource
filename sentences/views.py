@@ -1,6 +1,7 @@
 from django.shortcuts import *
 from django.http import *
 from django.core.urlresolvers import *
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib.auth.models import User
@@ -14,8 +15,6 @@ from ankiResource.lists.models import List
 from ankiResource.sentences.forms import SentenceForm, ListForm
 
 from models import Sentence
-
-# Create your views here.
 
 # -----------------------------INDEX------------------------------------
 # Shows the sentence index page
@@ -32,12 +31,25 @@ def index(request):
 # ----------------------------- LIST SENTENCES -------------------------
 # Shows a list of sentences
 def list(request):
+	# Get page to render
+	if 'page' in request.GET:
+		page = request.GET['page']
+	
+	# If no page is specified, just display page 1
+	else:
+		page = 1
+	
 	#Get all sentences
 	sentence_list = Sentence.objects.all().order_by('-pub_date')
 	
+	# Paginate
+	sentence_paginator = Paginator(sentence_list, settings.ANKIRESOURCE_ITEMS_PER_PAGE)
+	sentence_page = sentence_paginator.page(page)
+	
 	#Send it all to template renderer
 	dic = {
-		'sentence_list': sentence_list,
+		'sentence_page': sentence_page,
+		'sentence_paginator': sentence_paginator,
 	}
 	
 	#Render the page

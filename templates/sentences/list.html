@@ -4,7 +4,7 @@
 
 {% block main %}
 	<table width="100%">
-		{% for sentence in sentence_list %}
+		{% for sentence in sentence_page.object_list %}
 			<tr>
 				<td>
 					{% if user.is_authenticated %}
@@ -22,4 +22,10 @@
 		{% endfor %}
 	</table>
 	
+	Pages:
+	<span>
+		{% for page in sentence_paginator.page_range %}
+			<a href="{% url url_sentences_list %}?page={{ page }}">{{ page }}</a>
+		{% endfor %}
+	</span>
 {% endblock main %}

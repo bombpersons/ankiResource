@@ -8,9 +8,9 @@ from ankiResource.sentences.models import Sentence
 
 class List(models.Model):
 	# Relationships
-	user = models.ManyToManyField(User) 	  # (Optionally) attach this list to a user
-									  # If this is set, only the user(s) can edit
-									  # list.
+	user = models.ManyToManyField(User) # (Optionally) attach this list to a user
+									    # If this is set, only the user(s) can edit
+									    # list.
 	sentence = models.ManyToManyField(Sentence, blank=True, null=True) # Sentences associated with this List
 	
 	# Options

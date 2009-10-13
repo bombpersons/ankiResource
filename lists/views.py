@@ -1,6 +1,7 @@
 from django.shortcuts import *
 from django.http import *
 from django.core.urlresolvers import *
+from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib.auth.models import User
@@ -8,6 +9,7 @@ from django.contrib.auth.models import User
 from models import List
 from ankiResource.sentences.models import Sentence
 from ankiResource.sentences.forms import ListForm
+from ankiResource import settings
 from forms import QuicklistForm
 
 from export import TextFileListExporter
@@ -29,6 +31,35 @@ def show_list(request, list_id):
 	
 	# Render the template
 	return render_to_response("lists/show_list.html", dic, context_instance=RequestContext(request))
+	
+# ---------------------------- SHOW ALL --------------------------------
+def show_all(request):
+	# Make a dictionary
+	dic = {
+	}
+	
+	# Get the current page
+	if 'page' in request.GET:
+		page = request.GET['page']
+	else:
+		page = 1
+	
+	# Grab all the lists
+	lists = List.objects.all().exclude(name__icontains="quicklist")
+	
+	# Paginate
+	paginator = Paginator(lists, settings.ANKIRESOURCE_ITEMS_PER_PAGE)
+	page = paginator.page(page)
+	
+	#Send it all to template renderer
+	dic.update({
+		'page': page,
+		'paginator': paginator,
+	})
+	
+	# Render
+	return render_to_response("lists/show_all.html", dic, context_instance=RequestContext(request))
+	
 
 # ---------------------------------- EXPORT LIST -----------------------
 def export_list(request, list_id):

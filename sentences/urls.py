@@ -3,15 +3,6 @@ from tagging.views import tagged_object_list
 from ankiResource.sentences.models import Sentence
 
 urlpatterns = patterns('',
-    # Example:
-    # (r'^anki_site/', include('anki_site.foo.urls')),
-
-    # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 
-    # to INSTALLED_APPS to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
-	#sentences url's
-	#
 	#sentence index
 	url(r'^$', 'ankiResource.sentences.views.index', name="url_sentences_index"),
 	

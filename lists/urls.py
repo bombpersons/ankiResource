@@ -6,6 +6,9 @@ urlpatterns = patterns('',
 	#shows a list
 	url(r'^list/(?P<list_id>\d+)$', 'ankiResource.lists.views.show_list', name="url_sentences_show_list"),
 	
+	#shows all lists
+	url(r'^all/$', 'ankiResource.lists.views.show_all', name="url_lists_show_all"),
+	
 	#exports a list
 	url(r'^export/(?P<list_id>\d+)/$', 'ankiResource.lists.views.export_list', name="url_lists_export"),
 	
