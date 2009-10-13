@@ -1,9 +1,10 @@
 body {
-	background-color: White;
+	background-color: #EEEEEE;
 }
 
 table {
 	border-style: solid;
+	border-width: 1px;
 }
 
 .main_menu_header {

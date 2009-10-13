@@ -22,9 +22,8 @@ class ListExporter:
 	
 	# OPEN TEMP FILE
 	def openTempFile(self):
-		# Make a temporary file, we need to make sure it doesn't get
-		# When we close it.
-		file = tempfile.NamedTemporaryFile(delete=False)
+		# Make a temporary file, it get's deleted when the file is closed.
+		file = tempfile.NamedTemporaryFile()
 		
 		# Now return this.
 		return file
@@ -76,10 +75,8 @@ class TextFileListExporter(ListExporter):
 			# Make sure we strip any spaces
 			self.filename = re.sub('\s', '', self.filename)
 			
-			print self.filename
-			
-			# We should have a file now, return the file name
-			return file.name
+			# We should have a file now, return the file
+			return file
 		
 		# No sentences, fail.
 		else:

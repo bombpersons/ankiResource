@@ -73,15 +73,13 @@ def export_list(request, list_id):
 	exporter.readList(list)
 	
 	# Export the to file and get the name
-	filename = exporter.export()
-	
-	print exporter.filename
+	file = exporter.export()
 	
 	# If that was succesful...
-	if filename:
+	if file:
 		
 		# Forward the user to download the file
-		response = HttpResponse(open(filename, 'rb').read(), mimetype='application/octet-stream')
+		response = HttpResponse(file.read(), mimetype='application/octet-stream')
 		response['Content-Disposition'] = 'attachment; filename=' + exporter.filename
 		return response
 	
