@@ -8,7 +8,7 @@
 			<tr>
 				<td>
 					{% if user.is_authenticated %}
-						Add to list:
+						Quicklist:
 						<input type="checkbox" id={{ sentence.id }} list={{user.get_profile.quick_list.id}} class="list_check_boxes" />
 					{% endif %}
 				</td>
