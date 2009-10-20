@@ -5,6 +5,14 @@ import datetime
 from tagging.fields import TagField
 from tagging.models import Tag
 
+def truncate(s, l):
+	if len(s) < l:
+		return s
+	else:
+		words = s[:l+1].split(' ')
+		if len(words) == 1:
+			return words[0][:l+1] + '...'
+		return ' '.join(words[0:-1]) + '...'
 
 # Create your models here.
 
@@ -27,6 +35,9 @@ class Sentence(models.Model):
 	#Display something useful at interactive prompt...
 	def __unicode__(self):
 		return self.sentence
+		
+	def short_form(self):
+		return truncate(self.sentence, 50)
 
 	def get_tags(self):
 		return Tag.objects.get_for_object(self) 
