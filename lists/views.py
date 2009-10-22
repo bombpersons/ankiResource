@@ -12,7 +12,7 @@ from ankiResource.sentences.forms import ListForm
 from ankiResource import settings
 from forms import QuicklistForm
 
-from export import TextFileListExporter
+from export import TextFileListExporter, AnkiListExporter
 
 # ------------------------------- SHOW LIST ----------------------------
 def show_list(request, list_id):
@@ -88,8 +88,11 @@ def export_list(request, list_id):
 	
 	# Check what format the user wants to export to
 	if request.GET['export_type'] == "Text":
-			# User wants to export as a text file
-			exporter = TextFileListExporter()
+		# User wants to export as a text file
+		exporter = TextFileListExporter()
+	elif request.GET['export_type'] == "Anki":
+		# User wants to export as a anki deck
+		exporter = AnkiListExporter()
 	
 	# Not supported
 	else:

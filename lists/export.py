@@ -1,6 +1,9 @@
 # This file contains classes that can export lists into various formats.
 
+import settings
+
 import tempfile, re, codecs, random, os
+import anki
 
 # LIST FILES -----------------------------------------------------------
 # This function lists all the files in a directory (ignoring folders)
@@ -22,7 +25,7 @@ def listDirs(dir):
 		if os.path.isdir(os.path.join(dir,file)):
 			files.append(file)
 	
-	return files
+	return files7	
 
 
 # A class to store information about sentences
@@ -56,11 +59,10 @@ class ListExporter:
 				name += random.choice(self.letters)
 			
 			# K, now check whether or not this file already exists
-			if name not in listFiles("/tmp") or name not in listDirs("/tmp"):
+			if name not in listFiles(os.path.join(settings.SITE_ROOT, "tmp")) or name not in listDirs(os.path.join(settings.SITE_ROOT, "tmp")):
 				running = False
 		
-		print os.path.join("/tmp", name)
-		return os.path.join("/tmp", name)	
+		return os.path.join(settings.SITE_ROOT, "tmp", name)	
 	
 	# OPEN TEMP FILE
 	def openTempFile(self):
@@ -79,15 +81,19 @@ class ListExporter:
 	def readList(self, list):
 		# Loop through the sentences in the list
 		for sentence in list.sentence.all():
+			newSentence = Sentence(sentence=sentence.sentence, language=sentence.language)
+			
+			for media in sentence.media.all():
+				newSentence.media.append(media)
+			
 			# Now add the sentence to our list
-			self.sentences.append(Sentence(sentence=sentence.sentence, media=sentence.media, language=sentence.language))
+			self.sentences.append(newSentence)
 		
 		# Let's read the name of the list for convenience later on.
 		self.name = list.name
 		
 		# Done for now.
 			
-	
 	# EXPORT -----------------------------------------------------------
 	# Export the sentences to a file and return the path, so that we can
 	# redirect the user to the file. (The file can be outside of the
@@ -96,7 +102,7 @@ class ListExporter:
 	# make the webserver send the file.
 	def export(self):
 		pass
-	
+		
 	
 # AS TEXT FILE
 # This class exports setences into a text file, line seperated.
@@ -111,7 +117,6 @@ class TextFileListExporter(ListExporter):
 			
 			for sentence in self.sentences:
 				file.write(sentence.sentence + "\n")
-				print "Writing line"
 			
 			# Close the file
 			file.close()
@@ -133,3 +138,71 @@ class TextFileListExporter(ListExporter):
 		# No sentences, fail.
 		else:
 			return False
+
+# AS ANKI DECK
+# This class exports sentences as an anki deck (zip file with media)
+class AnkiListExporter(ListExporter):
+	def export(self):
+		if self.sentences:
+			
+			# Get a random name in temp
+			random_name = self.getRandomName(10) + ".anki"
+			
+			# Open an anki deck with anki
+			deck = anki.DeckStorage.Deck(random_name)
+			
+			# Now make an ankiResource model
+			model = anki.models.Model(name=u"AnkiResource")
+			model.addFieldModel(anki.models.FieldModel(name=u"Expression", required=False, unique=False))
+			model.addFieldModel(anki.models.FieldModel(name=u"Image", required=False, unique=False))
+			model.addFieldModel(anki.models.FieldModel(name=u"Sound", required=False, unique=False))
+			model.addFieldModel(anki.models.FieldModel(name=u"Video", required=False, unique=False))
+			model.addFieldModel(anki.models.FieldModel(name=u"Readings", required=False, unique=False))
+			
+			# Now add a card model to this model
+			model.addCardModel(
+				anki.models.CardModel(name=u"Recognition", 
+					qformat=u"%(Expression)s<br>%(Image)s",
+					aformat=u"%(Video)s<br>%(Sound)s<br>%(Readings)s"))
+			
+			deck.addModel(model)
+			
+			# Now add cards
+			for sentence in self.sentences:
+				fact = anki.facts.Fact(model=model)
+				fact['Expression'] = sentence.sentence
+				
+				# Find media
+				for media in sentence.media:
+					if media.endswith(".jpg") or media.endswith(".png") or media.endswith(".gif"):
+						fact['Image'] += "<img src=\"" + media + "\">"
+					elif media.endswith(".mpg") or media.endswith(".mpeg") or media.endswith(".avi") or media.endswith(".mp4") or media.endswith(".ogv") or media.endswith(".flv"):
+						fact['Video'] += "[sound:" + media + "]"
+					elif media.endswith(".mp3") or media.endswith(".ogg"):
+						fact['Sound'] += "[sound:" + media + "]"
+						
+					print media
+				
+				fact.setModified(textChanged=True)
+				
+				# Add the fact.
+				deck.addFact(fact)
+			
+			print deck.getCard().question
+			
+			# Save the anki deck
+			deck.setModified()
+			deck.save()
+			deck.close()
+			
+			# Make the filename
+			self.filename = self.name + ".anki"
+			self.filename = re.sub('\s', '', self.filename)
+			
+			return open(random_name, "rb")
+			
+		else:
+			
+			return False
+			
+			
