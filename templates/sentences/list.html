@@ -8,11 +8,11 @@
 			<tr>
 				<td>
 					{% if user.is_authenticated %}
-						Add to list:
-						<input type="checkbox" id={{ sentence.id }} class="list_check_boxes" />
+						Quicklist:
+						<input type="checkbox" id={{ sentence.id }} list={{user.get_profile.quick_list.id}} class="list_check_boxes" />
 					{% endif %}
 				</td>
-				<td><a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.sentence }}</a></td>
+				<td><a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a></td>
 				<td>
 					{% ifequal user.id sentence.profile.user.id %}
 						<a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit.

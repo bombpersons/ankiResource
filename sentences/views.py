@@ -31,6 +31,7 @@ def index(request):
 # ----------------------------- LIST SENTENCES -------------------------
 # Shows a list of sentences
 def list(request):
+
 	# Get page to render
 	if 'page' in request.GET:
 		page = request.GET['page']
@@ -50,6 +51,7 @@ def list(request):
 	dic = {
 		'sentence_page': sentence_page,
 		'sentence_paginator': sentence_paginator,
+		'list': request.user.get_profile().quick_list
 	}
 	
 	#Render the page

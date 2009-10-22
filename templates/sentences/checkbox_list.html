@@ -8,6 +8,8 @@
 			// An array for the post data
 			var POSTcontent = new Array();
 			
+			POSTcontent["lol"] = 1;
+			
 			// If the checkbox value is false, send a remove
 			if (this.checked == false) {
 				POSTcontent["remove"] = 1;
@@ -15,7 +17,7 @@
 				POSTcontent["add"] = 1;
 			}
 			
-			POSTcontent["list"] = {{ user.get_profile.quick_list.id }};
+			POSTcontent["list"] = {{ list.id }};
 			POSTcontent["sentence"] = this.id;
 			
 			dojo.xhrPost({
@@ -48,10 +50,10 @@
 				console.log(node.id);
 				
 				dojo.xhrPost({
-					url: "{% url url_sentences_ajax_list_edit %}",
+					url: "{% url lists.views.ajax_list_edit %}",
 					handleAs: "text",
 					content: {
-						'list': {{ user.get_profile.quick_list.id }},
+						'list': {{ list.id }},
 						'sentence' : node.id,
 						'exists' : 1,
 					},
