@@ -2,7 +2,7 @@
 
 import settings
 
-import tempfile, re, codecs, random, os
+import tempfile, re, codecs, random, os, shutil, zipfile, copy
 import anki
 
 # LIST FILES -----------------------------------------------------------
@@ -62,7 +62,7 @@ class ListExporter:
 			if name not in listFiles(os.path.join(settings.SITE_ROOT, "tmp")) or name not in listDirs(os.path.join(settings.SITE_ROOT, "tmp")):
 				running = False
 		
-		return os.path.join(settings.SITE_ROOT, "tmp", name)	
+		return os.path.join(settings.SITE_ROOT, "tmp", name)
 	
 	# OPEN TEMP FILE
 	def openTempFile(self):
@@ -81,10 +81,13 @@ class ListExporter:
 	def readList(self, list):
 		# Loop through the sentences in the list
 		for sentence in list.sentence.all():
-			newSentence = Sentence(sentence=sentence.sentence, language=sentence.language)
+			newSentence = Sentence(sentence=sentence.sentence, language=sentence.language, media=[])
 			
 			for media in sentence.media.all():
-				newSentence.media.append(media)
+				if media.type == "Image":
+					newSentence.media.append(media.image.path.split("/")[-1])
+				else:
+					newSentence.media.append(media.file.path.split("/")[-1])
 			
 			# Now add the sentence to our list
 			self.sentences.append(newSentence)
@@ -144,12 +147,26 @@ class TextFileListExporter(ListExporter):
 class AnkiListExporter(ListExporter):
 	def export(self):
 		if self.sentences:
+			# Make a name for the deck from the list name
+			deck_name = self.name
+			deck_name = re.sub('\s', '', deck_name)
 			
-			# Get a random name in temp
-			random_name = self.getRandomName(10) + ".anki"
+			# First make a directory that we can work in
+			tempDir = self.getRandomName(10)
+			os.mkdir(tempDir)
+			
+			# And a directory to put media
+			os.mkdir(os.path.join(tempDir, deck_name + ".media"))
+			
+			# Get the path to make the anki deck in.
+			anki_name = os.path.join(tempDir, deck_name + ".anki")
+			
+			# Now make a zip file with the media and anki deck
+			zip_name = os.path.join(tempDir, deck_name + ".zip")
+			z = zipfile.ZipFile(zip_name, "a")
 			
 			# Open an anki deck with anki
-			deck = anki.DeckStorage.Deck(random_name)
+			deck = anki.DeckStorage.Deck(anki_name)
 			
 			# Now make an ankiResource model
 			model = anki.models.Model(name=u"AnkiResource")
@@ -175,31 +192,37 @@ class AnkiListExporter(ListExporter):
 				# Find media
 				for media in sentence.media:
 					if media.endswith(".jpg") or media.endswith(".png") or media.endswith(".gif"):
-						fact['Image'] += "<img src=\"" + media + "\">"
+						fact['Image'] += "<img src=\"" + media + "\" /><br>"
+						shutil.copyfile(os.path.join(settings.MEDIA_ROOT, "media", "images", media), os.path.join(tempDir, deck_name + ".media", media))
+						z.write(os.path.join(tempDir, deck_name + ".media", media), arcname=os.path.join(deck_name + ".media", media))
+						
 					elif media.endswith(".mpg") or media.endswith(".mpeg") or media.endswith(".avi") or media.endswith(".mp4") or media.endswith(".ogv") or media.endswith(".flv"):
 						fact['Video'] += "[sound:" + media + "]"
+						shutil.copyfile(os.path.join(settings.MEDIA_ROOT, "media", "video", media), os.path.join(tempDir, deck_name + ".media", media))
+						z.write(os.path.join(tempDir, deck_name + ".media", media), arcname=os.path.join(deck_name + ".media", media))
+						
 					elif media.endswith(".mp3") or media.endswith(".ogg"):
 						fact['Sound'] += "[sound:" + media + "]"
-						
-					print media
+						shutil.copyfile(os.path.join(settings.MEDIA_ROOT, "media", "sound", media), os.path.join(tempDir, deck_name + ".media", media))
+						z.write(os.path.join(tempDir, deck_name + ".media", media), arcname=os.path.join(deck_name + ".media", media))
 				
 				fact.setModified(textChanged=True)
 				
 				# Add the fact.
 				deck.addFact(fact)
 			
-			print deck.getCard().question
-			
 			# Save the anki deck
 			deck.setModified()
 			deck.save()
 			deck.close()
 			
-			# Make the filename
-			self.filename = self.name + ".anki"
-			self.filename = re.sub('\s', '', self.filename)
+			# Add the files
+			z.write(anki_name, arcname=deck_name + ".anki")
+			z.close()
 			
-			return open(random_name, "rb")
+			self.filename = deck_name + ".zip"
+			
+			return open(zip_name, "rb")
 			
 		else:
 			
