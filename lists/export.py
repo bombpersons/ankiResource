@@ -25,7 +25,7 @@ def listDirs(dir):
 		if os.path.isdir(os.path.join(dir,file)):
 			files.append(file)
 	
-	return files7	
+	return files
 
 
 # A class to store information about sentences
