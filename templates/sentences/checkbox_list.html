@@ -2,7 +2,7 @@
 
 {% block javascript %}
 	// Require dojo query
-	dojo.require("dojo.NodeList-fx")
+	dojo.require("dojo.NodeList-fx");
 	dojo.require("dijit.form.Button");
 
 	function checkbox() {
@@ -36,6 +36,7 @@
 					console.warn("error!",error);
 				},
 			});
+			dojo.byId("seehere").innerHTML += "hello";
 	}
 
 	// Checks if the sentence is in the list
@@ -78,8 +79,8 @@
 			
 	}
 	
-	function test_button() {
-		dojo.byId("seehere").innerHTML += "Thank you! ";
+	function test_button(id) {
+		dojo.byId("seehere").innerHTML += id;
 	}
 	
 	{{ javascript.super }}
@@ -87,10 +88,10 @@
 
 {% block init_javascript %}
 	// When a user clicks on the check boxes, add them to their current list.
+	checkbox_update();
 	dojo.query(".list_check_boxes").connect("onchange", checkbox);
 	
 	// Update all checkboxes (check them if they are in the list)
-	checkbox_update();
 	
 	{{ init_javascript.super }}
 {% endblock init_javascript %}

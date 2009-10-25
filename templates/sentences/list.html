@@ -1,31 +1,25 @@
-{% extends "sentences/checkbox_list.html" %}}
+{% extends "sentences/js_list.html" %}
 
 {% block title %}All sentences{% endblock title %}
 
 {% block main %}
-	<div id="seehere"> </div>
+	<div id="response"> </div>
 	<table width="100%">
 		{% for sentence in sentence_page.object_list %}
 			<tr>
 				<td>
-					{% if user.is_authenticated %}
-						Quicklist:
-						<input type="checkbox" id={{ sentence.id }} list={{user.get_profile.quick_list.id}} class="list_check_boxes" />
-					{% endif %}
-				</td>
-				<td><a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a></td>
-				<td>
-					{% ifequal user.id sentence.profile.user.id %}
-						<a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit.
-					{% endifequal %}
+					<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>
 				</td>
 				<td>
 				<button dojoType="dijit.form.Button" type="button" class="small_button">
-					Click me too!
+					Quicklist
 					<script type="dojo/method" event="onClick" args="evt">
-						test_button();
+						add_to_quicklist( {{ sentence.id }} );
 					</script>
 				</button>
+				</td>
+				<td>
+				<div id=response{{ sentence.id }}> </div>
 				</td>
 			</tr>
 		{% endfor %}

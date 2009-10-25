@@ -14,6 +14,8 @@ from forms import QuicklistForm
 
 from export import TextFileListExporter, AnkiListExporter
 
+import time
+
 # ------------------------------- SHOW LIST ----------------------------
 def show_list(request, list_id):
 	# Make a dic
@@ -214,6 +216,7 @@ def save_quick_list(request):
 # ---------------------------- ADD / REMOVE TO LIST --------------------
 @login_required
 def ajax_list_edit(request):	
+	time.sleep(1)
 	# Make sure the list and sentence exist
 	list = List.objects.get(pk=request.POST['list'])
 	sentence = Sentence.objects.get(pk=request.POST['sentence'])

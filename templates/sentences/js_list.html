@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+	// Require dojo query
+	dojo.require("dojo.NodeList-fx");
+	dojo.require("dijit.form.Button");
+
+	function add_to_quicklist(sentence_id) {
+			// An array for the post data
+			var POSTcontent = new Array();
+			
+			POSTcontent["add"] = 1;			
+			POSTcontent["list"] = {{ list.id }};
+			POSTcontent["sentence"] = sentence_id;
+			
+			xhrArgs={
+				url: "{% url url_sentences_ajax_list_edit %}",
+				handleAs: "text",
+				content: POSTcontent,
+				
+				load: function(data,args){
+                	dojo.byId("response"+sentence_id).innerHTML = "Added.";
+				},
+				
+				// if any error occurs, it goes here:
+				error: function(error,args){
+					console.warn("error!",error);
+				},
+			}
+			
+			dojo.xhrPost(xhrArgs);
+            dojo.byId("response"+sentence_id).innerHTML = "Adding..."
+	}
+	
+	function test_button(id) {
+		dojo.byId("seehere").innerHTML += id;
+	}
+	
+	{{ javascript.super }}
+{% endblock javascript %}
+
+{% block init_javascript %}
+	
+	// Update all checkboxes (check them if they are in the list)
+	
+	{{ init_javascript.super }}
+{% endblock init_javascript %}
