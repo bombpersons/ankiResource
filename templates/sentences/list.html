@@ -3,42 +3,46 @@
 {% block title %}All sentences{% endblock title %}
 
 {% block main %}
+
 	<div id="response"> </div>
 	<table width="100%">
-		{% for sentence in sentence_page.object_list %}
+		{% for sentence, inql in sentence_page_ql %}
 			<tr>
 				<td>
 					<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>
 				</td>
 				<td>
-				<button dojoType="dijit.form.Button" type="button" class="small_button">
+				
+				{% if not inql %}
+				
+				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy">
 					Quicklist
 					<script type="dojo/method" event="onClick" args="evt">
-						add_to_quicklist( {{ sentence.id }} );
+						add_to_list( {{sentence.id}}, {{list.id}} );
 					</script>
 				</button>
+				{% endif %}
 				</td>
 				<td>
 				
+
+				
 <div dojoType="dijit.form.DropDownButton" class="small_button">
     <span>
-        Register
-    </span>
-    <div dojoType="dijit.TooltipDialog">
-        <label for="name2">
-            Name:
-        </label>
-        <input dojoType="dijit.form.TextBox" name="name2">
-        <br>
-        <label for="hobby2">
-            Hobby:
-        </label>
-        <input dojoType="dijit.form.TextBox" name="hobby2">
-        <br>
-        <button dojoType="dijit.form.Button" type="submit">
-            Save
-        </button>
+        Add to list
+    </span>    
+    <div dojoType="dijit.Menu">
+    {% for list in user.get_profile.editable_lists %}
+        <div dojoType="dijit.MenuItem">
+        	{{list}}
+			<script type="dojo/method" event="onClick" args="evt">
+				add_to_list( {{sentence.id}}, {{list.id}} );
+			</script>
+  		</div>
+    {% endfor %}	      
     </div>
+
+    
 </div>
 
 				</td>

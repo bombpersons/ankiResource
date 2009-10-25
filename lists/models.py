@@ -19,6 +19,9 @@ class List(models.Model):
 								 
 	name = models.CharField(max_length=200, blank=True) # Name of the list (optional)
 	
+	def contains_sentence(self, sentence):
+		return sentence in self.sentence.all()
+	
 	def number_of_sentences(self):
 		return len(self.sentence.all())
 		

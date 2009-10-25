@@ -43,15 +43,20 @@ def list(request):
 	#Get all sentences
 	sentence_list = Sentence.objects.all().order_by('-pub_date')
 	
+	ql = request.user.get_profile().quick_list
+	
 	# Paginate
 	sentence_paginator = Paginator(sentence_list, settings.ANKIRESOURCE_ITEMS_PER_PAGE)
 	sentence_page = sentence_paginator.page(page)
 	
+	sentence_page_ql = [[sentence, ql.contains_sentence(sentence)] for sentence in sentence_page.object_list]
+	
 	#Send it all to template renderer
 	dic = {
 		'sentence_page': sentence_page,
+		'sentence_page_ql' : sentence_page_ql,
 		'sentence_paginator': sentence_paginator,
-		'list': request.user.get_profile().quick_list
+		'list': ql
 	}
 	
 	#Render the page
