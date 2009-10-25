@@ -2,17 +2,25 @@ body {
 	background-color: #EEEEEE;
 }
 
+#sidebar {
+	width: 25%;
+	float: left;
+	outline: 1px solid;
+}
+
+#main {
+	width: 74%;
+	float: right;
+	border: 1px solid;
+}
+
 table {
 	border-style: solid;
 	border-width: 1px;
 }
 
-.main_menu_header {
-	background-color: #CCCCCC;
-}
-
-.main_menu_item {
-	background-color: #EEEEEE;
+.sidebar_sentence_head, .sidebar_sentence_item, .sidebar_list_head, .sidebar_list_item, .sidebar_account_head, .spacer {
+	border-top: 1px solid;
 }
 
 .sidebar_sentence_head {
@@ -36,5 +44,6 @@ table {
 }
 
 .spacer {
-	background-color: Grey;
+	background-color: White;
+	height: 20px;
 }
