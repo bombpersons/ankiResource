@@ -4,6 +4,9 @@
 	// Require dojo query
 	dojo.require("dojo.NodeList-fx");
 	dojo.require("dijit.form.Button");
+    dojo.require("dijit.form.DropDownButton");
+    dojo.require("dijit.TooltipDialog");
+    dojo.require("dijit.form.TextBox");
 
 	function add_to_quicklist(sentence_id) {
 			// An array for the post data
@@ -40,8 +43,5 @@
 {% endblock javascript %}
 
 {% block init_javascript %}
-	
-	// Update all checkboxes (check them if they are in the list)
-	
 	{{ init_javascript.super }}
 {% endblock init_javascript %}
