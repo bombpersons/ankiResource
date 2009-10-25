@@ -3,6 +3,7 @@
 {% block title %}All sentences{% endblock title %}
 
 {% block main %}
+	<div id="seehere"> </div>
 	<table width="100%">
 		{% for sentence in sentence_page.object_list %}
 			<tr>
@@ -17,6 +18,14 @@
 					{% ifequal user.id sentence.profile.user.id %}
 						<a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit.
 					{% endifequal %}
+				</td>
+				<td>
+				<button dojoType="dijit.form.Button" type="button" class="small_button">
+					Click me too!
+					<script type="dojo/method" event="onClick" args="evt">
+						test_button();
+					</script>
+				</button>
 				</td>
 			</tr>
 		{% endfor %}

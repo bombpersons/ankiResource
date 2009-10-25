@@ -3,6 +3,7 @@
 {% block javascript %}
 	// Require dojo query
 	dojo.require("dojo.NodeList-fx")
+	dojo.require("dijit.form.Button");
 
 	function checkbox() {
 			// An array for the post data
@@ -75,6 +76,10 @@
 				});
 			})
 			
+	}
+	
+	function test_button() {
+		dojo.byId("seehere").innerHTML += "Thank you! ";
 	}
 	
 	{{ javascript.super }}

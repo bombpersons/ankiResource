@@ -16,11 +16,16 @@
 		dojo.addOnLoad(init);
 	</script>
 	
-	{% block css %}<link rel="stylesheet" type="text/css" href="/static/css/base.css" />{% endblock css %}
+	{% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/base.css" />
+	<link rel="stylesheet" type="text/css" href="/static/js/dojotoolkit/dijit/themes/tundra/tundra.css" />
+	<link rel="stylesheet" type="text/css" href="/static/css/dijit.css" />
+	{% endblock css %}
+	
 	<title>{% block title %}Default Title{% endblock title %} - Anki Resource</title>
 	</head>
 	
-	<body>
+	<body class="tundra">
 		{% block top %}
 			{% if user.is_authenticated %}
 				Welcome, {{ user.username }}.

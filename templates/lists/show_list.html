@@ -9,6 +9,9 @@
 {% endblock title %}
 
 {% block main %}
+	<div id="seehere">
+	</div>
+
 	<h1> {{ list.name }} {{ list.id }} </h1>
 	
 	{{ list.number_of_sentences }} sentence(s) in this list <br />
@@ -23,7 +26,17 @@
 						<input type="checkbox" id={{ sentence.id }}  class="list_check_boxes" />
 					{% endif %}
 				</td>
-				<td><a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a></td>
+				<td>
+					<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>
+				</td>
+				<td>
+				<button dojoType="dijit.form.Button" type="button" class="small_button">
+					Click me too!
+					<script type="dojo/method" event="onClick" args="evt">
+						test_button();
+					</script>
+				</button>
+				</td>
 			</tr>
 		{% endfor %}
 	</table>
