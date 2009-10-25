@@ -3,15 +3,17 @@ body {
 }
 
 #sidebar {
-	width: 25%;
+	width: 24%;
 	float: left;
-	outline: 1px solid;
+	border: 1px solid gray;
+	padding: 2px;
 }
 
 #main {
-	width: 74%;
+	width: 73%;
 	float: right;
-	border: 1px solid;
+	border: 1px solid gray;
+	padding: 10px;
 }
 
 table {
@@ -21,6 +23,7 @@ table {
 
 .sidebar_sentence_head, .sidebar_sentence_item, .sidebar_list_head, .sidebar_list_item, .sidebar_account_head, .spacer {
 	border-top: 1px solid;
+	border-color: white;
 }
 
 .sidebar_sentence_head {
@@ -44,6 +47,6 @@ table {
 }
 
 .spacer {
-	background-color: White;
-	height: 20px;
+	background-color: Gray;
+	height: 2px;
 }

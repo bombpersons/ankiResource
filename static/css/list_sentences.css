@@ -1,0 +1,24 @@
+.row {
+	
+}
+
+.sentence-text {
+	width:50%;
+	height: 20px;
+	float: left;
+}
+
+.quicklist_button {
+	float: left;
+	width: 90px;
+}
+
+.otherlist_button {
+	float: left;
+	width: 120px;
+}
+
+.response {
+	float: left;
+	width: 40px;
+}
