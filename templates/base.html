@@ -1,25 +1,29 @@
 <html>
 	<head>
-	{% block javascript_toolkit %}
-			<!-- load the dojo toolkit base -->
-			<script type="text/javascript" src="/static/js/dojotoolkit/dojo/dojo.js"
-				djConfig="parseOnLoad:true, isDebug:false"></script>
-	{% endblock javascript_toolkit %}
+
+	<script type="text/javascript" src="/static/js/dojotoolkit/dojo/dojo.js"
+	djConfig="parseOnLoad:true, isDebug:false"></script>
+	
+	{% block javascript_include %}
+	{% endblock javascript_include %}
 	
 	<script type="text/javascript">
-		{% block javascript %}{% endblock javascript %}
+		{% block javascript %}
+		{% endblock javascript %}
 		
 		function init() {
-			{% block init_javascript %}{% endblock init_javascript %}
+			{% block init_javascript %}
+			{% endblock init_javascript %}
 		}
 		
 		dojo.addOnLoad(init);
 	</script>
 	
-	{% block css %}
 	<link rel="stylesheet" type="text/css" href="/static/css/base.css" />
 	<link rel="stylesheet" type="text/css" href="/static/js/dojotoolkit/dijit/themes/tundra/tundra.css" />
 	<link rel="stylesheet" type="text/css" href="/static/css/dijit.css" />
+	
+	{% block css %}
 	{% endblock css %}
 	
 	<title>{% block title %}Default Title{% endblock title %} - Anki Resource</title>

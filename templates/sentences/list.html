@@ -1,4 +1,9 @@
-{% extends "sentences/js_list.html" %}
+{% extends "base.html" %}
+
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/ajax_edit_list.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
+{% endblock javascript_include %}
 
 {% block title %}All sentences{% endblock title %}
 

@@ -1,4 +1,4 @@
-{% extends "lists/js_show_list.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 	{% if list.name %}
@@ -7,6 +7,11 @@
 		List
 	{% endif %}
 {% endblock title %}
+
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/ajax_edit_list.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
+{% endblock javascript_include %}
 
 {% block main %}
 	<div id="seehere">
