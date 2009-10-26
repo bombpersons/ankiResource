@@ -7,9 +7,12 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 
 {% block title %}All sentences{% endblock title %}
 
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/list_sentences.css" />
+{% endblock css %}
+
 {% block main %}
 	
-	<link rel="stylesheet" type="text/css" href="/static/css/list_sentences.css" />
 
 		{% for sentence, inql in sentence_page_ql %}
 		
