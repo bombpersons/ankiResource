@@ -1,5 +1,6 @@
 from ankiResource import settings
 from ankiResource import media, sentences, accounts
+from ankiResource.lists.models import List
 
 import os, shutil, hashlib, re, datetime
 
@@ -73,6 +74,20 @@ def addSentence(request, form):
 		
 	#Now save again
 	newSentence.save()
+	
+	#Add to the selected list, if exists
+	if form.cleaned_data['list'] != 0:
+		
+		list = List.objects.get(pk=form.cleaned_data['list'])
+		
+		#Check if the user has permission to do this
+		if request.user in list.user.all():
+			
+			#Add the sentence to the list
+			list.sentence.add(newSentence)
+			
+			#Save the list
+			list.save()
 	
 	#Return ID
 	return newSentence.id

@@ -110,6 +110,12 @@ def new(request):
 	else:
 		form = SentenceForm()
 		
+		# Add the options for choosing a list
+		form.fields['list'].choices = []
+		form.fields['list'].choices.append((0, "None"))
+		for list in request.user.get_profile().editable_lists():
+			form.fields['list'].choices.append((list.id, list.name))
+		
 		#make a dic to hold the form
 		dic = {'form': form}
 		

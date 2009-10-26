@@ -20,6 +20,8 @@ class SentenceForm(forms.Form):
 	sound = forms.FileField(required=False)
 	image = forms.ImageField(required=False)
 	
+	list = forms.ChoiceField(required=False)
+	
 #--------------------------ListForm -----------------------------------
 class ListForm(forms.Form):
 	name = forms.CharField()
