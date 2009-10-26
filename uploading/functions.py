@@ -76,7 +76,7 @@ def addSentence(request, form):
 	newSentence.save()
 	
 	#Add to the selected list, if exists
-	if form.cleaned_data['list'] != 0:
+	if form.cleaned_data['list'] != u"0":
 		
 		list = List.objects.get(pk=form.cleaned_data['list'])
 		

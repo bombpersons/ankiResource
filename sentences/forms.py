@@ -20,7 +20,7 @@ class SentenceForm(forms.Form):
 	sound = forms.FileField(required=False)
 	image = forms.ImageField(required=False)
 	
-	list = forms.ChoiceField(required=False)
+	list = forms.ChoiceField()
 	
 #--------------------------ListForm -----------------------------------
 class ListForm(forms.Form):

@@ -92,6 +92,12 @@ def new(request):
 		#validate the data
 		form = SentenceForm(request.POST)
 		
+		# If we don't add to this form as well, it will complain during validation
+		form.fields['list'].choices = []
+		form.fields['list'].choices.append((0, "None"))
+		for list in request.user.get_profile().editable_lists():
+			form.fields['list'].choices.append((list.id, list.name))
+		
 		#continue if the form is valid
 		if form.is_valid():
 			# Add the sentence
