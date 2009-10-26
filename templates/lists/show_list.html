@@ -47,7 +47,7 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 		{% endfor %}
 	
 	{% ifequal list.id user.get_profile.quick_list.id %}
-		<div class="save_new_list">
+		<div class="main_footer">
 		<a href="{% url url_lists_savequicklist %}"> Save this to a new list </a> 
 		</div>
 	{% else %}

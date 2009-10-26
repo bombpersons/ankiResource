@@ -1,8 +1,10 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
 	<head>
 
-	<script type="text/javascript" src="/static/js/dojotoolkit/dojo/dojo.js"
-	djConfig="parseOnLoad:true, isDebug:false"></script>
+	<script type="text/javascript" src="/static/js/dojotoolkit/dojo/dojo.js" djConfig="parseOnLoad:true, isDebug:false"></script>
 	
 	{% block javascript_include %}
 	{% endblock javascript_include %}
@@ -41,36 +43,35 @@
 		{% endblock top %}
 		<div id="container">
 				{% block sidebar %}
-					<div id="sidebar">
-						{% block main_menu_title %}
-							Main Menu
-						{% endblock main_menu_title %}
-						{% block main_menu_content %}
-							<div class=sidebar_sentence_head><a href="{% url url_sentences_index %}">Sentences</div>
-							<div class=sidebar_sentence_item><td><a href="/search/">Search</a></div>
-							<div class=sidebar_sentence_item><td><a href="{% url url_sentences_list %}">View all</a></div>
-							<div class=sidebar_sentence_item><td><a href="{% url url_sentences_new %}">Add new</a></div>
-							<div class=spacer></div>
-							
-							
-							<div class=sidebar_list_head><td><a href="{% url url_manager_index %}">Lists</a></div>
-							<div class=sidebar_list_item><td><a href="{% url url_lists_show_all %}">Show all</a></div>
-							<div class=sidebar_list_item><td><a href="{% url url_sentences_new_list %}">Add new</a></div>
-							<div class=spacer></div>
-							
-							
-							<div class=sidebar_account_head><td><a href="{% url url_accounts_index %}">Account</a></div>
-							{% if not user.is_authenticated %}
-								<tr class=main_menu_item><td><a href="{% url url_accounts_register %}">Register</a></td></tr>
-							{% endif %}
-						{% endblock main_menu_content %}
-					</div>
+				<div id="sidebar">
+					{% block main_menu_title %}
+						Main Menu
+					{% endblock main_menu_title %}
+					{% block main_menu_content %}
+						<div class="sidebar_sentence_head"><a href="{% url url_sentences_index %}">Sentences</a></div>
+						<div class="sidebar_sentence_item"><a href="/search/">Search</a></div>
+						<div class="sidebar_sentence_item"><a href="{% url url_sentences_list %}">View all</a></div>
+						<div class="sidebar_sentence_item"><a href="{% url url_sentences_new %}">Add new</a></div>
+						<div class="spacer"></div>
+						
+						
+						<div class="sidebar_list_head"><a href="{% url url_manager_index %}">Lists</a></div>
+						<div class="sidebar_list_item"><a href="{% url url_lists_show_all %}">Show all</a></div>
+						<div class="sidebar_list_item"><a href="{% url url_sentences_new_list %}">Add new</a></div>
+						<div class="spacer"></div>
+						
+						
+						<div class="sidebar_account_head"><a href="{% url url_accounts_index %}">Account</a></div>
+						{% if not user.is_authenticated %}
+							<div class="main_menu_item"><a href="{% url url_accounts_register %}">Register</a> </div>
+						{% endif %}
+					{% endblock main_menu_content %}
+				</div>
 				{% endblock sidebar %}
 				<div id="main">{% block main %}{% endblock main %}</div>
-			</div>
 
+		</div>
 	{% include "everypage/tracker.html" %}	
-
 	</body>
 	
 </html>
