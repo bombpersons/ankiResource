@@ -33,10 +33,11 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 			</div>
 			<div class="remove_button">
 				{% if user.is_authenticated %}
-				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy">
+				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy" id="remove_button_{{forloop.counter}}">
 				Remove from list
 				<script type="dojo/method" event="onClick" args="evt">
 					remove_from_list( {{sentence.id}}, {{list.id}} );
+					dijit.byId("remove_button_{{forloop.counter}}").attr("disabled", "true");
 				</script>
 				</button>
 				{% endif %}

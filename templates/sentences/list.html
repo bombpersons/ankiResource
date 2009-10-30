@@ -24,10 +24,11 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 			
 			<div class="quicklist_button">
 				{% if not inql %}
-				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy">
+				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy" id="quicklist_button_{{forloop.counter}}">
 					Quicklist
 					<script type="dojo/method" event="onClick" args="evt">
 						add_to_list( {{sentence.id}}, {{list.id}} );
+						dijit.byId("quicklist_button_{{forloop.counter}}").attr("disabled", "true");
 					</script>
 				</button>
 				{% else %}
