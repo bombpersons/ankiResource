@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/start_list.js"></script>
+{% endblock javascript_include %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/js/dojotoolkit/dojo/resources/dojo.css" />
+<!-- this does not seem needed but it was included in the sitepen tutorial
+<link rel="stylesheet" type="text/css" href="/static/js/dojotoolkit/dojo/resources/dnd.css" /> 
+-->
+<link rel="stylesheet" type="text/css" href="/static/css/dnd.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/list_manager.css" />
+{% endblock css %}
+
+{% block main %}
+	
+<ol dojoType="dojo.dnd.Source" id="wishlistNode" class="container">
+
+    <li class="dojoDndItem">Wrist watch</li>
+    <li class="dojoDndItem">Life jacket</li>
+    <li class="dojoDndItem">Toy bulldozer</li>
+    <li class="dojoDndItem">Vintage microphone</li>
+    <li class="dojoDndItem">TIE fighter</li>
+
+</ol>
+
+{% endblock main %}
