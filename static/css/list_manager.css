@@ -4,21 +4,20 @@
 	border:1px solid #aaa;
 	padding: 1em;
 	cursor: default;
-	background:#fff;
 }
 
-.wishlistContainer {
+.dnd_list_container {
 	float: left;
 	margin-right: 20px;
 	width: 233px;
 }
 
-.wishlistContainer ol {
+.ol {
 	margin: 0;
 	background: url("images/clipboard.jpg") no-repeat -30px 0;
 	height: 300px;
 }
 
-#wishlistNode {
+#start_list_nodes {
 	padding: 1em 3em;
 }
