@@ -9,7 +9,7 @@ function get_list(list_id) {
 
 		var list_name = "list_" + list_id;
 		var ol_t = create_dnd_target(list_name, response_data[1]); 
-		var start_list = new dojo.dnd.Source(ol_t);
+		var start_list = new dojo.dnd.Source(ol_t, {accept: ["editable"]});
 		
 		start_list.insertNodes(false, response_data[0]);
 		
