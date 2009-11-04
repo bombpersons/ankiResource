@@ -29,7 +29,7 @@ function create_dnd_target(name, title) { //returns a DOMnode of the ol
 	var parent = dojo.byId("dnd_area");
 
 	target = dojo.create("div", {id: name + '_container' ,class: "dnd_list_container"}, parent);
-	dojo.create("h2", {innerHTML: title}, target);
+	dojo.create("h2", {class: "list_title", innerHTML: title}, target);
 	return dojo.create("ol", {id: name + "_nodes"}, target);
 
 }
