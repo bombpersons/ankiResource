@@ -21,7 +21,7 @@ def index(request):
 	
 def start_list(request, start_list_id):
 
-	dic = {
+	dic = {'start_list_id' : start_list_id
 	}
 
 	# dic = start_list_id.render_to_json not implemented yet!
