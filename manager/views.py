@@ -56,10 +56,7 @@ def modify(request):
 								source.remove(curr)
 							
 							# Return success
-							return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript')
-							
-					else:
-						raise Http500
+							return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript'))
 				
 				else:
 					if 'sentences' in request.POST:
@@ -74,10 +71,7 @@ def modify(request):
 								sentence.delete()
 						
 						# Return success
-						return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript')
-						
-					else:
-						raise Http500
+						return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript'))
 			
 			elif request.POST['action'] == "move":
 				# Okay, Javascript wants us to move some sentences from one list to another. 
@@ -99,17 +93,8 @@ def modify(request):
 								source.sentences.remove(sentence)
 							
 							# Return success
-							return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript')
+							return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript'))
 						
-						else:
-							raise Http500
-							
-					else:
-						raise Http500
-						
-				else:
-					raise Http500
-					
 			elif request.POST['action'] == "copy":
 				# Okay, Javascript wants us to copy some sentences from one
 				# list to another. 
@@ -130,26 +115,11 @@ def modify(request):
 									dest.sentence.add(sentence)
 								
 								# Return success
-								return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript')
+								return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript'))
 								
-						else:
-							raise Http500
-					
-					else:
-						raise Http500
-						
-				else:
-					raise Http500
-			
-			
-			
-			else:
-				raise Http500
-				
-		else:
-			raise Http500
-				
-						
+	# If we get here an error has happened,
+	raise Http500
+														
 	
 def start_list(request, start_list_id):
 
