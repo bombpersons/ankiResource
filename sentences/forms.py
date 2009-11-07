@@ -21,8 +21,3 @@ class SentenceForm(forms.Form):
 	image = forms.ImageField(required=False)
 	
 	list = forms.ChoiceField()
-	
-#--------------------------ListForm -----------------------------------
-class ListForm(forms.Form):
-	name = forms.CharField()
-	open = forms.BooleanField() # Whether or not the list is open.

@@ -12,7 +12,8 @@ from ankiResource import settings
 from ankiResource.uploading.functions import *
 from ankiResource import accounts, media, lists
 from ankiResource.lists.models import List
-from ankiResource.sentences.forms import SentenceForm, ListForm
+from ankiResource.sentences.forms import SentenceForm
+from ankiResource.lists.forms import ListForm
 
 from models import Sentence
 

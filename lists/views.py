@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 from models import List
 from ankiResource.sentences.models import Sentence
-from ankiResource.sentences.forms import ListForm
+from ankiResource.lists.forms import ListForm
 from ankiResource import settings
 from forms import QuicklistForm
 
