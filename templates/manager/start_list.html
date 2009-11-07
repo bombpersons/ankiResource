@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/start_list.js"></script>
+{% endblock javascript_include %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="/static/css/dnd.css" />
+<link rel="stylesheet" type="text/css" href="/static/css/list_manager.css" />
+{% endblock css %}
+
+{% block init_javascript %}
+//create_dnd_target("lol", "title");
+get_list( {{start_list_id}});
+get_list( 2 );
+{% endblock init_javascript %}
+
+{% block main %}
+
+<div id="debug">
+</div>
+
+
+<div id="dnd_area">
+</div>
+
+
+
+
+{% endblock main %}

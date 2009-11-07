@@ -1,4 +1,4 @@
-{% extends "sentences/checkbox_list.html" %}
+{% extends "base.html" %}
 
 {% block title %}
 	{% if list.name %}
@@ -8,41 +8,49 @@
 	{% endif %}
 {% endblock title %}
 
-{% block main %}
-	<div id="seehere">
-	</div>
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/ajax_edit_list.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
+{% endblock javascript_include %}
 
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/show_list.css" />
+{% endblock css %}
+
+{% block main %}
 	<h1> {{ list.name }} {{ list.id }} </h1>
 	
-	{{ list.number_of_sentences }} sentence(s) in this list <br />
-	Export this list as.. <a href="{% url url_lists_export list.id %}?export_type=Text">a text file.</a><a href="{% url url_lists_export list.id %}?export_type=Anki">an anki deck.</a>
+	{{ list.number_of_sentences }} sentence(s) in this list 
+	<br />
 
-	<table width="100%">
+	Export this list as.. <a href="{% url url_lists_export list.id %}?export_type=Text">a text file.</a><a href="{% url url_lists_export list.id %}?export_type=Anki">an anki deck.</a> 
+	<br /> <br />
+
 		{% for sentence in list.sentence.all %}
-			<tr>
-				<td>
-					{% if user.is_authenticated %}
-						Quicklist
-						<input type="checkbox" id={{ sentence.id }}  class="list_check_boxes" />
-					{% endif %}
-				</td>
-				<td>
-					<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>
-				</td>
-				<td>
-				<button dojoType="dijit.form.Button" type="button" class="small_button">
-					Click me too!
-					<script type="dojo/method" event="onClick" args="evt">
-						test_button();
-					</script>
+		<div id="sentence_entry_{{sentence.id}}" class="row">	
+			<div class="list-text"
+				<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>
+			</div>
+			<div class="remove_button">
+				{% if user.is_authenticated %}
+				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy" id="remove_button_{{forloop.counter}}">
+				Remove from list
+				<script type="dojo/method" event="onClick" args="evt">
+					remove_from_list( {{sentence.id}}, {{list.id}} );
+					dijit.byId("remove_button_{{forloop.counter}}").attr("disabled", "true");
+				</script>
 				</button>
-				</td>
-			</tr>
+				{% endif %}
+			</div>
+			<div id=response{{ sentence.id }} class="response"> 
+			</div>
+		</div>
 		{% endfor %}
-	</table>
 	
 	{% ifequal list.id user.get_profile.quick_list.id %}
+		<div class="main_footer">
 		<a href="{% url url_lists_savequicklist %}"> Save this to a new list </a> 
+		</div>
 	{% else %}
 	{% endifequal %}
 {% endblock main %}

@@ -1,0 +1,29 @@
+.row {
+	
+}
+
+.list-text {
+	width:50%;
+	height: 20px;
+	float: left;
+}
+
+.remove_button {
+	float: left;
+	width: 130px;
+}
+
+.otherlist_button {
+	float: left;
+	width: 120px;
+}
+
+.response {
+	float: left;
+	width: 40px;
+}
+
+.save_new_list {
+	width: 100%;
+	float: left;
+}

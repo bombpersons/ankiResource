@@ -1,7 +1,3 @@
-{% extends "base.html" %}
-
-{% block javascript %}
-	// Require dojo query
 	dojo.require("dojo.NodeList-fx");
 	dojo.require("dijit.form.Button");
     dojo.require("dijit.form.DropDownButton");
@@ -17,7 +13,7 @@
 			POSTcontent["sentence"] = sentence_id;
 			
 			xhrArgs={
-				url: "{% url url_sentences_ajax_list_edit %}",
+				url: "/lists/ajax/list/add/",
 				handleAs: "text",
 				content: POSTcontent,
 				
@@ -35,13 +31,30 @@
             dojo.byId("response"+sentence_id).innerHTML = "Adding..."
 	}
 	
-	function test_button(id) {
-		dojo.byId("seehere").innerHTML += id;
+	function remove_from_list(sentence_id, list_id) {
+		// An array for the post data
+		var POSTcontent = new Array();
+		
+		POSTcontent["remove"] = 1;			
+		POSTcontent["list"] = list_id;
+		POSTcontent["sentence"] = sentence_id;
+		
+		xhrArgs={
+			url: "/lists/ajax/list/add/",
+			handleAs: "text",
+			content: POSTcontent,
+			
+			load: function(data,args){
+            	dojo.byId("response"+sentence_id).innerHTML = "Removed.";
+			},
+			
+			// if any error occurs, it goes here:
+			error: function(error,args){
+				console.warn("error!",error);
+			},
+		}
+		
+		dojo.xhrPost(xhrArgs);
+        dojo.byId("response"+sentence_id).innerHTML = "Removing..."
 	}
-	
-	{{ javascript.super }}
-{% endblock javascript %}
 
-{% block init_javascript %}
-	{{ init_javascript.super }}
-{% endblock init_javascript %}

@@ -1,10 +1,18 @@
-{% extends "sentences/js_list.html" %}
+{% extends "base.html" %}
+
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/ajax_edit_list.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
+{% endblock javascript_include %}
 
 {% block title %}All sentences{% endblock title %}
 
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/list_sentences.css" />
+{% endblock css %}
+
 {% block main %}
 	
-	<link rel="stylesheet" type="text/css" href="/static/css/list_sentences.css" />
 
 		{% for sentence, inql in sentence_page_ql %}
 		
@@ -16,10 +24,11 @@
 			
 			<div class="quicklist_button">
 				{% if not inql %}
-				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy">
+				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy" id="quicklist_button_{{forloop.counter}}">
 					Quicklist
 					<script type="dojo/method" event="onClick" args="evt">
 						add_to_list( {{sentence.id}}, {{list.id}} );
+						dijit.byId("quicklist_button_{{forloop.counter}}").attr("disabled", "true");
 					</script>
 				</button>
 				{% else %}
@@ -44,20 +53,21 @@
 								add_to_list( {{sentence.id}}, {{list.id}} );
 							</script>
 				  		</div>
-					</div>
-					{% endfor %}	      
+					{% endfor %}	
+					</div>      
 				</div> 
 			</div>
 
-			<div id=response{{ sentence.id }} class="response"> </div>
-		
+			<div id="response{{ sentence.id }}" class="response"> </div>
+		</div>
 		{% endfor %}
-	</div>
 	
+	<div class="main_footer">
 	Pages:
 	<span>
 		{% for page in sentence_paginator.page_range %}
 			<a href="{% url url_sentences_list %}?page={{ page }}">{{ page }}</a>
 		{% endfor %}
 	</span>
+	</div>
 {% endblock main %}

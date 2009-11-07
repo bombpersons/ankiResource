@@ -15,6 +15,7 @@ from forms import QuicklistForm
 from export import TextFileListExporter, AnkiListExporter
 
 import time
+import json
 
 # ------------------------------- SHOW LIST ----------------------------
 def show_list(request, list_id):
@@ -262,3 +263,20 @@ def ajax_list_edit(request):
 	
 	#Render to template
 	return render_to_response("lists/ajax/list_edit.html", dic, context_instance=RequestContext(request))
+	
+@login_required
+def ajax_list_get_json(request, list_id):	
+
+	
+	list = List.objects.get(pk=list_id)
+	
+	to_serialize_list = [{'data':sentence.sentence, 'sentence':sentence.id, 'type':["editable"] } for sentence in list.sentence.all()]
+	
+	to_serialize = [to_serialize_list, list.__unicode__()]
+	
+	data = json.dumps(to_serialize)
+	
+	print data
+	
+	#Render to template
+	return HttpResponse(data)

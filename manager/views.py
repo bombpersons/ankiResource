@@ -150,6 +150,12 @@ def modify(request):
 			raise Http500
 				
 						
-
 	
-			
+def start_list(request, start_list_id):
+
+	dic = {'start_list_id' : start_list_id
+	}
+
+	# dic = start_list_id.render_to_json not implemented yet!
+	
+	return render_to_response("manager/start_list.html", dic, context_instance=RequestContext(request))

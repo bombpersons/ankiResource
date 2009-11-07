@@ -1,0 +1,15 @@
+/* Copyright (c) 2008 SitePen, Inc. All Rights Reserved */
+
+.dnd_list_container {
+	float: left;
+	margin-right: 20px;
+	width: 233px;
+	
+	border:1px solid #aaa;
+	padding: 1em;
+}
+
+.list_title {
+	padding: 0px;
+	margin: 0px;
+}
