@@ -86,8 +86,6 @@ def modify(request):
 					
 					if request.user in dest.user.all() and request.user in source.user.all():
 						
-						print "cleared"
-						
 						if 'sentences' in request.POST:
 							
 							# Add these sentences to the list
@@ -127,9 +125,28 @@ def modify(request):
 	
 def start_list(request, start_list_id):
 
-	dic = {'start_list_id' : start_list_id
+	list = [start_list_id]
+	dic = {'user_lists' : start_list_id
 	}
+	
+	return render_to_response("manager/manage_lists.html", dic, context_instance=RequestContext(request))
+	
+	
+	
+def all_lists(request):
+
+	dic = {}
+	
+	user_lists = []
 
 	# dic = start_list_id.render_to_json not implemented yet!
 	
-	return render_to_response("manager/start_list.html", dic, context_instance=RequestContext(request))
+	for list in request.user.list_set.all():
+		user_lists.append(list.id)
+		
+	dic.update({'user_lists': user_lists})
+		
+	print user_lists
+	
+	return render_to_response("manager/manage_lists.html", dic, context_instance=RequestContext(request))
+

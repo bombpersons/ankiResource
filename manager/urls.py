@@ -10,5 +10,8 @@ urlpatterns = patterns('',
 
 	# Start with a list
 	url(r'^list/(?P<start_list_id>\d+)$', 'ankiResource.manager.views.start_list', name="url_manager_start_list"),
+	
+	# Edit all lists
+	url(r'^list/all/$', 'ankiResource.manager.views.all_lists', name="url_manager_all_lists"),
 
 )
