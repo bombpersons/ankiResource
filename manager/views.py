@@ -74,6 +74,7 @@ def modify(request):
 						return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript'))
 			
 			elif request.POST['action'] == "move":
+				print "moving"
 				# Okay, Javascript wants us to move some sentences from one list to another. 
 				# Sentences are removed from the source and moved to the dest
 				if 'dest' in request.POST and 'source' in request.POST:
@@ -82,18 +83,21 @@ def modify(request):
 					source = get_object_or_404(List, pk=request.POST['source'])
 				
 					# Check if we have permission
-					if request.user in dest.user and request.user in source.user:
 					
+					if request.user in dest.user.all() and request.user in source.user.all():
+						
+						print "cleared"
+						
 						if 'sentences' in request.POST:
 							
 							# Add these sentences to the list
 							for sentence_id in request.POST['sentences'].split():
 								sentence = Sentence.objects.get(pk=sentence_id)
-								dest.sentences.add(sentence)
-								source.sentences.remove(sentence)
+								dest.sentence.add(sentence)
+								source.sentence.remove(sentence)
 							
 							# Return success
-							return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript'))
+							return HttpResponse(simplejson.dumps({'Success': True}), mimetype='application/javascript')
 						
 			elif request.POST['action'] == "copy":
 				# Okay, Javascript wants us to copy some sentences from one
@@ -105,7 +109,7 @@ def modify(request):
 					dest = get_object_or_404(List, pk=request.POST['dest'])
 					
 					# Check if we have permission to write to the list
-					if request.user in dest.user:
+					if request.user in dest.user.all():
 						
 						if 'sentences' in request.POST:
 							
@@ -115,7 +119,7 @@ def modify(request):
 									dest.sentence.add(sentence)
 								
 								# Return success
-								return HttpResponse(simplejson.dump({'Success': True}, mimetype='application/javascript'))
+								return HttpResponse(simplejson.dumps({'Success': True}), mimetype='application/javascript')
 								
 	# If we get here an error has happened,
 	raise Http500

@@ -48,7 +48,7 @@ function update_server_move(source_list_id, dest_list_id, changed_sentences) {
 	POSTcontent["sentences"] = changed_sentences;
 	
 	xhrArgs={
-		url: "/manager/ajax/modify",
+		url: "/manager/ajax/modify/",
 		handleAs: "text",
 		content: POSTcontent,
 		
@@ -70,6 +70,28 @@ function update_server_move(source_list_id, dest_list_id, changed_sentences) {
 function update_server_copy(dest_list_id, changed_sentences) {
 	console.log(changed_sentences);
 	console.log(" copied to " + dest_list_id); 
+	
+	var POSTcontent = [];
+	POSTcontent["action"] = "copy";			
+	POSTcontent["dest"] = dest_list_id;
+	POSTcontent["sentences"] = changed_sentences;
+	
+	xhrArgs={
+		url: "/manager/ajax/modify/",
+		handleAs: "text",
+		content: POSTcontent,
+		
+		load: function(data,args){
+        	console.log("success");
+		},
+		
+		// if any error occurs, it goes here:
+		error: function(error,args){
+			console.warn("error!",error);
+		},
+	}
+	
+	dojo.xhrPost(xhrArgs);
 }
 
 function create_dnd_from_list(response_data, list_id) {
