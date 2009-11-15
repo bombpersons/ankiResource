@@ -23,7 +23,7 @@ class Profile(models.Model):
 			newList = List(open=False, name= str(self.user.username) + "'s quicklist")
 			newList.save()
 			
-			newList.user.add(self.user)
+			newList.users.add(self.user)
 			
 			self.quick_list = newList
 			
@@ -34,8 +34,9 @@ class Profile(models.Model):
 	
 	def editable_lists(self):
 		#returns lists that the user can edit
-		return List.objects.filter(user=self.user)
+		#will it work with more than 1 users on a list?
+		return List.objects.filter(users=self.user)
 		
 	def num_editable_lists(self):
 		#returns number of editable lists
-		return len(List.objects.filter(user=self.user))
+		return len(List.objects.filter(users=self.user))

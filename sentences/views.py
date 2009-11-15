@@ -54,10 +54,9 @@ def list(request):
 	
 	#Send it all to template renderer
 	dic = {
-		'sentence_page': sentence_page,
 		'sentence_page_ql' : sentence_page_ql,
 		'sentence_paginator': sentence_paginator,
-		'list': ql
+		'quicklist': ql
 	}
 	
 	#Render the page

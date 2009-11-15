@@ -3,19 +3,14 @@
 {% block title %}All list{% endblock title %}
 
 {% block main %}
-	<table width="100%">
 		{% for list in page.object_list %}
-			<tr>
-				<td><a href="{% url url_sentences_show_list list.id %}">{{ list.name }}</a></td>
-				<td>
-					{% ifequal user.id list.profile.user.id %}
-						Delete / Edit.
-					{% endifequal %}
-				</td>
-			</tr>
+            <br />
+    		<a href="{% url url_sentences_show_list list.id %}">{{ list.name }}</a>
+		    {% ifequal user.id list.profile.user.id %}
+				Delete / Edit.
+			{% endifequal %}
 		{% endfor %}
-	</table>
-	
+    <br />	
 	Pages:
 	<span>
 		{% for page_num in paginator.page_range %}

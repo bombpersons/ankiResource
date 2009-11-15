@@ -20,13 +20,6 @@
 		<table width="100%">
 			{% if page.object_list %}
 				{% for result in page.object_list %}
-					<tr>
-						<td>
-						{% if user.is_authenticated %}
-							Add to list:
-							<input type="checkbox" id={{ result.object.id }} class="list_check_boxes" />
-						{% endif %}
-						</td>
 						<td><a href="{% url url_sentences_sentence result.object.id %}">{{ result.object.sentence }}</a></td>
 						<td>
 							{% ifequal user.id result.object.profile.user.id %}

@@ -143,7 +143,7 @@ def new_list(request):
 							open=form.cleaned_data['open'],
 							)
 			new_list.save()			
-			new_list.user.add(request.user)
+			new_list.users.add(request.user)
 			new_list.save()
 			
 			id=new_list.id
@@ -180,12 +180,12 @@ def save_quick_list(request):
 							open=False,
 							)
 			new_list.save()			
-			new_list.user.add(request.user)
+			new_list.users.add(request.user)
 			
 			uql = request.user.get_profile().quick_list
 			
 			for sentence in uql.sentence.all():
-				new_list.sentence.add(sentence)
+				new_list.sentences.add(sentence)
 			
 			new_list.save()
 			
@@ -227,18 +227,18 @@ def ajax_list_edit(request):
 	}
 	
 	# K, now check if the user has permissions to do this.
-	if request.user in list.user.all() or list.open:
+	if request.user in list.users.all() or list.open:
 		# Add / Remove the sentence to the list
 		if 'add' in request.POST:
 			if request.POST['add'] == "1":
-				list.sentence.add(sentence)
+				list.sentences.add(sentence)
 				
 				# Tell the template we succeeded
 				dic.update({'success': True})
 		
 		if 'remove' in request.POST:
 			if request.POST['remove'] == "1":
-				list.sentence.remove(sentence)
+				list.sentences.remove(sentence)
 				
 				# Tell the template we succeeded
 				dic.update({'success': True})
@@ -246,7 +246,7 @@ def ajax_list_edit(request):
 		# Check whether or not the sentence is in the list.
 		if 'exists' in request.POST:
 			if request.POST['exists'] == "1":
-				if sentence in list.sentence.all():
+				if sentence in list.sentences.all():
 					dic.update({'success': True})
 				else:
 					# Tell the template we failed
@@ -270,7 +270,7 @@ def ajax_list_get_json(request, list_id):
 	
 	list = List.objects.get(pk=list_id)
 	
-	to_serialize_list = [{'data':sentence.sentence, 'sentence':sentence.id, 'type':["editable"] } for sentence in list.sentence.all()]
+	to_serialize_list = [{'data':sentence.sentence, 'sentence':sentence.id, 'type':["editable"] } for sentence in list.sentences.all()]
 	
 	to_serialize = [to_serialize_list, list.__unicode__()]
 	

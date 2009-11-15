@@ -26,7 +26,7 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 	Export this list as.. <a href="{% url url_lists_export list.id %}?export_type=Text">a text file.</a><a href="{% url url_lists_export list.id %}?export_type=Anki">an anki deck.</a> 
 	<br /> <br />
 
-		{% for sentence in list.sentence.all %}
+		{% for sentence in list.sentences.all %}
 		<div id="sentence_entry_{{sentence.id}}" class="row">	
 			<div class="list-text"
 				<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>

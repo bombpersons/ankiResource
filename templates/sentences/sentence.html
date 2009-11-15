@@ -3,20 +3,17 @@
 {% block title %} Viewing Sentence {% endblock title %}
 
 {% block main %}
-	<table width="100%">
-		<tr><h1>{{ sentence.sentence }}</h1></tr>
+<h1>{{ sentence.sentence }}</h1>
 		
-		<tr>
-			<td>
+
 				Tags: {% for tag in sentence.get_tags %}
 					<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }} </a>
 				{% endfor %}
-			</td>
-		</tr>
+
 
 		{% for media in sentence.media.all %}
 			{% if media %}
-				<tr><td>
+
 				{% ifequal media.type "Image" %}
 					<img src= /static/{{ media.image }}/>
 				{% else %}
@@ -30,15 +27,15 @@
 						</video>
 					{% endifequal %}
 				{% endifequal %}
-				</td></tr>
+
 			{% endif %}
 		{% endfor %}
 
 	</table>
 
 	<h3>
-		{% ifequal sentence.profile.user.username user.username %}
-			Posted by you. <a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit this sentence.
+		{% ifequal sentence.user.get_profile.id user.id %}
+			Posted by you. <br /> <a href="{% url url_sentences_delete sentence.id %}">Delete</a> this sentence.
 		{% else %}
 			Posted by <a href="{% url url_accounts_profile sentence.user.id %}">{{ sentence.user.username }}</a>
 		{% endifequal %}

@@ -81,10 +81,10 @@ def addSentence(request, form):
 		list = List.objects.get(pk=form.cleaned_data['list'])
 		
 		#Check if the user has permission to do this
-		if request.user in list.user.all():
+		if request.user in list.users.all():
 			
 			#Add the sentence to the list
-			list.sentence.add(newSentence)
+			list.sentences.add(newSentence)
 			
 			#Save the list
 			list.save()

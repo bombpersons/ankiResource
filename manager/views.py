@@ -26,6 +26,7 @@ def index(request):
 # ------------------------- AJAX ---------------------------------------
 # ----------------------------------------------------------------------
 # Called when javascript wants to modify a list
+@login_required
 def modify(request):
 	# Make sure we have post data
 	if request.POST:

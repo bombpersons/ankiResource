@@ -8,10 +8,10 @@ from ankiResource.sentences.models import Sentence
 
 class List(models.Model):
 	# Relationships
-	user = models.ManyToManyField(User) # (Optionally) attach this list to a user
+	users = models.ManyToManyField(User) # (Optionally) attach this list to a user
 									    # If this is set, only the user(s) can edit
 									    # list.
-	sentence = models.ManyToManyField(Sentence, blank=True, null=True) # Sentences associated with this List
+	sentences = models.ManyToManyField(Sentence, blank=True, null=True) # Sentences associated with this List
 	
 	# Options
 	open = models.BooleanField() # Whether or not the list is open.
@@ -20,10 +20,10 @@ class List(models.Model):
 	name = models.CharField(max_length=200, blank=True) # Name of the list (optional)
 	
 	def contains_sentence(self, sentence):
-		return sentence in self.sentence.all()
+		return sentence in self.sentences.all()
 	
 	def number_of_sentences(self):
-		return len(self.sentence.all())
+		return len(self.sentences.all())
 		
 	def name_nos(self):
 		return self.name + " (%s)" % self.number_of_sentences()
