@@ -5,14 +5,8 @@ import tagging
 #------------------------- SentenceForm --------------------------------
 class SentenceForm(forms.Form):
 	sentence = forms.CharField()
-	language = forms.ChoiceField(choices=(
-		('English', 'English'),
-		('日本語', '日本語'),
-		('Other', 'Other')
-	)
-	)
 	
-	other_language = forms.CharField(required=False)
+	translation = forms.CharField(required=False)
 	
 	tags = tagging.forms.TagField(required=False)
 	

@@ -142,7 +142,7 @@ def delete(request, sentence_id):
 	
 	# Only delete the sentence if the user is a superuser (admin
 	# Or if the sentence is owned by them.
-	if request.user == sentence.profile.user or request.user.is_superuser == True:
+	if request.user == sentence.user or request.user.is_superuser == True:
 		# Delete the sentence.
 		sentence.delete()
 		

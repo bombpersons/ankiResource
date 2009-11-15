@@ -22,9 +22,14 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 	
 	{{ list.number_of_sentences }} sentence(s) in this list 
 	<br />
+	Created by: 
+	{% for user in list.users.all %}
+		{{user}}
+	{% endfor %}
+	<br />
 
-	Export this list as.. <a href="{% url url_lists_export list.id %}?export_type=Text">a text file.</a><a href="{% url url_lists_export list.id %}?export_type=Anki">an anki deck.</a> 
-	<br /> <br />
+	Export this list as <a href="{% url url_lists_export list.id %}?export_type=Text">a text file</a> or <a href="{% url url_lists_export list.id %}?export_type=Anki">an anki deck.</a> 
+	<p />
 
 		{% for sentence in list.sentences.all %}
 		<div id="sentence_entry_{{sentence.id}}" class="row">	

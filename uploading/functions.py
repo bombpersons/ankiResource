@@ -45,7 +45,6 @@ def addSentence(request, form):
 											user=request.user,
 											)
 	
-	#Right we should be good to save now =D
 	newSentence.save()
 	
 	#If there is media, save it
@@ -63,14 +62,9 @@ def addSentence(request, form):
 	for m in ms:
 		m.save()
 		newSentence.media.add(m)
-
-	#Pick a language
-	if form.cleaned_data['language'] == "Other" and form.cleaned_data['other_language'] != "":
-		newSentence.language = form.cleaned_data['other_language']
-	elif form.cleaned_data['language'] != "Other":
-		newSentence.language = form.cleaned_data['language']
 	
 	newSentence.tags = form.cleaned_data['tags']
+	newSentence.translation = form.cleaned_data['translation']
 		
 	#Now save again
 	newSentence.save()

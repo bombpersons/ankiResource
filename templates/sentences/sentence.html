@@ -4,12 +4,15 @@
 
 {% block main %}
 <h1>{{ sentence.sentence }}</h1>
-		
+<h3>{{ sentence.translation }}</h3>
 
-				Tags: {% for tag in sentence.get_tags %}
-					<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }} </a>
-				{% endfor %}
-
+		{% if sentence.has_tags %}
+			Tags: {% for tag in sentence.get_tags %}
+				<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }} </a>
+			{% endfor %}
+		{% else %}
+			Tags: None
+		{% endif %}
 
 		{% for media in sentence.media.all %}
 			{% if media %}

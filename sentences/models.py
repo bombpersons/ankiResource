@@ -20,13 +20,13 @@ def truncate(s, l):
 # A sentence
 class Sentence(models.Model):
 	# Relationships
-	user = models.ForeignKey(User) #Attach sentences to users.
+	user = models.ForeignKey(User)
 	media = models.ManyToManyField('media.Media', blank=True, null=True) #Media attached to this sentence
 	
 	# Values
-	sentence = models.TextField() #The actual sentence
+	sentence = models.TextField()
+	translation = models.TextField()
 	pub_date = models.DateTimeField("Date Submitted") #The date and time the sentence was submitted
-	language = models.CharField(max_length=30) #what language the sentence is in
 	
 	#tags
 	tags = TagField()
@@ -41,6 +41,9 @@ class Sentence(models.Model):
 
 	def get_tags(self):
 		return Tag.objects.get_for_object(self) 
+		
+	def has_tags(self):
+		return len(self.get_tags()) != 0
 		
 
 # LIST -----------------------------------------------------------------

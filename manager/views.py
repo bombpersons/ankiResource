@@ -49,7 +49,7 @@ def modify(request):
 						source = get_object_or_404(List, pk=request.POST['source'])
 						
 						# Check if we have permission to do this
-						if request.user in source.user:
+						if request.user in source.users:
 							
 							# Remove the sentences from source
 							for sentence in request.POST['sentences'].split():
@@ -85,15 +85,15 @@ def modify(request):
 				
 					# Check if we have permission
 					
-					if request.user in dest.user.all() and request.user in source.user.all():
+					if request.user in dest.users.all() and request.user in source.users.all():
 						
 						if 'sentences' in request.POST:
 							
 							# Add these sentences to the list
 							for sentence_id in request.POST['sentences'].split():
 								sentence = Sentence.objects.get(pk=sentence_id)
-								dest.sentence.add(sentence)
-								source.sentence.remove(sentence)
+								dest.sentences.add(sentence)
+								source.sentences.remove(sentence)
 							
 							# Return success
 							return HttpResponse(simplejson.dumps({'Success': True}), mimetype='application/javascript')
@@ -108,14 +108,14 @@ def modify(request):
 					dest = get_object_or_404(List, pk=request.POST['dest'])
 					
 					# Check if we have permission to write to the list
-					if request.user in dest.user.all():
+					if request.user in dest.users.all():
 						
 						if 'sentences' in request.POST:
 							
 								# Add these sentences to the list
 								for sentence_id in request.POST['sentences'].split():
 									sentence = Sentence.objects.get(pk=sentence_id)
-									dest.sentence.add(sentence)
+									dest.sentences.add(sentence)
 								
 								# Return success
 								return HttpResponse(simplejson.dumps({'Success': True}), mimetype='application/javascript')
@@ -131,17 +131,13 @@ def start_list(request, start_list_id):
 	}
 	
 	return render_to_response("manager/manage_lists.html", dic, context_instance=RequestContext(request))
-	
-	
+
 	
 def all_lists(request):
 
 	dic = {}
-	
 	user_lists = []
 
-	# dic = start_list_id.render_to_json not implemented yet!
-	
 	for list in request.user.list_set.all():
 		user_lists.append(list.id)
 		

@@ -80,8 +80,8 @@ class ListExporter:
 	# Sentences from it.
 	def readList(self, list):
 		# Loop through the sentences in the list
-		for sentence in list.sentence.all():
-			newSentence = Sentence(sentence=sentence.sentence, language=sentence.language, media=[])
+		for sentence in list.sentences.all():
+			newSentence = Sentence(sentence=sentence.sentence, media=[])
 			
 			for media in sentence.media.all():
 				if media.type == "Image":
