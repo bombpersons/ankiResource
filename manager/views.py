@@ -11,6 +11,8 @@ from ankiResource import settings
 from ankiResource.lists.models import List
 from ankiResource.sentences.models import Sentence
 
+import json
+
 # --------------------------- INDEX ------------------------------------
 def index(request):
 	# Dictionary
@@ -147,3 +149,20 @@ def all_lists(request):
 	
 	return render_to_response("manager/manage_lists.html", dic, context_instance=RequestContext(request))
 
+
+@login_required
+def ajax_list_get_json(request, list_id):	
+
+	
+	list = List.objects.get(pk=list_id)
+	
+	to_serialize_list = [{'data':sentence.sentence, 'sentence':sentence.id, 'type':["editable"] } for sentence in list.sentences.all()]
+	
+	to_serialize = [to_serialize_list, list.__unicode__()]
+	
+	data = json.dumps(to_serialize)
+	
+	print data
+	
+	#Render to template
+	return HttpResponse(data)

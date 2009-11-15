@@ -19,10 +19,8 @@ urlpatterns = patterns('',
 	url(r'^savequicklist/$', 'ankiResource.lists.views.save_quick_list', name="url_lists_savequicklist"),
 			
 	# ------------------------- AJAX -----------------------------------
-	# Add / Removes / Confirms a sentence in a list
+	# Add / Removes / Confirms a sentence in a list, used for add to list buttons
 	url(r'^ajax/list/add/$', 'ankiResource.lists.views.ajax_list_edit', name="url_sentences_ajax_list_edit"),
 	
-	# Retrieves a list in JSON format
-	url(r'^ajax/list/get/(?P<list_id>\d+)$', 'ankiResource.lists.views.ajax_list_get_json', name="url_sentences_ajax_list_get_json"),
 )
 

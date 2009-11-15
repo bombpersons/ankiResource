@@ -120,7 +120,7 @@ function precalc_sentence_map(source) {
 function get_list(list_id) {
 
 	var xhrArgs = {
-		url: "/lists/ajax/list/get/" + list_id,
+		url: "/manager/ajax/list/get/" + list_id,
 		handleAs: "json",
 		load: function(response_data){
 			create_dnd_from_list(response_data, list_id);

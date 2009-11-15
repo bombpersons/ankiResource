@@ -1,6 +1,7 @@
 from ankiResource import settings
 from ankiResource import media, sentences, accounts
 from ankiResource.lists.models import List
+from mecab import *
 
 import os, shutil, hashlib, re, datetime
 
@@ -46,6 +47,14 @@ def addSentence(request, form):
 											)
 	
 	newSentence.save()
+	
+
+	#Reading
+	mecab = MecabController()
+	mecab.ensureOpen()
+	
+	expr = unicode(form.cleaned_data['sentence'])
+	mecab.parse_words(expr)
 	
 	#If there is media, save it
 	ms = []

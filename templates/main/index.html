@@ -1,19 +1,22 @@
 {% extends "base.html" %}
 
 {% block main %}
-	<table>
+
+	<h1> Welcome to ankiResource! </h1>
+		
+		<p> ankiResource is a site for sharing sentences. It allows users to upload their own sentences, view sentences uploaded by others, and collect sentences in lists, which can then be downloaded. </p>
+		
+		<h2> News </h2>
+		
 		{% for new in news %}
-			<tr>
-				<td>{{ new.title }}</td>
-			</tr>
 			
-			<tr>
-				<td>{{ new.text|safe }}</td>
-			</tr>
-			
-			<tr>
-				<td>Posted by {{ new.profile.user.username }} at {{ new.pub_date }}</td>
-			</tr>
+				<div class=newsitem>
+				<h3>{{ new.title }}</h3>
+				<p> {{ new.text|safe }} </p>
+				<em>Posted by {{ new.profile.user.username }} at {{ new.pub_date }}</em>
+				</div>
+				
+				<p />		
 			
 		{% endfor %}
 	</table>
