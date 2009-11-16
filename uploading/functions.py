@@ -1,9 +1,10 @@
 from ankiResource import settings
 from ankiResource import media, sentences, accounts
 from ankiResource.lists.models import List
-from mecab import *
+from mecab_parse import parse, print_in
 
 import os, shutil, hashlib, re, datetime
+import string
 
 #Stores the file in the media dir. Returns the location (relative to media dir) if succesfull.
 def storeFile(file, dir):
@@ -50,11 +51,7 @@ def addSentence(request, form):
 	
 
 	#Reading
-	mecab = MecabController()
-	mecab.ensureOpen()
-	
-	expr = unicode(form.cleaned_data['sentence'])
-	mecab.parse_words(expr)
+	#print_in(parse(form.cleaned_data['sentence']))
 	
 	#If there is media, save it
 	ms = []
@@ -72,7 +69,7 @@ def addSentence(request, form):
 		m.save()
 		newSentence.media.add(m)
 	
-	newSentence.tags = form.cleaned_data['tags']
+	newSentence.tags = form.cleaned_data['tags'] + string.join(parse(form.cleaned_data['sentence']))
 	newSentence.translation = form.cleaned_data['translation']
 		
 	#Now save again

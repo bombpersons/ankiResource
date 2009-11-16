@@ -7,8 +7,8 @@
 <h3>{{ sentence.translation }}</h3>
 
 		{% if sentence.has_tags %}
-			Tags: {% for tag in sentence.get_tags %}
-				<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }} </a>
+			Tags / {% for tag in sentence.get_tags %}
+				<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }}</a> / 
 			{% endfor %}
 		{% else %}
 			Tags: None
