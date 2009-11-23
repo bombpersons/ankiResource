@@ -8,10 +8,18 @@
 
 		{% if sentence.has_tags %}
 			Tags / {% for tag in sentence.get_tags %}
-				<a href="{% url tagging.views.tagged_object_list tag %}"> {{ tag }}</a> / 
+				<a href="{% url url_sentences_tags tag %}"> {{ tag }}</a> / 
 			{% endfor %}
 		{% else %}
 			Tags: None
+		{% endif %}
+		<br />
+		{% if sentence.has_words %}
+			Words / {% for word in sentence.get_words %}
+				<a href="{% url url_sentences_words word %}"> {{ word }}</a> / 
+			{% endfor %}
+		{% else %}
+			Words: None
 		{% endif %}
 
 		{% for media in sentence.media.all %}

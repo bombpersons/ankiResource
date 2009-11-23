@@ -14,9 +14,18 @@
 	{% else %}
 		<p>No sentences =(</p>
 	{% endif %}
-	<h1>Tag Cloud</h1>
+	<h2>Tag Cloud</h2>
 	
 	{% tag_cloud_for_model sentences.Sentence as object_list %}
+	
+	{% for tag in object_list %}
+			<a href="{% url tagging.views.tagged_object_list tag %}"> 
+			<font size="{{tag.font_size}}"> {{tag.name}} </font>
+ 			</a>
+	{% endfor %}
+	
+	<h2>Word Cloud</h2>
+	{% tag_cloud_for_model sentences.SentenceWords as object_list %}
 	
 	{% for tag in object_list %}
 			<a href="{% url tagging.views.tagged_object_list tag %}"> 

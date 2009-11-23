@@ -125,7 +125,7 @@ def modify(request):
 	# If we get here an error has happened,
 	raise Http500
 														
-	
+@login_required	
 def start_list(request, start_list_id):
 
 	list = [start_list_id]
@@ -134,7 +134,7 @@ def start_list(request, start_list_id):
 	
 	return render_to_response("manager/manage_lists.html", dic, context_instance=RequestContext(request))
 
-	
+@login_required	
 def all_lists(request):
 
 	dic = {}

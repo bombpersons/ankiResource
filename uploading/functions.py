@@ -41,9 +41,13 @@ def storeFile(file, dir):
 #Adds a sentence, returns the new sentence's id
 def addSentence(request, form):
 	#Try to make the new sentence
+	new_sentence_words = sentences.models.SentenceWords(mecab_words=string.join(parse(form.cleaned_data['sentence'])))
+	new_sentence_words.save()
+	
 	newSentence = sentences.models.Sentence(
 											sentence=form.cleaned_data['sentence'], 
-											pub_date=datetime.datetime.now(), 
+											pub_date=datetime.datetime.now(),
+											words=new_sentence_words, 
 											user=request.user,
 											)
 	
@@ -69,7 +73,7 @@ def addSentence(request, form):
 		m.save()
 		newSentence.media.add(m)
 	
-	newSentence.tags = form.cleaned_data['tags'] + string.join(parse(form.cleaned_data['sentence']))
+	newSentence.tags = form.cleaned_data['tags']
 	newSentence.translation = form.cleaned_data['translation']
 		
 	#Now save again

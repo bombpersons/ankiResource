@@ -16,6 +16,9 @@ def truncate(s, l):
 
 # Create your models here.
 
+class SentenceWords(models.Model):
+	mecab_words = TagField()
+
 # SENTENCE -------------------------------------------------------------
 # A sentence
 class Sentence(models.Model):
@@ -30,11 +33,12 @@ class Sentence(models.Model):
 	
 	#tags
 	tags = TagField()
+	words = models.ForeignKey(SentenceWords)
 	
 	# Custom Methods
 	#Display something useful at interactive prompt...
 	def __unicode__(self):
-		return self.sentence
+		return "<sentence> "+ self.sentence
 		
 	def short_form(self):
 		return truncate(self.sentence, 50)
@@ -44,6 +48,14 @@ class Sentence(models.Model):
 		
 	def has_tags(self):
 		return len(self.get_tags()) != 0
+		
+	def get_words(self):
+		return Tag.objects.get_for_object(self.words)
+		
+	def has_words(self):
+		return len(self.get_words()) != 0
+		
+
 		
 
 # LIST -----------------------------------------------------------------

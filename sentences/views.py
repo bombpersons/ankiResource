@@ -44,14 +44,20 @@ def list(request):
 	#Get all sentences
 	sentence_list = Sentence.objects.all().order_by('-pub_date')
 	
-	ql = request.user.get_profile().quick_list
+	if request.user.is_authenticated():
+		ql = request.user.get_profile().quick_list
+	else:
+		ql = None
 	
 	# Paginate
 	sentence_paginator = Paginator(sentence_list, settings.ANKIRESOURCE_ITEMS_PER_PAGE)
 	sentence_page = sentence_paginator.page(page)
 	
-	sentence_page_ql = [[sentence, ql.contains_sentence(sentence)] for sentence in sentence_page.object_list]
-	
+	if request.user.is_authenticated():
+		sentence_page_ql = [[sentence, ql.contains_sentence(sentence)] for sentence in sentence_page.object_list]
+	else:
+		sentence_page_ql = [[sentence, True] for sentence in sentence_page.object_list]
+		
 	#Send it all to template renderer
 	dic = {
 		'sentence_page_ql' : sentence_page_ql,

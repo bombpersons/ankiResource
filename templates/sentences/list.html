@@ -22,6 +22,7 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 				<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>
 			</div>
 			
+			{% if user.is_authenticated %}
 			<div class="quicklist_button">
 				{% if not inql %}
 				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy" id="quicklist_button_{{forloop.counter}}">
@@ -37,6 +38,7 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 				</button>
 				{% endif %}
 			</div>
+
 			
 
 				
@@ -60,6 +62,7 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 
 			<div id="response{{ sentence.id }}" class="response"> </div>
 		</div>
+		{% endif %}
 		{% endfor %}
 	
 	<div class="main_footer">
