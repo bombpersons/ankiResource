@@ -54,29 +54,3 @@ class Sentence(models.Model):
 		
 	def has_words(self):
 		return len(self.get_words()) != 0
-		
-
-		
-
-# LIST -----------------------------------------------------------------
-# A list of sentences. A user can make a list of sentences for any purpose,
-# a list for JLPT words, a list for a certain Drama series, etc
-# A list can also be "open", which means that any user can edit / add to the list.
-class ooList(models.Model):
-	# Relationships
-	user = models.ManyToManyField(User) 	  # (Optionally) attach this list to a user
-									  # If this is set, only the user(s) can edit
-									  # list.
-	sentence = models.ManyToManyField(Sentence, blank=True, null=True) # Sentences associated with this List
-	
-	# Options
-	open = models.BooleanField() # Whether or not the list is open.
-								 # If a list is open, anyone can edit it.
-								 
-	name = models.CharField(max_length=200, blank=True) # Name of the list (optional)
-	
-	def number_of_sentences(self):
-		return len(self.sentence.all())
-		
-	def __unicode__(self):
-		return self.name

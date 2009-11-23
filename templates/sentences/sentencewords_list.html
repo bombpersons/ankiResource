@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+	Tag
+{% endblock title %}
+
+{% block main %}
+
+	Found {{object_list|length}} sentence(s) tagged with word "{{tag}}"
+
+	<table width="100%">
+	{% for word in object_list %}
+	{% for sentence in word.sentence_set.all %}
+	<tr>
+		<td>
+			{% if user.is_authenticated %}
+			{% endif %}
+		</td>
+		<td><a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.sentence }}</a></td>
+		<td>
+			<a href="{% url url_sentences_delete sentence.id %}">Delete</a> / Edit.
+		</td>
+	</tr>
+	
+	{% endfor %}
+	{% endfor %}
+	</table>
+
+{% endblock main%}
