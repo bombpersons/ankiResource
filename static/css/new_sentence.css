@@ -1,3 +1,7 @@
 #form_container {
     border-style: none
 }
+
+.error {
+	color: red
+}

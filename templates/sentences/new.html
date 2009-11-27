@@ -7,7 +7,7 @@
 {% block main %}
 <h1>Add a new sentence:</h1>
 <form action="/sentences/new/" method="post" enctype="multipart/form-data">
-		
+			
 <table id="form_container">		
 {% for field in form %}
 <tr>
@@ -15,7 +15,7 @@
     <td>{{ field }} </td>
 	<td>{% if field.errors %}
 		{% for error in field.errors %}
-		    {{ error|escape }}
+		    <span class="error">{{ error|escape }}</span>
    		{% endfor %}
 
     {% else %}
@@ -26,6 +26,7 @@
 {% endfor %}
 </table>
 <br />		
-<input type="submit" value="Add Sentence" />
+<input type="submit" name="view" value="Add Sentence" /> <br />
+<input type="submit" name="stay" value="Add Sentence and stay on this page" />
 </form>
 {% endblock main %}

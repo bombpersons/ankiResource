@@ -2,6 +2,16 @@ body {
 	background-color: #EEEEEE;
 }
 
+a {
+	color:navy;
+	text-decoration: none;
+}
+
+a:hover {
+	color:navy;
+	text-decoration: underline;
+}
+
 #sidebar {
 	width: 24%;
 	float: left;

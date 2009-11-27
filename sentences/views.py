@@ -90,6 +90,15 @@ def sentence(request, sentence_id):
 	return render_to_response("sentences/sentence.html", dic, context_instance=RequestContext(request))
 
 
+def populate_choices(request, form):
+	form.fields['list'].choices = []
+	form.fields['list'].choices.append((0, "None"))
+
+	for list in request.user.get_profile().editable_lists():
+		form.fields['list'].choices.append((list.id, list.name))	
+		
+	return form
+
 # ---------------------------- NEW SENTENCE ----------------------------
 @login_required
 # Makes a new Sentence
@@ -98,33 +107,33 @@ def new(request):
 		form = SentenceForm(request.POST)
 		
 		# If we don't add to this form as well, it will complain during validation
-		form.fields['list'].choices = []
-		form.fields['list'].choices.append((0, "None"))
-
-		for list in request.user.get_profile().editable_lists():
-			form.fields['list'].choices.append((list.id, list.name))
+		form = populate_choices(request, form)
 		
 		if form.is_valid():
+
 			id = addSentence(request, form)
-			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(id,)))
+			
+			if u'stay' in form.data:
+				empty_form = SentenceForm()
+				empty_form = populate_choices(request, empty_form)
+			
+				dic = {'form': empty_form, 'previous_sentence': form.cleaned_data['sentence']}
+				return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
+			elif u'view' in form.data:
+				return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(id,)))
+			else:
+				return render_to_response("sentences/new.html", {'form': form})
 			
 		dic = {'form': form}
-	
-		return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
-	
+		return render_to_response("sentences/new.html", {'form': form})
+		
 	else:
 		form = SentenceForm()
 		
-		# Add the options for choosing a list
-		form.fields['list'].choices = []
-		form.fields['list'].choices.append((0, "None"))
-		for list in request.user.get_profile().editable_lists():
-			form.fields['list'].choices.append((list.id, list.name))
+		form = populate_choices(request, form)
 		
-		#make a dic to hold the form
 		dic = {'form': form}
 		
-		#render the page
 		return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
 
 
