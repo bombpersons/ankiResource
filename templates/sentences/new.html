@@ -1,9 +1,31 @@
 {% extends "base.html" %}
 
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="/static/css/new_sentence.css" />
+{% endblock css %}
+
 {% block main %}
-	<h1>Add a new sentence:</h1>
-	<form action="/sentences/new/" method="post" enctype="multipart/form-data">
-		{{ form.as_p }}
-		<input type="submit" value="Add Sentence" />
-	</form>
+<h1>Add a new sentence:</h1>
+<form action="/sentences/new/" method="post" enctype="multipart/form-data">
+		
+<table id="form_container">		
+{% for field in form %}
+<tr>
+    <td>{{ field.label_tag }}: </td> 
+    <td>{{ field }} </td>
+	<td>{% if field.errors %}
+		{% for error in field.errors %}
+		    {{ error|escape }}
+   		{% endfor %}
+
+    {% else %}
+
+	{% endif %}
+	</td>
+</tr>
+{% endfor %}
+</table>
+<br />		
+<input type="submit" value="Add Sentence" />
+</form>
 {% endblock main %}

@@ -95,30 +95,23 @@ def sentence(request, sentence_id):
 # Makes a new Sentence
 def new(request):
 	if request.method == "POST":
-		#validate the data
 		form = SentenceForm(request.POST)
 		
 		# If we don't add to this form as well, it will complain during validation
 		form.fields['list'].choices = []
 		form.fields['list'].choices.append((0, "None"))
+
 		for list in request.user.get_profile().editable_lists():
 			form.fields['list'].choices.append((list.id, list.name))
 		
-		#continue if the form is valid
 		if form.is_valid():
-			# Add the sentence
 			id = addSentence(request, form)
-			
-			#Redirect the user to the new sentence.
 			return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(id,)))
 			
-		#add the form to the dic
 		dic = {'form': form}
 	
-		#render the page
 		return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
 	
-	#If we aren't already adding, draw a blank form.
 	else:
 		form = SentenceForm()
 		
