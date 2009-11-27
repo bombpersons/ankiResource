@@ -145,8 +145,7 @@ function create_dnd_dom(name, title) { //returns a DOMnode of the ol
 var custom_creator = function(item, hint){
 	var node;
 	node = dojo.doc.createElement("li");
-	node.innerHTML = item.data + item.sentence;	//debug to see sentence-id of each sentence
-	//node.id = dojo.dnd.getUniqueId();
+	node.innerHTML = item.data;
 	return {node: node, data: item, type: item.type};	
 //The default creator seems to set data: item.data, throwing away the "sentence" field, hence a custom creator is used here.
 };
