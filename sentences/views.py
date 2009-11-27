@@ -111,16 +111,16 @@ def new(request):
 		
 		if form.is_valid():
 
-			id = addSentence(request, form)
+			new_sentence = addSentence(request, form)
 			
 			if u'stay' in form.data:
 				empty_form = SentenceForm()
 				empty_form = populate_choices(request, empty_form)
 			
-				dic = {'form': empty_form, 'previous_sentence': form.cleaned_data['sentence']}
+				dic = {'form': empty_form, 'previous_sentence': new_sentence}
 				return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
 			elif u'view' in form.data:
-				return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(id,)))
+				return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(new_sentence.id,)))
 			else:
 				return render_to_response("sentences/new.html", {'form': form})
 			

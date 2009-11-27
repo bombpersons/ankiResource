@@ -38,7 +38,7 @@ def storeFile(file, dir):
 	#return the location of the file
 	return os.path.join(dir, proper_filename)
 
-#Adds a sentence, returns the new sentence's id
+#Adds a sentence, returns the new sentence
 def addSentence(request, form):
 	#Try to make the new sentence
 	new_sentence_words = sentences.models.SentenceWords(mecab_words=string.join(parse(form.cleaned_data['sentence'])))
@@ -94,4 +94,4 @@ def addSentence(request, form):
 			list.save()
 	
 	#Return ID
-	return newSentence.id
+	return newSentence

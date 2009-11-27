@@ -25,6 +25,10 @@
 </tr>
 {% endfor %}
 </table>
+<br />
+{%if previous_sentence%}
+	<a href="{% url url_sentences_sentence previous_sentence.id %}">"{{previous_sentence.short_form}}"</a> has been added
+{%endif%}
 <br />		
 <input type="submit" name="view" value="Add Sentence" /> <br />
 <input type="submit" name="stay" value="Add Sentence and stay on this page" />
