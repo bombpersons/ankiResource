@@ -24,5 +24,7 @@ urlpatterns = patterns('',
 	#deletes a sentence
 	url(r'^delete/(?P<sentence_id>\d+)$', 'ankiResource.sentences.views.delete', name="url_sentences_delete"),
 	
+	#grab external sentence from smart.fm
+	url(r'^smart_fm/(?P<word>[^/]+)$', 'ankiResource.sentences.views.smart_fm', name="url_sentences_smart-fm"),
 )
 

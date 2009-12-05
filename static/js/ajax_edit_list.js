@@ -5,7 +5,6 @@
     dojo.require("dijit.form.TextBox");
 
 	function add_to_list(sentence_id, list_id) {
-			// An array for the post data
 			var POSTcontent = new Array();
 			
 			POSTcontent["add"] = 1;			
@@ -20,8 +19,7 @@
 				load: function(data,args){
                 	dojo.byId("response"+sentence_id).innerHTML = "Added.";
 				},
-				
-				// if any error occurs, it goes here:
+
 				error: function(error,args){
 					console.warn("error!",error);
 				},
@@ -32,7 +30,6 @@
 	}
 	
 	function remove_from_list(sentence_id, list_id) {
-		// An array for the post data
 		var POSTcontent = new Array();
 		
 		POSTcontent["remove"] = 1;			
@@ -47,8 +44,7 @@
 			load: function(data,args){
             	dojo.byId("response"+sentence_id).innerHTML = "Removed.";
 			},
-			
-			// if any error occurs, it goes here:
+
 			error: function(error,args){
 				console.warn("error!",error);
 			},

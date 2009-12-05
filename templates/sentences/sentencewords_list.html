@@ -1,8 +1,17 @@
 {% extends "base.html" %}
 
 {% block title %}
-	Tag
+	Word
 {% endblock title %}
+
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/smart-fm.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
+{% endblock javascript_include %}
+
+{% block init_javascript %}
+	get_sentences_from_smart_fm("lol")
+{% endblock init_javascript %}
 
 {% block main %}
 
@@ -25,5 +34,8 @@
 	{% endfor %}
 	{% endfor %}
 	</table>
+	
+	<div id='response'> </div>
+	<div id='smart_fm'> </div>
 
 {% endblock main%}

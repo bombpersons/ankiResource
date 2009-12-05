@@ -8,14 +8,14 @@ from django.contrib.auth.models import User
 
 from haystack.query import SearchQuerySet
 
-from ankiResource import settings
+from ankiResource import settings, accounts, media, lists
 from ankiResource.uploading.functions import *
-from ankiResource import accounts, media, lists
 from ankiResource.lists.models import List
-from ankiResource.sentences.forms import SentenceForm
 from ankiResource.lists.forms import ListForm
+from ankiResource.sentences.forms import SentenceForm
 
 from models import Sentence
+import json
 
 # -----------------------------INDEX------------------------------------
 # Shows the sentence index page
@@ -68,7 +68,7 @@ def list(request):
 	#Render the page
 	return render_to_response("sentences/list.html", dic, context_instance=RequestContext(request))
 
-# ----------------------------- SENTENCE -------------------------------
+# ----------------------------- SHOW SENTENCE -------------------------------
 # Shows an individual sentence.
 def sentence(request, sentence_id):
 	try:
@@ -83,8 +83,7 @@ def sentence(request, sentence_id):
 	
 	dic = {
 		'sentence': sentence,
-		'more': more,
-		
+		'more': more,	
 	}
 	
 	return render_to_response("sentences/sentence.html", dic, context_instance=RequestContext(request))
@@ -98,6 +97,14 @@ def populate_choices(request, form):
 		form.fields['list'].choices.append((list.id, list.name))	
 		
 	return form
+
+# ------ get sentence from smart.fm ------
+def smart_fm(request, word):
+	print word + "requested"
+	dic={'smart_fm_sentence': 'this is from smart-fm'}
+	
+	data = json.dumps(dic)
+	return HttpResponse(data)
 
 # ---------------------------- NEW SENTENCE ----------------------------
 @login_required
