@@ -3,6 +3,8 @@
 {% block javascript_include %}
 <script type="text/javascript" src="/static/js/ajax_edit_list.js"
 djConfig="parseOnLoad:true, isDebug:false"></script>
+<script type="text/javascript" src="/static/js/highlight_sentence.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
 {% endblock javascript_include %}
 
 {% block title %}All sentences{% endblock title %}
@@ -18,14 +20,24 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 		
 		<div id="sentence_entry_{{sentence.id}}" class="row">	
 			
-			<div class="sentence-text"> 
-				<a href="{% url url_sentences_sentence sentence.id %}">{{ sentence.short_form }}</a>
+			<div id="sentence_text_{{sentence.id}}" class="sentence-text"> 
+				<a href="{% url url_sentences_sentence sentence.id %}" 
+				onMouseOver="highlight({{sentence.id}})" 
+				onMouseOut="no_highlight({{sentence.id}})">
+				{{ sentence.short_form }}
+				</a>
 			</div>
 			
 			{% if user.is_authenticated %}
-			<div class="quicklist_button">
 				{% if not inql %}
-				<button dojoType="dijit.form.Button" type="button" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy" id="quicklist_button_{{forloop.counter}}">
+				<div class="quicklist_button" 
+				onMouseOver="highlight({{sentence.id}});"
+				onMouseOut="no_highlight({{sentence.id}});">				
+				
+				<button dojoType="dijit.form.Button" 
+				type="button" class="small_button" 
+				iconClass="dijitEditorIcon dijitEditorIconCopy" 
+				id="quicklist_button_{{forloop.counter}}">
 					Quicklist
 					<script type="dojo/method" event="onClick" args="evt">
 						add_to_list( {{sentence.id}}, {{quicklist.id}} );
@@ -33,6 +45,7 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 					</script>
 				</button>
 				{% else %}
+				<div class="quicklist_button">
 					<button dojoType="dijit.form.Button" type="button" disabled=true class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy">
 					Quicklist
 				</button>
@@ -42,8 +55,12 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 			
 
 				
-			<div class="otherlist_button">
-				<div dojoType="dijit.form.DropDownButton" class="small_button" iconClass="dijitEditorIcon dijitEditorIconCopy">
+			<div class="otherlist_button"				
+			onMouseOver="highlight({{sentence.id}});"
+			onMouseOut="no_highlight({{sentence.id}});">
+				<div dojoType="dijit.form.DropDownButton" 
+				class="small_button" 
+				iconClass="dijitEditorIcon dijitEditorIconCopy">
 					<span>
 						Add to list
 					</span>    
