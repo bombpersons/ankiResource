@@ -17,6 +17,8 @@ from ankiResource.sentences.forms import SentenceForm
 from models import Sentence
 import json
 
+from smart_fm import get_from_smart_fm
+
 # -----------------------------INDEX------------------------------------
 # Shows the sentence index page
 def index(request):
@@ -101,9 +103,9 @@ def populate_choices(request, form):
 # ------ get sentence from smart.fm ------
 def smart_fm(request, word):
 	print word + "requested"
-	dic={'smart_fm_sentence': 'this is from smart-fm'}
+	sentence_list=get_from_smart_fm(word)
 	
-	data = json.dumps(dic)
+	data = json.dumps(sentence_list)
 	return HttpResponse(data)
 
 # ---------------------------- NEW SENTENCE ----------------------------

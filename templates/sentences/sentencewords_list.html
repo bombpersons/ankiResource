@@ -9,10 +9,6 @@
 djConfig="parseOnLoad:true, isDebug:false"></script>
 {% endblock javascript_include %}
 
-{% block init_javascript %}
-	get_sentences_from_smart_fm("lol")
-{% endblock init_javascript %}
-
 {% block main %}
 
 	Found {{object_list|length}} sentence(s) tagged with word "{{tag}}"
@@ -35,7 +31,10 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 	{% endfor %}
 	</table>
 	
-	<div id='response'> </div>
-	<div id='smart_fm'> </div>
+	<br />
+	
+	<div id='smart_fm'> 
+		<a href="javascript:get_sentences_from_smart_fm('{{tag}}')">more from smart.fm</a> 
+	</div>
 
 {% endblock main%}

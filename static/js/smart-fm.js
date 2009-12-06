@@ -11,8 +11,13 @@ function get_sentences_from_smart_fm(word) {
 			content: POSTcontent,
 			
 			load: function(data,args){
-            	dojo.byId("response").innerHTML = "Got it.";
-            	dojo.byId("smart_fm").innerHTML = data["smart_fm_sentence"];
+            	dojo.byId("smart_fm").innerHTML = "Found X matches. <br /> <br />";
+				dojo.forEach(data, function(item){
+						dojo.byId("smart_fm").innerHTML += item;
+						dojo.byId("smart_fm").innerHTML += "<br />";
+				}
+);
+            	
 			},
 
 			error: function(error,args){
@@ -21,5 +26,5 @@ function get_sentences_from_smart_fm(word) {
 		}
 		
 		dojo.xhrPost(xhrArgs);
-        dojo.byId("response").innerHTML = "Getting..."
+        dojo.byId("smart_fm").innerHTML = "Getting..."
 }
