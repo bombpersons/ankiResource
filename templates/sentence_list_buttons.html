@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+<!-- Generic template to show sentences and allow users to press buttons-->
+
+{% block javascript_include %}
+<script type="text/javascript" src="/static/js/ajax_edit_list.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
+<script type="text/javascript" src="/static/js/highlight_sentence.js"
+djConfig="parseOnLoad:true, isDebug:false"></script>
+{% endblock javascript_include %}
+
+{% block main %}
+
+		{% for sentence, inql in sentence_page_ql %}
+
+		<div id="sentence_entry_{{sentence.id}}" class="row">	
+			<div id="sentence_text_{{sentence.id}}" class="sentence-text"> 
+				<a href="{% url url_sentences_sentence sentence.id %}" 
+				onMouseOver="highlight({{sentence.id}})" 
+				onMouseOut="no_highlight({{sentence.id}})">
+				{{ sentence.short_form }}
+				</a>
+			</div>
+			{% if user.is_authenticated %}
+				{% block buttons %}
+				{% endblock buttons %}
+			{% endif %}			
+		</div>
+
+		{% endfor %}
+	
+	<div class="main_footer">
+	Pages:
+	<span>
+		{% for page in sentence_paginator.page_range %}
+			<a href="{% url url_sentences_list %}?page={{ page }}">{{ page }}</a>
+		{% endfor %}
+	</span>
+	</div>
+{% endblock main %}
