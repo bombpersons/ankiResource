@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 from tagging.views import tagged_object_list
-from ankiResource.sentences.models import Sentence, SentenceWords
+from ankiResource.sentences.models import Sentence, SentenceWords, SentenceTags
 
 urlpatterns = patterns('',
 	#sentence index
@@ -10,7 +10,7 @@ urlpatterns = patterns('',
 	url(r'^all/$', 'ankiResource.sentences.views.list', name="url_sentences_list"),
 
 	#show all sentences containing tag
-	url(r'^tag/(?P<tag>[^/]+)/$', 'tagging.views.tagged_object_list', dict(queryset_or_model=Sentence), name="url_sentences_tags"),
+	url(r'^tag/(?P<tag>[^/]+)/$', 'tagging.views.tagged_object_list', dict(queryset_or_model=SentenceTags), name="url_sentences_tags"),
 	
 	#show all sentences containing word
 	url(r'^word/(?P<tag>[^/]+)/$', 'tagging.views.tagged_object_list', dict(queryset_or_model=SentenceWords), name="url_sentences_words"),

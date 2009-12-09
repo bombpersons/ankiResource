@@ -43,12 +43,16 @@ def addSentence(request, form):
 	#Try to make the new sentence
 	new_sentence_words = sentences.models.SentenceWords(mecab_words=string.join(parse(form.cleaned_data['sentence'])))
 	new_sentence_words.save()
+		
+	new_sentence_tags = sentences.models.SentenceTags(sentence_tags=string.join(parse(form.cleaned_data['tags'])))
+	new_sentence_tags.save()
 	
 	newSentence = sentences.models.Sentence(
 											sentence=form.cleaned_data['sentence'], 
 											pub_date=datetime.datetime.now(),
-											words=new_sentence_words, 
 											user=request.user,
+											words=new_sentence_words, 
+											tags=new_sentence_tags,
 											)
 	
 	newSentence.save()
@@ -73,7 +77,6 @@ def addSentence(request, form):
 		m.save()
 		newSentence.media.add(m)
 	
-	newSentence.tags = form.cleaned_data['tags']
 	newSentence.translation = form.cleaned_data['translation']
 		
 	#Now save again

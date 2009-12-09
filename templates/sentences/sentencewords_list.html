@@ -14,6 +14,7 @@ djConfig="parseOnLoad:true, isDebug:false"></script>
 	Found {{object_list|length}} sentence(s) tagged with word "{{tag}}"
 
 	<table width="100%">
+	<br />
 	{% for word in object_list %}
 	{% for sentence in word.sentence_set.all %}
 	<tr>

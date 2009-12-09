@@ -15,6 +15,9 @@ def truncate(s, l):
 
 class SentenceWords(models.Model):
 	mecab_words = TagField()
+	
+class SentenceTags(models.Model):
+	sentence_tags = TagField()
 
 # SENTENCE -------------------------------------------------------------
 # A sentence
@@ -29,7 +32,7 @@ class Sentence(models.Model):
 	pub_date = models.DateTimeField("Date Submitted") #The date and time the sentence was submitted
 	
 	#tags
-	tags = TagField()
+	tags = models.ForeignKey(SentenceTags)
 	words = models.ForeignKey(SentenceWords)
 	
 	# Custom Methods
@@ -41,7 +44,7 @@ class Sentence(models.Model):
 		return truncate(self.sentence, 25)
 
 	def get_tags(self):
-		return Tag.objects.get_for_object(self) 
+		return Tag.objects.get_for_object(self.tags) 
 		
 	def has_tags(self):
 		return len(self.get_tags()) != 0

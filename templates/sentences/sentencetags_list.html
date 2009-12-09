@@ -9,7 +9,8 @@
 	Found {{object_list|length}} sentence(s) tagged with tag "{{tag}}"
 
 	<table width="100%">
-	{% for sentence in object_list %}
+	{% for tag in object_list %}
+	{% for sentence in tag.sentence_set.all %}
 	<tr>
 		<td>
 			{% if user.is_authenticated %}
@@ -22,6 +23,7 @@
 			{% endifequal %}
 		</td>
 	</tr>
+	{% endfor %}
 	{% endfor %}
 	</table>
 
