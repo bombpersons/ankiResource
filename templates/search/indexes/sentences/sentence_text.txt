@@ -1,1 +1,3 @@
 {{ object.sentence }}
+{{ object.tags }}
+{{ object.words }}

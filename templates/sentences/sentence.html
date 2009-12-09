@@ -43,6 +43,16 @@
 		{% endfor %}
 
 	</table>
+	
+	<br />
+	<table width="100%">
+		{% if more %}
+			More sentences like this:
+			{% for sentence in more %}
+				<tr><td><a href="{% url url_sentences_sentence sentence.object.id %}">{{ sentence.object.sentence }}</a><td></tr>
+			{% endfor %}
+		{% endif %}
+	</table>
 
 	<h3>
 		{% ifequal sentence.user.get_profile.id user.id %}
@@ -51,13 +61,4 @@
 			Posted by <a href="{% url url_accounts_profile sentence.user.id %}">{{ sentence.user.username }}</a>
 		{% endifequal %}
 	</h3>
-	
-	<!--{% comment %}<table width="100%">
-		{% if more %}
-			More sentences like this:
-			{% for sentence in more %}
-				<tr><td><a href="{% url url_sentences_sentence sentence.object.id %}">{{ sentence.object.sentence }}</a><td></tr>
-			{% endfor %}
-		{% endif %}
-	</table>{% endcomment %}-->
 {% endblock main %}
