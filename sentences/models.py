@@ -9,10 +9,7 @@ def truncate(s, l):
 	if len(s) < l:
 		return s
 	else:
-		words = s[:l+1].split(' ')
-		if len(words) == 1:
-			return words[0][:l+1] + '...'
-		return ' '.join(words[0:-1]) + '...'
+		return s[0:l] + '...'
 
 # Create your models here.
 
@@ -41,7 +38,7 @@ class Sentence(models.Model):
 		return "<sentence> "+ self.sentence
 		
 	def short_form(self):
-		return truncate(self.sentence, 50)
+		return truncate(self.sentence, 25)
 
 	def get_tags(self):
 		return Tag.objects.get_for_object(self) 
