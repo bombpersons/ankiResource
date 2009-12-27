@@ -1,7 +1,4 @@
 from django.shortcuts import *
-from django.http import *
-from django.core.urlresolvers import *
-from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
 from ankiResource import settings
