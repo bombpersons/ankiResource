@@ -5,9 +5,9 @@
 
 {% block main %}
 	<h1>Latest sentences</h1>
-	{% if latest_sentences_list %}
+	{% if latest %}
 		<ul>
-		{% for sentence in latest_sentences_list %}
+		{% for sentence in latest %}
 			<li><a href=/sentences/{{ sentence.id }}>{{ sentence.sentence }}</a></li>
 		{% endfor %}
 		</ul>

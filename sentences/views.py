@@ -80,15 +80,14 @@ def sentence(request, sentence_id):
 	
 	# Get more sentences like this.
 	more = SearchQuerySet().all().more_like_this(sentence)
-	
 	print more.count()
 	
 	dic = {
-		'sentence': sentence,
+		'object': sentence,
 		'more': more,	
 	}
 	
-	return render_to_response("sentences/sentence.html", dic, context_instance=RequestContext(request))
+	return render_to_response("sentences/sentence_detail.html", dic, context_instance=RequestContext(request))
 
 
 def populate_choices(request, form):
@@ -129,7 +128,7 @@ def new(request):
 				dic = {'form': empty_form, 'previous_sentence': new_sentence}
 				return render_to_response("sentences/new.html", dic, context_instance=RequestContext(request))
 			elif u'view' in form.data:
-				return HttpResponseRedirect(reverse('ankiResource.sentences.views.sentence', args=(new_sentence.id,)))
+				return HttpResponseRedirect(reverse('url_sentences_sentence', args=(new_sentence.id,)))
 			else:
 				return render_to_response("sentences/new.html", {'form': form})
 			

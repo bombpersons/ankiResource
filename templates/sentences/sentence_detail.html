@@ -3,26 +3,26 @@
 {% block title %} Viewing Sentence {% endblock title %}
 
 {% block main %}
-<h1>{{ sentence.sentence }}</h1>
-<h3>{{ sentence.translation }}</h3>
+<h1>{{ object.sentence }}</h1>
+<h3>{{ object.translation }}</h3>
 
-		{% if sentence.has_tags %}
-			Tags / {% for tag in sentence.get_tags %}
+		{% if object.has_tags %}
+			Tags / {% for tag in object.get_tags %}
 				<a href="{% url url_sentences_tags tag %}"> {{ tag }}</a> / 
 			{% endfor %}
 		{% else %}
 			Tags: None
 		{% endif %}
 		<br />
-		{% if sentence.has_words %}
-			Words / {% for word in sentence.get_words %}
+		{% if object.has_words %}
+			Words / {% for word in object.get_words %}
 				<a href="{% url url_sentences_words word %}"> {{ word }}</a> / 
 			{% endfor %}
 		{% else %}
 			Words: None
 		{% endif %}
 
-		{% for media in sentence.media.all %}
+		{% for media in object.media.all %}
 			{% if media %}
 
 				{% ifequal media.type "Image" %}
@@ -48,17 +48,17 @@
 	<table width="100%">
 		{% if more %}
 			More sentences like this:
-			{% for sentence in more %}
-				<tr><td><a href="{% url url_sentences_sentence sentence.object.id %}">{{ sentence.object.sentence }}</a><td></tr>
+			{% for r_sentence in more %}
+				<tr><td><a href="{% url url_sentences_sentence r_sentence.object.id %}">{{ r_sentence.object.sentence }}</a><td></tr>
 			{% endfor %}
 		{% endif %}
 	</table>
 
 	<h3>
-		{% ifequal sentence.user.get_profile.id user.id %}
-			Posted by you. <br /> <a href="{% url url_sentences_delete sentence.id %}">Delete</a> this sentence.
+		{% ifequal object.user.get_profile.id user.id %}
+			Posted by you. <br /> <a href="{% url url_sentences_delete object.id %}">Delete</a> this sentence.
 		{% else %}
-			Posted by <a href="{% url url_accounts_profile sentence.user.id %}">{{ sentence.user.username }}</a>
+			Posted by <a href="{% url url_accounts_profile object.user.id %}">{{ object.user.username }}</a>
 		{% endifequal %}
 	</h3>
 {% endblock main %}
