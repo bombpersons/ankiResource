@@ -18,8 +18,8 @@ urlpatterns = patterns('',
 	url(r'^word/(?P<tag>[^/]+)/$', 'tagging.views.tagged_object_list', dict(queryset_or_model=SentenceWords), name="url_sentences_words"),
 	
 	#shows a specific sentence
-	#url(r'^(?P<object_id>\d+)$', object_detail, {'queryset':Sentence.objects.all()}, name="url_sentences_sentence"),
-	url(r'^(?P<sentence_id>\d+)$', 'ankiResource.sentences.views.sentence', name="url_sentences_sentence"),
+	url(r'^(?P<object_id>\d+)$', object_detail, {'queryset':Sentence.objects.all()}, name="url_sentences_sentence"),
+	#url(r'^(?P<sentence_id>\d+)$', 'ankiResource.sentences.views.sentence', name="url_sentences_sentence"),
 	
 	#makes a new sentence
 	url(r'^new/$', 'ankiResource.sentences.views.new', name="url_sentences_new"),

@@ -46,10 +46,10 @@
 	
 	<br />
 	<table width="100%">
-		{% if more %}
+		{% if object.has_more %}
 			More sentences like this:
-			{% for r_sentence in more %}
-				<tr><td><a href="{% url url_sentences_sentence r_sentence.object.id %}">{{ r_sentence.object.sentence }}</a><td></tr>
+			{% for r_sentence in object.more_like_this %}
+				<tr><td><a href="{% url url_sentences_sentence r_sentence.id %}">{{ r_sentence.sentence }}</a><td></tr>
 			{% endfor %}
 		{% endif %}
 	</table>
